@@ -1,0 +1,82 @@
+﻿* {
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    background-color: lightgreen;
+}
+
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 800px;
+    width: 100%;
+    background-size: cover;
+}
+
+
+.form_class {
+    width: 1000px;
+    height: 700px;
+    padding: 40px;
+    border-radius: 8px;
+    background-color: white;
+    font-family: Arial;
+    box-shadow: 5px 5px 10px rgb(0,0,0,0.3);
+}
+
+.form_div {
+    text-transform: uppercase;
+}
+
+    .form_div > label {
+        letter-spacing: 3px;
+        font-size: 2rem;
+        font-family: Arial;
+    }
+
+.info_div {
+    text-align: center;
+    margin-top: 20px;
+}
+.info_div {
+    letter-spacing: 1px;
+}
+
+
+.field_class {
+    width: 100%;
+    border-radius: 6px;
+    border-style: solid;
+    border-width: 1px;
+    padding: 5px 0px;
+    text-indent: 6px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-family:Arial;
+    font-size: 2rem;
+    letter-spacing: 2px;
+}
+
+.submit_class {
+    border-style: none;
+    border-radius: 5px;
+    background-color: orange;
+    padding: 8px 20px;
+    font-family: Arial;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+    box-shadow: 2px 2px 5px rgb(0,0,0,0.2);
+    cursor: pointer;
+}
+#Password_form > p{
+    text-align:center;
+    font-size:30px;
+    color:orange;
+}
