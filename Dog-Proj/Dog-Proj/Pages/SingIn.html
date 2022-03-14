@@ -1,36 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- basic -->
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- mobile metas -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="viewport" content="initial-scale=1, maximum-scale=1">
-<!-- site metas -->
-<title>D-pot</title>
-<meta name="keywords" content="">
-<meta name="description" content="">
-<meta name="author" content="">	
-<!-- bootstrap css -->
-<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-<!-- style css -->
-<link rel="stylesheet" type="text/css" href="../css/style.css">
-<!-- Responsive-->
-<link rel="stylesheet" href="../css/responsive.css">
-<!-- fevicon -->
-<link rel="icon" href="../images/fevicon.png" type="image/gif" />
-<!-- Scrollbar Custom CSS -->
-<link rel="stylesheet" href="../css/jquery.mCustomScrollbar.min.css">
-<!-- Tweaks for older IEs-->
-<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-<!-- owl stylesheets --> 
-<link rel="stylesheet" href="../css/owl.carousel.min.css">
-<link rel="stylesheet" href="../css/owl.theme.default.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-   
+    <!-- basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- mobile metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- site metas -->
+    <title>D-pot</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <!-- Responsive-->
+    <link rel="stylesheet" href="../css/responsive.css">
+    <!-- fevicon -->
+    <link rel="icon" href="../images/fevicon.png" type="image/gif" />
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="../css/jquery.mCustomScrollbar.min.css">
+    <!-- Tweaks for older IEs-->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <!-- owl stylesheets -->
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <script src="../Scripts/ajaxCall.js"></script>
+    <script>
+    $(document).ready(function () {
+            $("#myForm").submit(signUp);
+        });
 
+        function signUp() {
+            let familyname = $("#familyname").val();
+            let cityName = $("#cityName").val();
+            let street = $("#street").val();
+            let homeNum = $("#homeNum").val();
+            let moreAnimals = $("#moreAnimals").val();
+            let yardSize = $("#yardSize").val(); 
+            let houseType = $("#houseType").val();
+            //גבר / אישה ?
+            let username = $("#username").val();
+            let age = $("#age").val();
+            let phone = $("#phone").val();
+            //זמינות
+
+            user = {
+                Familyname: familyname,
+                CityName: cityName,
+                Street: street,
+                HomeNum: homeNum,
+                MoreAnimals: moreAnimals,
+                YardSize:yardSize,
+                HouseType: houseType,
+                Username: username,
+                Age: age,
+                Phone: phone,
+            }
+            console.log(user);
+            ajaxCall("POST", "../api/Users", JSON.stringify(u), postSCB, postECB);
+            return false;
+        }
+
+
+        function postSCB(success) {
+            if (success == 0) {
+                alert("The user is exists");
+            }
+            else {
+                alert("You signed up successfully");
+                window.location.href = "SingInDog.html";
+            }
+            console.log(success);
+        }
+
+        function postECB(err) {
+            console.log(err);
+        }</script>
 
 </head>
 <body>
@@ -91,13 +141,13 @@
                                     </tr>
 
                                     <tr>
-                                        <td><input type="text" id="lastName" required /></td>
+                                        <td><input type="text" id="familyname" required /></td>
                                         <td><h3>כאן גרים בכיף משפחת</h3></td>
 
                                     </tr>
                                     <tr>
                                         <td>
-                                            <select id="citySelect" size="1">
+                                            <select id="cityName" size="1">
                                                 <option>בחר</option>
                                                 <option></option>
                                             </select>
@@ -105,28 +155,24 @@
                                         <td><h3>עיר</h3></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" id="Street" required /></td>
+                                        <td><input type="text" id="street" required /></td>
                                         <td><h3>רחוב</h3></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" id="Apartmentnumber" required /></td>
+                                        <td><input type="text" id="homeNum" required /></td>
                                         <td><h3>דירה</h3></td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <img class="imgform" src="../images/חיות.jpg" />
                                         </td>
-                                        <td>
-                                            <img class="imgform" src="../images/כלב.gif" />
-                                        </td>
                                     </tr>
                                     <tr>
-                                        <td><input type="button" class="BTF" requiredvalue value="יש חיות נוספות" /></td>
-                                        <td><input type="button" class="BTF" required value="אין חיות נוספות" /></td>
+                                        <td><input type="checkbox" class="BTF"  id="moreAnimals" requiredvalue value="יש חיות נוספות" /></td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <select id="Yardsize">
+                                            <select id="yardSize">
                                                 <option>בחר</option>
                                                 <option>גדול</option>
                                                 <option>בינוני</option>
@@ -137,7 +183,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <select id="TypeOfHome">
+                                            <select id="houseType">
                                                 <option>בחר</option>
                                                 <option>בניין מגורים</option>
                                                 <option>בית פרטי</option>
@@ -167,15 +213,15 @@
                                         <td><input type="button" class="BTF" required value="אני אישה" /></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" id="FirstName" required /></td>
+                                        <td><input type="text" id="username" required /></td>
                                         <td><h3>שם פרטי</h3></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" id="Age" required /></td>
+                                        <td><input type="text" id="age" required /></td>
                                         <td><h3>גיל</h3></td>
                                     </tr>
                                     <tr>
-                                        <td>
+                                        <td colspan="3">
                                             <select>
                                                 <option>בחר</option>
                                                 <option>052</option>
@@ -183,8 +229,10 @@
                                                 <option>053</option>
                                                 <option>054</option>
                                             </select>
-                                        </td>
-                                        <td> <h3>מספר טלפון</h3><input type="text" id="phone" required /></td>
+                                        
+                                         <h3>מספר טלפון</h3>
+                                        <input type="text" id="phone" required />
+                                     </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -212,7 +260,6 @@
                                     </tr>
                                     <tr>
                                     </tr>
-
                                     <tr>
                                         <td colspan="2">
                                             <input type="submit" value="Sign in" />
@@ -299,18 +346,18 @@
 </div>
 
         <!-- Javascript files-->
-        <script src="../Scripts/jquery.min.js"></script>
+        <!--<script src="../Scripts/jquery.min.js"></script>
         <script src="../Scripts/popper.min.js"></script>
         <script src="../Scripts/bootstrap.bundle.min.js"></script>
         <script src="../Scripts/jquery-3.0.0.min.js"></script>
-        <script src="../Scripts/plugin.js"></script>
+        <script src="../Scripts/plugin.js"></script>-->
         <!-- sidebar -->
-        <script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
-        <script src="../Scripts/custom.js"></script>
+        <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="../Scripts/custom.js"></script>-->
         <!-- javascript -->
-        <script src="../Scripts/owl.carousel.js"></script>
-        <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-        <script>
+        <!--<script src="../Scripts/owl.carousel.js"></script>
+        <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>-->
+        <!--<script>
             $(document).ready(function () {
                 $(".fancybox").fancybox({
                     openEffect: "none",
@@ -336,7 +383,7 @@
             function closeNav() {
                 document.getElementById("myNav").style.width = "0%";
             }
-        </script>
+        </script>-->
 
 </body>
 </html>

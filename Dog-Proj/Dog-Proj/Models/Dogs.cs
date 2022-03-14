@@ -8,7 +8,7 @@ namespace DOGS1.Models
     public class Dogs
     {
         int id;
-        img picture;
+        string picture;
         string dogname;
         int familyNum;
         string dogBreed;
