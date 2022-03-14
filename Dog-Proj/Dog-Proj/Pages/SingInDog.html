@@ -1,37 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- basic -->
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- mobile metas -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="viewport" content="initial-scale=1, maximum-scale=1">
-<!-- site metas -->
-<title>D-pot</title>
-<meta name="keywords" content="">
-<meta name="description" content="">
-<meta name="author" content="">	
-<!-- bootstrap css -->
-<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-<!-- style css -->
-<link rel="stylesheet" type="text/css" href="../css/style.css">
-<!-- Responsive-->
-<link rel="stylesheet" href="../css/responsive.css">
-<!-- fevicon -->
-<link rel="icon" href="../images/fevicon.png" type="image/gif" />
-<!-- Scrollbar Custom CSS -->
-<link rel="stylesheet" href="../css/jquery.mCustomScrollbar.min.css">
-<!-- Tweaks for older IEs-->
-<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-<!-- owl stylesheets --> 
-<link rel="stylesheet" href="../css/owl.carousel.min.css">
-<link rel="stylesheet" href="../css/owl.theme.default.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-   
+    <!-- basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- mobile metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- site metas -->
+    <title>D-pot</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <!-- Responsive-->
+    <link rel="stylesheet" href="../css/responsive.css">
+    <!-- fevicon -->
+    <link rel="icon" href="../images/fevicon.png" type="image/gif" />
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="../css/jquery.mCustomScrollbar.min.css">
+    <!-- Tweaks for older IEs-->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <!-- owl stylesheets -->
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    
+
+    <script>
+        $(document).ready(function () {
+            $("#signDog").submit(signUp);
+        });
+
+        function signUp() {
+            //זכר ונקבה
+            let dogname = $("#dogname").val();
+            let picture = $("#picture").val();
+            let age = $("#age").val();
+            let dogBreed = $("#dogBreed").val();
+            //אופי הכלב
+            let size = $("#size").val();
+            let neutering = $("#neutering").val();
+           
+
+            Dog = {
+                Dogname: dogname,
+                Picture: picture,
+                Age: age,
+                DogBreed: dogBreed,
+                Size: size,
+                Neutering: neutering,
+                
+            }
+            console.log(Dog);
+            ajaxCall("POST", "../api/Dogs", JSON.stringify(Dog), postSCB, postECB);
+            return false;
+        }
 
 
+        function postSCB(success) {
+            if (success == 0) {
+                alert("The user is exists");
+            }
+            else {
+                alert("You signed up successfully");
+                window.location.href = "PasswordSelection.html";
+            }
+            console.log(success);
+        }
+
+        function postECB(err) {
+            console.log(err);
+        }
+    </script>
 </head>
 <body>
 	<!-- section banner start -->
@@ -73,7 +118,7 @@
                 <div class="email_box">
                     <div class="input_main">
                         <div class="container">
-                            <form id="sing" action="/action_page.php">
+                            <form id="signDog" action="/action_page.php">
 
                                 <table>
 
@@ -98,20 +143,20 @@
                                         <td><input type="button" class="BTF" requiredvalue value="זכר" /></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" id="DogName" required /></td>
+                                        <td><input type="text" id="dogname" required /></td>
                                         <td><h3>שם הכלב/ה</h3></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" id="Street" required /></td>
+                                        <td><input type="text" id="picture" required /></td>
                                         <td><h3>תמונה של הכלב</h3></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" id="AgeDog" required /></td>
+                                        <td><input type="text" id="age" required /></td>
                                         <td><h3>גיל הכלב/ה</h3></td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <select id="Dogtype" size="1">
+                                            <select id="dogBreed" size="1">
                                                 <option>בחר</option>
                                                 <option></option>
                                                 <option></option>
@@ -131,7 +176,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <select id="DogSize" size="1">
+                                            <select id="size" size="1">
                                                 <option>בחר</option>
                                                 <option>גדול</option>
                                                 <option>בינוני</option>
@@ -141,7 +186,7 @@
                                         <td><h3>גודל הכלב/ה</h3></td>
                                     </tr>
                                     <tr>
-                                        <td> <input type="button" class="BTF" requiredvalue value="מסורס/מעוקר" /></td>
+                                        <td> <input type="checkbox" class="BTF"  id="neutering"requiredvalue value="מסורס/מעוקר" /></td>
                                     </tr>
                                    
 
@@ -231,16 +276,16 @@
 </div>
 
         <!-- Javascript files-->
-        <script src="../Scripts/jquery.min.js"></script>
+        <!--<script src="../Scripts/jquery.min.js"></script>
         <script src="../Scripts/popper.min.js"></script>
         <script src="../Scripts/bootstrap.bundle.min.js"></script>
         <script src="../Scripts/jquery-3.0.0.min.js"></script>
-        <script src="../Scripts/plugin.js"></script>
+        <script src="../Scripts/plugin.js"></script>-->
         <!-- sidebar -->
-        <script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
-        <script src="../Scripts/custom.js"></script>
+        <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="../Scripts/custom.js"></script>-->
         <!-- javascript -->
-        <script src="../Scripts/owl.carousel.js"></script>
+        <!--<script src="../Scripts/owl.carousel.js"></script>
         <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
         <script>
             $(document).ready(function () {
@@ -268,7 +313,7 @@
             function closeNav() {
                 document.getElementById("myNav").style.width = "0%";
             }
-        </script>
+        </script>-->
 
 </body>
 </html>

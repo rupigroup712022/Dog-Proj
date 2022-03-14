@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DOGS1.Models
 {
-    public class Users
+    public class User
     {
         int id;
         string username;
@@ -15,7 +15,7 @@ namespace DOGS1.Models
         int available;
         DateTime ending_date;
 
-        public Users(int id, string username, int phone, string sex, int age, int available, DateTime ending_date)
+        public User(int id, string username, int phone, string sex, int age, int available, DateTime ending_date)
         {
             Id = id;
             Username = username;

@@ -18,5 +18,6 @@ namespace DOGS1.Models
         bool neutering;
         string dog_character;
 
+       
     }
 }

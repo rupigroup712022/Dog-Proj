@@ -5,12 +5,12 @@ using System.Web;
 
 namespace DOGS1.Models
 {
-    public class Times
+    public class Time
     {
         DateTime availableDays;
         DateTime availableHours;
 
-        public Times(DateTime availableDays, DateTime availableHours)
+        public Time(DateTime availableDays, DateTime availableHours)
         {
             AvailableDays = availableDays;
             AvailableHours = availableHours;

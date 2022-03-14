@@ -32,7 +32,7 @@
     <script src="../Scripts/ajaxCall.js"></script>
     <script>
     $(document).ready(function () {
-            $("#myForm").submit(signUp);
+        $("#sign").submit(signUp);
         });
 
         function signUp() {
@@ -62,7 +62,7 @@
                 Phone: phone,
             }
             console.log(user);
-            ajaxCall("POST", "../api/Users", JSON.stringify(u), postSCB, postECB);
+            ajaxCall("POST", "../api/Accounts", JSON.stringify(user), postSCB, postECB);
             return false;
         }
 
@@ -80,7 +80,8 @@
 
         function postECB(err) {
             console.log(err);
-        }</script>
+        }
+    </script>
 
 </head>
 <body>
@@ -127,7 +128,7 @@
                 <div class="email_box">
                     <div class="input_main">
                         <div class="container">
-                            <form id="sing" action="/action_page.php">
+                            <form id="sign" action="/action_page.php">
 
                                 <table>
 
