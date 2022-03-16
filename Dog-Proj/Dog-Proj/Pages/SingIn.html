@@ -50,7 +50,7 @@
             let phone = $("#phone").val();
             //זמינות
 
-            user = {
+            account = {
                 Familyname: familyname,
                 CityName: cityName,
                 Street: street,
@@ -58,12 +58,20 @@
                 MoreAnimals: moreAnimals,
                 YardSize:yardSize,
                 HouseType: houseType,
+                 
+            }
+
+            user = {
                 Username: username,
                 Age: age,
                 Phone: phone,
+                Sex: sex,
+                //זמינויות
+
             }
-            console.log(user);
-            ajaxCall("POST", "../api/Accounts", JSON.stringify(user), postSCB, postECB);
+
+            ajaxCall("POST", "../api/Accounts", JSON.stringify(account), postSCB, postECB);
+            ajaxCall("POST", "../api/User", JSON.stringify(user), postSCB, postECB); //להוסיף קונרטארול יוזר
             return false;
         }
 

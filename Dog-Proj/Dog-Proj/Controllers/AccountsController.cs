@@ -11,10 +11,10 @@ namespace Dog_Proj.Controllers
     {
      
         // GET api/<controller>
-        public Accounts Get(string Email, string Password)
+        public Account Get(string Email, string Password)
         {
-            Accounts Accounts = new Accounts();
-            return user.ReadUser(Email, Password);
+            Account accounts = new Account();
+            return accounts.ReadUser(Email, Password);
         }
 
 
@@ -25,9 +25,9 @@ namespace Dog_Proj.Controllers
         //}
 
         // POST api/<controller>
-        public int Post([FromBody]Accounts accounts)
+        public int Post([FromBody]Account account)
         {
-            return accounts.Insert();
+            return account.Insert();
         }
 
         //public int Put(int id)
