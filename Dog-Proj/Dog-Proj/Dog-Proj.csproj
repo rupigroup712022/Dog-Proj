@@ -162,6 +162,7 @@
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\City.cs" />
+    <Compile Include="Models\DAL\DataServices.cs" />
     <Compile Include="Models\Dog.cs" />
     <Compile Include="Models\Dogs_breed.cs" />
     <Compile Include="Models\History.cs" />

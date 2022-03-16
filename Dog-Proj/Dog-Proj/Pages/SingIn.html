@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
     <script src="../Scripts/ajaxCall.js"></script>
     <script>
+        let unisex = "";
     $(document).ready(function () {
         $("#sign").submit(signUp);
         });
@@ -210,8 +211,8 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><input type="button" class="BTF" requiredvalue value="אני גבר" /></td>
-                                        <td><input type="button" class="BTF" required value="אני אישה" /></td>
+                                        <td><input type="radio" class="BTF"  value="אני גבר" /></td>
+                                       // <td><input type="radio" class="BTF" value="אני אישה" /></td>
                                     </tr>
                                     <tr>
                                         <td><input type="text" id="username" required /></td>
