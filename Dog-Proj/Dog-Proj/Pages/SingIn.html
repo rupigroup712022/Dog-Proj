@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- basic -->
@@ -222,18 +222,17 @@
                                         <td><h3>גיל</h3></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3">
-                                            <select>
+                                        <td>
+                                            <select id="phoneType">
                                                 <option>בחר</option>
                                                 <option>052</option>
                                                 <option>050</option>
                                                 <option>053</option>
                                                 <option>054</option>
                                             </select>
-                                        
-                                         <h3>מספר טלפון</h3>
-                                        <input type="text" id="phone" required />
-                                     </td>
+                                        <input type="text" id="phone" required /></td>
+                                        <td><h3>מספר טלפון</h3></td>
+                                       
                                     </tr>
                                     <tr>
                                         <td>
@@ -248,7 +247,7 @@
                                                 <option>שבת</option>
                                             </select>
                                         </td>
-                                        <td><h3>זמינות</h3></td>
+                                        <td><h3>?מתי זמין</h3></td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -260,6 +259,15 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td>
+                                            <div class="cart_coupon">
+                                                <p>
+                                                    <span class="cart_coupon_text">הוסף בן משפחה</span>
+                                                    <span class="info cart_coupon_field"><input id="adduser" name="adduser" type="text" /></span>
+                                                    <span class="cart_coupon_link"><a href="/orders/mamoshop/new" class="blue_link" id="check_coupon_link">הפעל קופון</a></span>
+                                                <p>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">
@@ -286,7 +294,7 @@
 
                         <li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
                         <!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
-                        <li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
+                        <li class="footer-logo"><img src="../images/call-icon.png"><a href="tel:972544447364"><p><span class="map_text"> 052-4447364</span></p></a></li>
                         <li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
                     </ul>
                 </div>
