@@ -44,8 +44,8 @@
 
         function Login() {
             let email = $("#email").val();
-            let password = $("#password").val();
-            let apiCall = "../api/Accounts?Email=" + email + "&Password=" + password;
+            let passwords = $("#password").val();
+            let apiCall = "../api/Accounts?Email=" + email + "&Password=" + passwords;
             ajaxCall("GET", apiCall, "", getUserSCB, getUserECB);
             return false;
         }

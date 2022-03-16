@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using DOGS1.Models;
 
 namespace Dog_Proj.Controllers
 {
@@ -14,7 +15,7 @@ namespace Dog_Proj.Controllers
         public Account Get(string Email, string Password)
         {
             Account accounts = new Account();
-            return accounts.ReadUser(Email, Password);
+            return accounts.ReadAccount(Email, Password);
         }
 
 

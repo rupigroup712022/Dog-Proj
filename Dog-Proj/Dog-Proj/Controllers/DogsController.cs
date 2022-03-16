@@ -4,17 +4,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using DOGS1.Models;
 
 namespace Dog_Proj.Controllers
 {
     public class DogsController : ApiController
     {
         // GET api/<controller>
-        public Dogs Get()
-        {
-            Dogs Dogs = new Dogs();
-            return user.ReadDog(Email, Password);
-        }
+      
 
         // GET api/<controller>/5
         public string Get(int id)
@@ -23,9 +20,9 @@ namespace Dog_Proj.Controllers
         }
 
         // POST api/<controller>
-        public int Post([FromBody]Accounts dogs)
+        public int Post([FromBody] Dog dog)
         {
-            return dogs.Insert();
+            return dog.Insert();
         }
 
         // PUT api/<controller>/5
