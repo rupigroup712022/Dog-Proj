@@ -15,5 +15,7 @@ namespace DOGS1.Models
         }
 
         public string CityName { get => cityName; set => cityName = value; }
+        public City() { }
+
     }
 }

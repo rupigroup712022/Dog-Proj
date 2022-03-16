@@ -45,7 +45,7 @@
         function Login() {
             let email = $("#email").val();
             let password = $("#password").val();
-            let apiCall = "../api/Users?Email=" + email + "&Password=" + password;
+            let apiCall = "../api/Accounts?Email=" + email + "&Password=" + password;
             ajaxCall("GET", apiCall, "", getUserSCB, getUserECB);
             return false;
         }
@@ -57,7 +57,7 @@
             }
             else if (userlog.Password != "The password is wrong!") {
                 localStorage["userlog"] = JSON.stringify(userlog);
-                window.location.href = "User selection.html";
+                window.location.href = "Userselection.html";
             }
             else {
                 alert("Wrong password, please try again!");
@@ -209,16 +209,16 @@
 </div>
 
 <!-- Javascript files-->
-<script src="../Scripts/jquery.min.js"></script>
+<!--<script src="../Scripts/jquery.min.js"></script>
 <script src="../Scripts/popper.min.js"></script>
 <script src="../Scripts/bootstrap.bundle.min.js"></script>
 <script src="../Scripts/jquery-3.0.0.min.js"></script>
-<script src="../Scripts/plugin.js"></script>
+<script src="../Scripts/plugin.js"></script>-->
 <!-- sidebar -->
-<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
-<script src="../Scripts/custom.js"></script>
+<!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="../Scripts/custom.js"></script>-->
 <!-- javascript -->
-<script src="../Scripts/owl.carousel.js"></script>
+<!--<script src="../Scripts/owl.carousel.js"></script>
 <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -246,7 +246,7 @@
     function closeNav() {
         document.getElementById("myNav").style.width = "0%";
     }
-</script>
+</script>-->
 
 </body>
 </html>
