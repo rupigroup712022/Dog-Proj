@@ -12,7 +12,7 @@ namespace Dog_Proj.Controllers
         // GET api/<controller>
         public Dogs Get()
         {
-            Dogs Dogs= new Dogs();
+            Dogs Dogs = new Dogs();
             return user.ReadDog(Email, Password);
         }
 
