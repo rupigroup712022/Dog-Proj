@@ -64,7 +64,7 @@
 				<div class="ram">
 					<div class="row">
                         <div class="col-sm-12">
-                            <h1   dir="rtl" class="about_taital"><strong><span style="color:orange;">מי מטייל איתי</span>? </strong></h1>
+                            <h1   dir="rtl" class="about_taital"><strong><span style="color:orange;">מי שומר עלי </span>? </strong></h1>
                         </div>
 				    </div>
 				</div>
@@ -90,8 +90,8 @@
         <div class="container">
             <div class="about_text">
                 <h1 class="about_taital_food"><strong><span style="color:white;">בחר את סוג השירות המבוקש  </span> לטיול</strong></h1>
-                <input type="button" class="BTSER" requiredvalue value="טיול במשך 15 דק -20 נקודות זכות" />
-                <input type="button" class="BTSER" required value="טיול במשך 30 דק -40 נקודות זכות" />
+                <input type="button" class="BTSER" requiredvalue value="שמירה על הכלב בין יום אחד לחמישה -100 נקודות זכות ליום" />
+                <input type="button" class="BTSER" required value="שמירה על הכלב מעל שישה ימים-110 נקודות זכות ליום" />
             </div>
             
         </div>
@@ -180,5 +180,45 @@
     	</div>
 	<!-- section footer end -->
 
+    <!-- Javascript files-->
+    <script src="../Scripts/jquery.min.js"></script>
+    <script src="../Scripts/popper.min.js"></script>
+    <script src="../Scripts/bootstrap.bundle.min.js"></script>
+      <script src="../Scripts/jquery-3.0.0.min.js"></script>
+      <script src="../Scripts/plugin.js"></script>
+      <!-- sidebar -->
+      <script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+      <script src="../Scripts/custom.js"></script>
+      <!-- javascript --> 
+      <script src="../Scripts/owl.carousel.js"></script>
+      <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+      <script>
+      $(document).ready(function(){
+      $(".fancybox").fancybox({
+         openEffect: "none",
+         closeEffect: "none"
+         });
+         
+         $(".zoom").hover(function(){
+         
+         $(this).addClass('transition');
+         }, function(){
+         
+         $(this).removeClass('transition');
+         });
+         });
+         </script> 
+
+
+   <script>
+    function openNav() {
+    document.getElementById("myNav").style.width = "100%";
+    }
+
+    function closeNav() {
+   document.getElementById("myNav").style.width = "0%";
+   }
+</script>
+     
 </body>
 </html>

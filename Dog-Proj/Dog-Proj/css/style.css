@@ -205,9 +205,9 @@ a {
 .banner_main {
     width: 100%;
     float: left;
-    padding-top: 200px;
-    padding-left : 1500px;
-}
+/*    padding-top: 200px;
+*//*    padding-left : 1500px;
+*/}
 
 
 .taital {
@@ -855,7 +855,12 @@ td > p {
     font-size: 20pt;
     border: 0px;
     color: #fff;
+    text-align: center;
 }
+h1.Ser_bt > a {
+    margin-top:30px;
+}
+
 .typeSer{
     width: 100%;
 height:100%;
