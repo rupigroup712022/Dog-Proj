@@ -32,34 +32,144 @@
     <script src="../Scripts/ajaxCall.js"></script>
     <script>
         let unisex = "";
-    $(document).ready(function () {
+        Users = [];
+        str = "";
+        $(document).ready(function () {
+            $(".Addfam").click(Addnew);
         $("#sign").submit(signUp);
         });
+        function Addnew() {
+            $("#sign").append(str)
+            //לשרשר הכל 
+            //str+= "<table class="userTable">"
+
+           //str+=" < tr >"
+           // str +=  " <td>"
+           // str +=  "<img class='imgform' src='../images/אני גבר.png' />"
+           // str +=  " </td>"
+           // str +=  "  <td>"
+           // str +=  " <img class='imgform' src='../images/אני אישה.png' />"
+           // str +="</td>"
+           // str +="</tr >"
+           // str +=" <tr>
+           //                             <td><input type="radio" class="BTF"  value="אני גבר" /></td>
+           //                             <td><input type="radio" class="BTF" value="אני אישה" /></td>
+           //                         </tr>
+           //                         <tr>
+           //                             <td><input type="text" id="username" required /></td>
+           //                             <td><h3>שם פרטי</h3></td>
+           //                         </tr>
+           //                         <tr>
+           //                             <td><input type="text" id="age" required /></td>
+           //                             <td><h3>גיל</h3></td>
+           //                         </tr>
+           //                         <tr>
+           //                             <td>
+           //                                 <select id="phoneType">
+           //                                     <option>בחר</option>
+           //                                     <option>052</option>
+           //                                     <option>050</option>
+           //                                     <option>053</option>
+           //                                     <option>054</option>
+           //                                 </select>
+           //                             <input type="text" id="phone" required /></td>
+           //                             <td><h3>מספר טלפון</h3></td>
+                                       
+           //                         </tr>
+           //                         <tr>
+           //                             <td>
+           //                                 <select>
+           //                                     <option>בחר</option>
+           //                                     <option>ראשון</option>
+           //                                     <option>שני</option>
+           //                                     <option>שלישי</option>
+           //                                     <option>רביעי</option>
+           //                                     <option>חמישי</option>
+           //                                     <option>שישי</option>
+           //                                     <option>שבת</option>
+           //                                 </select>
+           //                             </td>
+           //                             <td><h3>?מתי זמין</h3></td>
+           //                         </tr>
+           //                         <tr>
+           //                             <td>
+           //                                 <input type="button" class="BTF" requiredvalue value="07:00-08:00" />
+           //                                 <input type="button" class="BTF" required value="08:00-12:00" />
+           //                                 <input type="button" class="BTF" required value="12:00-14:00" />
+           //                                 <input type="button" class="BTF" required value="14:00-16:00" />
+           //                                 <input type="button" class="BTF" required value="16:00-20:00" />
+           //                             </td>
+           //                         </tr>
+           //                         <tr>
+           //                             <td>
+           //                                 <input type="button" class="Addfam"  value="הוסף בן משפחה" />
+
+           //                                 <!--<div class="cart_coupon">
+           //                                     <p>
+           //                                         <span t="cart_coupon_text">הוסף בן משפחה</span>
+           //                                         <span class="info cart_coupon_field"><input id="adduser" name="adduser" type="text" /></span>
+           //                                         <span class="cart_coupon_link"><a href="/orders/mamoshop/new" class="blue_link" id="check_coupon_link">הפעל קופון</a></span>
+           //                                     <p>
+           //                                 </div>-->
+           //                             </td>
+           //                         </tr>
+
+
+            
+        }
+
+
 
         function signUp() {
+            signUpfamily()
+            $(window).find(".userTable").each(signuser(id))
+
+            return false;
+        }
+
+
+        function signUpfamily() {
             let familyname = $("#familyname").val();
             let cityName = $("#cityName").val();
             let street = $("#street").val();
             let homeNum = $("#homeNum").val();
             let moreAnimals = $("#moreAnimals").val();
-            let yardSize = $("#yardSize").val(); 
+            let yardSize = $("#yardSize").val();
             let houseType = $("#houseType").val();
-            //גבר / אישה ?
-            let username = $("#username").val();
-            let age = $("#age").val();
-            let phone = $("#phone").val();
-            //זמינות
-
             account = {
                 Familyname: familyname,
                 CityName: cityName,
                 Street: street,
                 HomeNum: homeNum,
                 MoreAnimals: moreAnimals,
-                YardSize:yardSize,
+                YardSize: yardSize,
                 HouseType: houseType,
-                 
+
             }
+            ajaxCall("POST", "../api/Accounts", JSON.stringify(account), postSCB, postECB);
+           
+        }
+
+
+        function postSCB(success) {
+            familyid = id;//להחזיר ID של המשפחה 
+            if (success == 0) {
+                alert("The user is exists");
+            }
+            else {
+                alert("You signed up successfully");
+                window.location.href = "SingInDog.html";
+            }
+            console.log(success);
+        }
+
+        function signuser() {
+
+            //גבר / אישה ?
+            let username = $(this).find(".username").val();
+            let age = $(this).find(".age").val();
+            let phone = $(this).find(".phone").val();
+            //זמינות
 
             user = {
                 Username: username,
@@ -68,15 +178,14 @@
                 Sex: sex,
                 //זמינויות
 
-            }
+            }// מערך של יוזר
+            ajaxCall("POST", "../api/User", JSON.stringify(user), postSCBuser, postECB); //להוסיף קונרטארול יוזר
 
-            ajaxCall("POST", "../api/Accounts", JSON.stringify(account), postSCB, postECB);
-            ajaxCall("POST", "../api/User", JSON.stringify(user), postSCB, postECB); //להוסיף קונרטארול יוזר
-            return false;
+
         }
 
 
-        function postSCB(success) {
+        function postSCBuser(success) {
             if (success == 0) {
                 alert("The user is exists");
             }
@@ -90,6 +199,8 @@
         function postECB(err) {
             console.log(err);
         }
+
+
     </script>
 
 </head>
@@ -139,7 +250,7 @@
                         <div class="container">
                             <form id="sign" action="/action_page.php">
 
-                                <table>
+                                <table id="AcoountTable">
 
                                     <tr>
                                         <td>
@@ -178,7 +289,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="BTF"  id="moreAnimals" requiredvalue value="יש חיות נוספות" /></td>
+                                        <td><input type="checkbox" class="BTF" id="moreAnimals" requiredvalue value="יש חיות נוספות" /></td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -202,6 +313,9 @@
                                         <td><h3>סוג הבית</h3></td>
 
                                     </tr>
+                                </table>
+                                <table class="userTable">
+
                                     <tr>
                                         <td>
                                             <img class="imgform" src="../images/עצמך.png" />
@@ -219,15 +333,15 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><input type="radio" class="BTF"  value="אני גבר" /></td>
-                                       // <td><input type="radio" class="BTF" value="אני אישה" /></td>
+                                        <td><input type="radio" class="BTF" value="אני גבר" /></td>
+                                        <td><input type="radio" class="BTF" value="אני אישה" /></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" id="username" required /></td>
+                                        <td><input type="text" class="username" required /></td>
                                         <td><h3>שם פרטי</h3></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" id="age" required /></td>
+                                        <td><input type="text" class="age" required /></td>
                                         <td><h3>גיל</h3></td>
                                     </tr>
                                     <tr>
@@ -239,9 +353,10 @@
                                                 <option>053</option>
                                                 <option>054</option>
                                             </select>
-                                        <input type="text" id="phone" required /></td>
+                                            <input type="text" class="phone" required />
+                                        </td>
                                         <td><h3>מספר טלפון</h3></td>
-                                       
+
                                     </tr>
                                     <tr>
                                         <td>
@@ -269,22 +384,24 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div class="cart_coupon">
-                                                <p>
-                                                    <span class="cart_coupon_text">הוסף בן משפחה</span>
-                                                    <span class="info cart_coupon_field"><input id="adduser" name="adduser" type="text" /></span>
-                                                    <span class="cart_coupon_link"><a href="/orders/mamoshop/new" class="blue_link" id="check_coupon_link">הפעל קופון</a></span>
-                                                <p>
-                                            </div>
+                                            <input type="button" class="Addfam" value="הוסף בן משפחה" />
+
+                                            <!--<div class="cart_coupon">
+                    <p>
+                        <span t="cart_coupon_text">הוסף בן משפחה</span>
+                        <span class="info cart_coupon_field"><input id="adduser" name="adduser" type="text" /></span>
+                        <span class="cart_coupon_link"><a href="/orders/mamoshop/new" class="blue_link" id="check_coupon_link">הפעל קופון</a></span>
+                    <p>
+                </div>-->
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <input type="submit" value="המשך להרשמת כלב " />
-                                            <a href="SingInDog.html">SingInDog.html</a>
-                                        </td>
-                                    </tr>
+                                   
                                 </table>
+                                <div>
+                                  
+                                        <input type="submit" value="המשך להרשמת כלב " />
+                                        <a href="SingInDog.html">SingInDog.html</a>
+                                </div>
                             </form>
                         </div>
 
