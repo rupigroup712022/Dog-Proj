@@ -209,9 +209,9 @@ namespace Dog_Proj.Models.DAL
         private SqlCommand CreateInsertCommand(SqlConnection con, Account account)
         {
            
-            string commandStr = "INSERT INTO Account (familyname,moreAnimals,street,homeNum,email,yardSize,yardSize) VALUES (@familyname,@moreAnimals,@street,@homeNum,@email,@yardSize,@houseType)";
+            string commandStr = "INSERT INTO Account (familyname,moreAnimals,street,homeNum,email,yardSize,yardSize,passwords) VALUES (@familyname,@moreAnimals,@street,@homeNum,@email,@yardSize,@houseType,@passwords)";
             SqlCommand cmd = createCommand(con, commandStr);
-            cmd.Parameters.Add("@familyname", SqlDbType.Char);
+            cmd.Parameters.Add("@familyname", SqlDbType.NChar);
             cmd.Parameters["@familyname"].Value = account.Familyname;
             cmd.Parameters.Add("@moreAnimals", SqlDbType.Char);
             cmd.Parameters["@moreAnimals"].Value = account.MoreAnimals;
@@ -225,6 +225,8 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters["@yardSize"].Value = account.YardSize;
             cmd.Parameters.Add("@yardSize", SqlDbType.Char);
             cmd.Parameters["@yardSize"].Value = account.YardSize;
+            cmd.Parameters.Add("@passwords", SqlDbType.Char);
+            cmd.Parameters["@passwords"].Value = account.Passwords;
             return cmd;
         }
 

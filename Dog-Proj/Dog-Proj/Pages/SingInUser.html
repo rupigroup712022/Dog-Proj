@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- basic -->
@@ -30,61 +30,77 @@
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
     <script src="../Scripts/ajaxCall.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <script>
-        let unisex = "";
-        Users = [];
-        str = "";
         $(document).ready(function () {
-        $("#sign").submit(signUp);
+            $("#Day").change(selectday);
+            $("#singUser").submit(signUp);
+            $("#time").find(".BTF").click(changeColor);
+
+
         });
-
-      
-
+        var DayDic = {};
 
         function signUp() {
-            signUpfamily()
-            $(window).find(".userTable").each(signuser(id))
+            var sex = "";
+            var ele = document.getElementsByName('gender');
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].checked)
+                    sex = ele[i].value
+            }
+            let username = $(this).find(".username").val();
+            let age = $(this).find(".age").val();
+            let phone = $(this).find(".phone").val();
+            //זמינות
 
-            return false;
+            user = {
+                Username: username,
+                Age: age,
+                Phone: phone,
+                Sex: sex,
+                //זמינויות
+
+            }// מערך של יוזר
+            ajaxCall("POST", "../api/User", JSON.stringify(user), postSCBuser, postECB); //להוסיף קונרטארול יוזר
+
+
+        }
+        function selectday() {
+            DayDic[$(this).val()];
+            $("#time").removeClass("hidden");
+            console.log(this);
+
         }
 
+        function changeColor() {
+            console.log(this);
+            var colors = $(this).css("background-color");
+            console.log(colors);
 
-        function signUpfamily() {
-            let familyname = $("#familyname").val();
-            let cityName = $("#cityName").val();
-            let street = $("#street").val();
-            let homeNum = $("#homeNum").val();
-            let moreAnimals = $("#moreAnimals").val();
-            let yardSize = $("#yardSize").val();
-            let houseType = $("#houseType").val();
-            let email = $("#email").val();
-            let passwords = $("#passwords").val();
-
-            account = {
-                Familyname: familyname,
-                CityName: cityName,
-                Street: street,
-                HomeNum: homeNum,
-                MoreAnimals: moreAnimals,
-                YardSize: yardSize,
-                HouseType: houseType,
-                Email: email,
-                Passwords: passwords,
+            if ($(this).css("background-color") == "rgb(255, 165, 0)") {
+                $(this).css("background-color" ,"rgb(255, 255, 102)");
+                addtime(day);
 
             }
-            ajaxCall("POST", "../api/Accounts", JSON.stringify(account), postSCB, postECB);
-           
+        
+
+        }
+        function addtime(day) {
+            DayDic[day] = [$(this).val()];
+            console.log(DayDic);
+            console.log(this);
+
         }
 
 
         function postSCB(success) {
             if (success == 0) {
-                alert("The user is not exists");
+                alert("The user is exists");
             }
             else {
-                alert("Please add a family member");
-                localStorage["familyid"] = JSON.stringify(familyid);
-                window.location.href = "SingInUser.html";
+                alert("You signed up successfully");
+                window.location.href = "PasswordSelection.html";
             }
             console.log(success);
         }
@@ -94,8 +110,9 @@
         }
 
 
-    </script>
 
+
+    </script>
 </head>
 <body>
 	<!-- section banner start -->
@@ -107,11 +124,7 @@
                 </div>
                 <div class="col-md-8">
                     <div class="menu_text">
-                        <ul>
-                            <li class="LogeIn">
-                                <a href="LogeIn.html">Log In /</a>
-                                <a href="SingIn.html"> Sign Up</a>
-                            </li>
+                       <ul>
                             <li class="active">
                                 <div id="myNav" class="overlay">
                                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -135,93 +148,94 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h1 class="get_taital"><strong><span style="color: #ffffff;">בוא תצטרף</span>  אלינו</strong></h1>
+                        <h1 class="get_taital"><strong><span style="color: #ffffff;">רישום</span> בן משפחה</strong></h1>
                     </div>
                 </div>
                 <div class="email_box">
                     <div class="input_main">
                         <div class="container">
-                            <form id="sign" action="/action_page.php">
+                            <form id="singUser" action="/action_page.php">
 
-                                <table id="AcoountTable">
+                                <table class="userTable">
 
                                     <tr>
                                         <td>
-                                            <img class="imgform" src="../images/HOME.png" />
+                                            <img class="imgform" src="../images/עצמך.png" />
                                         </td>
                                         <td>
-                                            <p>נשמח להכי אותך, ספר לי קצת על משפחתך</p>
+                                            <p>הגיע הזמן לספר לי קצת על עצמך</p>
                                         </td>
                                     </tr>
-
-                                    <tr>
-                                        <td><input type="text" id="familyname" required /></td>
-                                        <td><h3>כאן גרים בכיף משפחת</h3></td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <select id="cityName" size="1">
-                                                <option>בחר</option>
-                                                <option></option>
-                                            </select>
-                                        </td>
-                                        <td><h3>עיר</h3></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" id="street" required /></td>
-                                        <td><h3>רחוב</h3></td>
-                                    </tr>
-                                    <tr>
-
-                                        <td><input type="text" id="homeNum" required /></td>
-                                        <td><h3>דירה</h3></td>
-                                    </tr>
+                                 
                                     <tr>
                                         <td>
                                             <label>
-                                                <input type="radio" name="test" value="small">
-                                                <img class="imgform" src="../images/חיות.jpg" /><span>יש לי חיות נוספות</span>
+                                                <input type="radio" name="gender" value="Male" checked>
+                                                <img class="imgform" src="../images/אני גבר.png" /><span>אני גבר</span>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input type="radio" name="gender" value="Female">
+                                                <img class="imgform" src="../images/אני אישה.png" /><span>אני אישה</span>
                                             </label>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <select id="yardSize">
-                                                <option>בחר</option>
-                                                <option>גדול</option>
-                                                <option>בינוני</option>
-                                                <option>קטן</option>
-                                            </select>
-                                        </td>
-                                        <td><h3>גודל החצר</h3></td>
+                                        <td><input type="text" class="username" required /></td>
+                                        <td><h3>שם פרטי</h3></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="age" required /></td>
+                                        <td><h3>גיל</h3></td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <select id="houseType">
-                                                <option>בחר</option>
-                                                <option>בניין מגורים</option>
-                                                <option>בית פרטי</option>
-                                            </select>
+                                            <input type="text" class="phone" required  pattern="05[0-9]{10}" />
+
                                         </td>
-                                        <td><h3>סוג הבית</h3></td>
+                                        <td><h3>מספר טלפון</h3></td>
 
                                     </tr>
-                                </table>
-                                <div class="form_div">
-                                    <label>Email:</label>
-                                    <input id="email" class="field_class" name="login_txt" type="email" placeholder="Please enter your email" autofocus>
-                                    <label>Password:</label>
-                                    <input id="password" class="field_class" name="password_txt" type="password" placeholder="Please enter a password">
-                                    <label>Confirm Password:</label>
-                                    <input id="pass" class="field_class" name="password_txt" type="password" placeholder="Please enter a password again">
-                                </div>
+                                    <tr>
+                                        <td>
+                                            <select id="Day">
+                                                <option>בחר</option>
+                                                <option>ראשון</option>
+                                                <option>שני</option>
+                                                <option>שלישי</option>
+                                                <option>רביעי</option>
+                                                <option>חמישי</option>
+                                                <option>שישי</option>
+                                                <option>שבת</option>
+                                            </select>
+                                        </td>
+                                        <td><h3>?מתי זמין</h3></td>
+                                    </tr>
+                                    <tr id="time"  class="hidden">
+                                        <td >
+                                            <input type="button" class="BTF"  value="07:00-08:00" />
+                                            <input type="button" class="BTF"  value="08:00-12:00" />
+                                            <input type="button" class="BTF"  value="12:00-14:00" />
+                                            <input type="button" class="BTF"  value="14:00-16:00" />
+                                            <input type="button" class="BTF"  value="16:00-20:00" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="submit" value="אני רוצה להמשיך להרשמת כלב  " />
+                                            <a href="SingInDog.html"></a>
+                                        </td>
+                                        <td>
+                                            <input type="button" value="הוסף בן משפחה " />
+                                            <a href="SingInUser.html"></a>
+                                        </td>
 
-                                <div>
-                                    <input type="submit" value="המשך להרשמת בן משפחה " />
-                                    <a href="SingInUser.html"></a>
-                                </div>
-                            </form>
+                                    </tr>
+
+                                </table>
+                                </form>
+                                
                         </div>
 
                     </div>
@@ -239,7 +253,7 @@
 
                         <li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
                         <!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
-                        <li class="footer-logo"><img src="../images/call-icon.png"><a href="tel:972544447364"><p><span class="map_text"> 052-4447364</span></p></a></li>
+                        <li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
                         <li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
                     </ul>
                 </div>
@@ -310,8 +324,8 @@
         <script src="../Scripts/custom.js"></script>-->
         <!-- javascript -->
         <!--<script src="../Scripts/owl.carousel.js"></script>
-        <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>-->
-        <!--<script>
+        <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+        <script>
             $(document).ready(function () {
                 $(".fancybox").fancybox({
                     openEffect: "none",

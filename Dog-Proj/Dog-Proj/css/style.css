@@ -829,7 +829,10 @@ td > p {
     border: 2PX orange;
    
 }
-
+.hidden {
+    display: none !important;
+    visibility: hidden !important;
+}
 .Service_section {
     float: initial;
     background-color: gainsboro;

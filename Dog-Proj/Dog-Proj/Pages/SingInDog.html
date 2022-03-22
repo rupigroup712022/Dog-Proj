@@ -132,15 +132,17 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <img class="imgform" src="../images/כלב.gif" />
+                                            <label>
+                                                <input type="radio" name="test" value="small" checked>
+                                                <img class="imgform" src="../images/כלב.gif" /><span>יש לי כלב </span>
+                                            </label>
                                         </td>
                                         <td>
-                                            <img class="imgform" src="../images/כלבה.png" />
+                                            <label>
+                                                <input type="radio" name="test" value="big">
+                                                <img class="imgform" src="../images/כלבה.png" /><span>יש לי כלבה</span>
+                                            </label>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="button" class="BTF" requiredvalue value="נקבה" /></td>
-                                        <td><input type="button" class="BTF" requiredvalue value="זכר" /></td>
                                     </tr>
                                     <tr>
                                         <td><input type="text" id="dogname" required /></td>
@@ -186,10 +188,9 @@
                                         <td><h3>גודל הכלב/ה</h3></td>
                                     </tr>
                                     <tr>
-                                        <td> <input type="checkbox" class="BTF"  id="neutering"requiredvalue value="מסורס/מעוקר" /></td>
+                                        <td>  <input type="radio" name="test" value="big" class="BTF" id="neutering"  /> <span>מסורס/מעוקר</span>
+                                        </td>
                                     </tr>
-                                   
-
                                     <tr>
                                         <td colspan="2">
                                             <input type="submit" value="המשך לבחירת סיסמא ושם משתמש" />
