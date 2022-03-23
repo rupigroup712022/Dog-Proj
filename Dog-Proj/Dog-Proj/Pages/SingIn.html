@@ -30,68 +30,93 @@
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
     <script src="../Scripts/ajaxCall.js"></script>
+    <script src="https://cdn.rawgit.com/LeaVerou/awesomplete/gh-pages/awesomplete.min.js"></script>
+    <script src="../Scripts/jquery-3.4.1.js"></script>
     <script>
+
         let unisex = "";
         Users = [];
         str = "";
         $(document).ready(function () {
-        $("#sign").submit(signUp);
+            var data = {
+                resource_id: '5c78e9fa-c2e2-4771-93ff-7f400a12f7ba', // the resource id
+
+
+            };
+            $.ajax({
+                url: 'https://raw.githubusercontent.com/royts/israel-cities/master/israel-cities.json',
+                data: data,
+                dataType: 'json',
+                success: function (data) {
+                    var citieslist = [];
+                    var value = " <option value='בחירת עיר'></option>";
+                    for (var i = 1; i < data.length; i++) {
+                        citieslist.push(data[i].name);
+                        value += " <option data-id='" + data[i].name + "' value = '" + data[i].name + "' > " + data[i].name + "</option > ";
+                    }
+                    $("#mylist").append(value);
+                }
+            });
+
+            $("#sign").submit(signUp);
         });
 
-      
 
 
-        function signUp() {
-            signUpfamily()
-            $(window).find(".userTable").each(signuser(id))
 
-            return false;
-        }
+
+            function signUp() {
+                signUpfamily()
+                $(window).find(".userTable").each(signuser(id))
+
+                return false;
+            }
 
 
         function signUpfamily() {
-            let familyname = $("#familyname").val();
-            let cityName = $("#cityName").val();
-            let street = $("#street").val();
-            let homeNum = $("#homeNum").val();
-            let moreAnimals = $("#moreAnimals").val();
-            let yardSize = $("#yardSize").val();
-            let houseType = $("#houseType").val();
-            let email = $("#email").val();
-            let passwords = $("#passwords").val();
+                var getvalue = document.getElementsByName('mylist')[0];
+                let familyname = $("#familyname").val();
+                let cityName = getvalue.value;
+                let street = $("#street").val();
+                let homeNum = $("#homeNum").val();
+                let moreAnimals = $("#moreAnimals").val();
+                let yardSize = $("#yardSize").val();
+                let houseType = $("#houseType").val();
+                let email = $("#email").val();
+                let passwords = $("#passwords").val();
 
-            account = {
-                Familyname: familyname,
-                CityName: cityName,
-                Street: street,
-                HomeNum: homeNum,
-                MoreAnimals: moreAnimals,
-                YardSize: yardSize,
-                HouseType: houseType,
-                Email: email,
-                Passwords: passwords,
+                account = {
+                    Familyname: familyname,
+                    CityName: cityName,
+                    Street: street,
+                    HomeNum: homeNum,
+                    MoreAnimals: moreAnimals,
+                    YardSize: yardSize,
+                    HouseType: houseType,
+                    Email: email,
+                    Passwords: passwords,
+
+                }
+                ajaxCall("POST", "../api/Accounts", JSON.stringify(account), postSCB, postECB);
 
             }
-            ajaxCall("POST", "../api/Accounts", JSON.stringify(account), postSCB, postECB);
-           
-        }
 
 
-        function postSCB(success) {
-            if (success == 0) {
-                alert("The user is not exists");
+            function postSCB(success) {
+                if (success == 0) {
+                    alert("The user is not exists");
+                }
+                else {
+                    alert("Please add a family member");
+                    localStorage["familyid"] = JSON.stringify(familyid);
+                    window.location.href = "SingInUser.html";
+                }
+                console.log(success);
             }
-            else {
-                alert("Please add a family member");
-                localStorage["familyid"] = JSON.stringify(familyid);
-                window.location.href = "SingInUser.html";
-            }
-            console.log(success);
-        }
 
-        function postECB(err) {
-            console.log(err);
-        }
+            function postECB(err) {
+                console.log(err);
+            }
 
 
     </script>
@@ -161,68 +186,72 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <select id="cityName" size="1">
-                                                <option>בחר</option>
-                                                <option></option>
-                                            </select>
-                                        </td>
+                                                 <div class="form-group">
+                                                     <div>
+                                                         <input class="dropdown-input" list="mylist" name="mylist" />
+                                                         <datalist id="mylist">
+                                                         </datalist>
+                                                         
+                                                     </div>
+                                              </div>
+                                            </td>
                                         <td><h3>עיר</h3></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" id="street" required /></td>
-                                        <td><h3>רחוב</h3></td>
-                                    </tr>
-                                    <tr>
+                                     </tr>
+                        <tr>
+                            <td><input type="text" id="street" required /></td>
+                            <td><h3>רחוב</h3></td>
+                        </tr>
+                        <tr>
 
-                                        <td><input type="text" id="homeNum" required /></td>
-                                        <td><h3>דירה</h3></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label>
-                                                <input type="radio" name="test" value="small">
-                                                <img class="imgform" src="../images/חיות.jpg" /><span>יש לי חיות נוספות</span>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <select id="yardSize">
-                                                <option>בחר</option>
-                                                <option>גדול</option>
-                                                <option>בינוני</option>
-                                                <option>קטן</option>
-                                            </select>
-                                        </td>
-                                        <td><h3>גודל החצר</h3></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <select id="houseType">
-                                                <option>בחר</option>
-                                                <option>בניין מגורים</option>
-                                                <option>בית פרטי</option>
-                                            </select>
-                                        </td>
-                                        <td><h3>סוג הבית</h3></td>
+                            <td><input type="text" id="homeNum" required /></td>
+                            <td><h3>דירה</h3></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="radio" name="test" value="small">
+                                    <img class="imgform" src="../images/חיות.jpg" /><span>יש לי חיות נוספות</span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select id="yardSize">
+                                    <option>בחר</option>
+                                    <option>גדול</option>
+                                    <option>בינוני</option>
+                                    <option>קטן</option>
+                                </select>
+                            </td>
+                            <td><h3>גודל החצר</h3></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select id="houseType">
+                                    <option>בחר</option>
+                                    <option>בניין מגורים</option>
+                                    <option>בית פרטי</option>
+                                </select>
+                            </td>
+                            <td><h3>סוג הבית</h3></td>
 
-                                    </tr>
-                                </table>
-                                <div class="form_div">
-                                    <label>Email:</label>
-                                    <input id="email" class="field_class" name="login_txt" type="email" placeholder="Please enter your email" autofocus>
-                                    <label>Password:</label>
-                                    <input id="password" class="field_class" name="password_txt" type="password" placeholder="Please enter a password">
-                                    <label>Confirm Password:</label>
-                                    <input id="pass" class="field_class" name="password_txt" type="password" placeholder="Please enter a password again">
-                                </div>
-
-                                <div>
-                                    <input type="submit" value="המשך להרשמת בן משפחה " />
-                                    <a href="SingInUser.html"></a>
-                                </div>
-                            </form>
+                        </tr>
+                        </table>
+                        <div class="form_div">
+                            <label>Email:</label>
+                            <input id="email" class="field_class" name="login_txt" type="email" placeholder="Please enter your email" >
+                            <label>Password:</label>
+                            <input id="password" class="field_class" name="password_txt" type="password" placeholder="Please enter a password">
+                            <label>Confirm Password:</label>
+                            <input id="pass" class="field_class" name="password_txt" type="password" placeholder="Please enter a password again">
                         </div>
+
+                        <div>
+                            <input type="submit" value="המשך להרשמת בן משפחה " />
+                            <a href="SingInUser.html"></a>
+                        </div>
+                        </form>
+                    </div>
 
                     </div>
                 </div>

@@ -56,12 +56,40 @@
                 Neutering: neutering,
                 
             }
-            console.log(Dog);
-            ajaxCall("POST", "../api/Dogs", JSON.stringify(Dog), postSCB, postECB);
-            return false;
+            upload();
+            console.log(JSON.stringify(Dog));
+
         }
 
+        function upload() {
+            var data = new FormData();
+            var files = $("#filebutton").get(0).files;
 
+            if (files.length > 0) {
+                for (f = 0; f < files.length; f++) {
+                    data.append("UploadedImage", files[f]);
+                }
+                data.append("name", "Profile_" + '_' + Date.now()); // append what ever data you want to send along with the files. See how you extract it in the controller.
+                // Ajax upload (image)
+                $.ajax({
+                    type: "POST",
+                    url: "../api/FileUpload",
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: successfile,
+                    error: error
+                });
+                return false;
+            }
+            else {
+                ajaxCall("POST", "../api/Dogs", JSON.stringify(Dog), postSCB, postECB);
+                return false;
+            }
+
+
+        }
+         
         function postSCB(success) {
             if (success == 0) {
                 alert("The user is exists");
@@ -149,7 +177,15 @@
                                         <td><h3>שם הכלב/ה</h3></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" id="picture" required /></td>
+                                       <td>
+                                           <div class="form-group">
+                                               <img class="col-sm-6" id="PP" src="#"  />
+                                               <div class="col-sm-6">
+                                                   <input id="filebutton" name="filebutton" class="input-file" type="file">
+                                               </div>
+                                           </div>
+                                     </td>
+                                        <td><label class="col-sm-3 control-label" for="filebutton"></label></td>
                                         <td><h3>תמונה של הכלב</h3></td>
                                     </tr>
                                     <tr>
