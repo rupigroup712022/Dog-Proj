@@ -67,8 +67,6 @@
 
             function signUp() {
                 signUpfamily()
-                $(window).find(".userTable").each(signuser(id))
-
                 return false;
             }
 
@@ -79,39 +77,44 @@
                 let cityName = getvalue.value;
                 let street = $("#street").val();
                 let homeNum = $("#homeNum").val();
-                let moreAnimals = $("#moreAnimals").val();
+                let moreAnimals = $("#moreAnimals").is(':checked');
                 let yardSize = $("#yardSize").val();
                 let houseType = $("#houseType").val();
                 let email = $("#email").val();
                 let passwords = $("#passwords").val();
 
-                account = {
-                    Familyname: familyname,
-                    MoreAnimals: moreAnimals,
-                    Street = street,
-                    HomeNum: homeNum,
-                    Email: email,
-                    YardSize: yardSize,
-                    HouseType: houseType,
-                    Passwords: passwords,
-                    CityName: cityName,
+            account = {
+
+                Familyname: familyname,
+                MoreAnimals: moreAnimals,
+                Street: street,
+                HomeNum: homeNum,
+                Email: email,
+                YardSize: yardSize,
+                HouseType: houseType,
+                Passwords: passwords,
+                CityName:cityName,
+
             }
-            
+            console.log(account)
+            console.log(JSON.stringify(account))
                 ajaxCall("POST", "../api/Accounts", JSON.stringify(account), postSCB, postECB);
 
             }
 
 
-            function postSCB(success) {
-                if (success == 0) {
-                    alert("The user is not exists");
+        function postSCB(success) {
+            console.log(success)
+                if (!success) {
+                    alert("The email is alredy exists");//לא הגיוני
                 }
                 else {
+                    console.log(success);
                     alert("Please add a family member");
-                    localStorage["familyid"] = JSON.stringify(familyid);
+                    localStorage["familyid"] = JSON.stringify(success);
                     window.location.href = "SingInUser.html";
                 }
-                console.log(success);
+                
             }
 
             function postECB(err) {
@@ -241,7 +244,7 @@
                             <label>Email:</label>
                             <input id="email" class="field_class" name="login_txt" type="email" placeholder="Please enter your email" >
                             <label>Password:</label>
-                            <input id="password" class="field_class" name="password_txt" type="password" placeholder="Please enter a password">
+                            <input id="passwords" class="field_class" name="password_txt" type="password" placeholder="Please enter a password">
                             <label>Confirm Password:</label>
                             <input id="pass" class="field_class" name="password_txt" type="password" placeholder="Please enter a password again">
                         </div>

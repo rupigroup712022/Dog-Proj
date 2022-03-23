@@ -23,21 +23,21 @@ namespace DOGS1.Models
         string cityName;
 
 
-        public Account(int id, string familyname, bool moreAnimals, string street, int homeNum, int linkedUsers, int numOfPoints, string email, string yardSize, string houseType, float avgPoint, string passwords, string cityName)
+        public Account(string familyname, bool moreAnimals, string street, int homeNum,string email, string yardSize, string houseType, string passwords, string cityName)
         {
-            Id = id;
+            
             Familyname = familyname;
             MoreAnimals = moreAnimals;
             Street = street;
             HomeNum = homeNum;
-            LinkedUsers = linkedUsers;
-            NumOfPoints = numOfPoints;
             Email = email;
             YardSize = yardSize;
             HouseType = houseType;
-            AvgPoint = avgPoint;
             Passwords = passwords;
             CityName = cityName;
+            NumOfPoints = 15;
+            AvgPoint = 0;
+
         }
 
         public int Id { get => id; set => id = value; }
@@ -69,6 +69,8 @@ namespace DOGS1.Models
             DataServices dbs = new DataServices();
             return dbs.ReadAccount(Email, Password);
         }
+
+
 
 
 

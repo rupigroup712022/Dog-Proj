@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- basic -->
@@ -37,8 +37,6 @@
             $("#Day").change(selectday);
             $("#singUser").submit(signUp);
             $("#time").find(".BTF").click(changeColor);
-
-
         });
         var DayDic = {};
 
@@ -52,18 +50,18 @@
             let username = $(this).find(".username").val();
             let age = $(this).find(".age").val();
             let phone = $(this).find(".phone").val();
-            //זמינות
+            
 
             user = {
                 Username: username,
                 Phone: phone,
                 Sex: sex,
                 Age: age,
-                DateTime availableDays;??
-                DateTime availableHours;??
-                //זמינויות
+                //DateTime availableDays;??
+                //DateTime availableHours;??
+                Availablity= DayDic
 
-            }// מערך של יוזר
+            }
             ajaxCall("POST", "../api/User", JSON.stringify(user), postSCBuser, postECB); //להוסיף קונרטארול יוזר
            
 
@@ -73,7 +71,22 @@
             DayDic[$(this).val()];
             $("#time").removeClass("hidden");
             console.log(this);
+            $("#time").find(".BTF").each(checkColor);
+        }
 
+        function checkColor() {
+            if (!DayDic[$('#Day').val()]) {
+                DayDic[$('#Day').val()] = [];
+            }
+            console.log(DayDic);
+            console.log(this);
+            if (DayDic[$('#Day').val()].includes($(this).val())) {
+                    $(this).css("background-color", "rgb(255, 255, 102)");
+                }
+                else {
+                    $(this).css("background-color", "rgb(255, 165, 0)")
+                }
+            
         }
 
         function changeColor() {
@@ -83,18 +96,20 @@
 
             if ($(this).css("background-color") == "rgb(255, 165, 0)") {
                 $(this).css("background-color" ,"rgb(255, 255, 102)");
-                addtime(day);
-
+                addtime($(this).val());
             }
-        
-
+            else {
+                $(this).css("background-color", "rgb(255, 165, 0)")
+                DayDic[$('#Day').val()] = DayDic[$('#Day').val()].filter(l => l != $(this).val())
+                console.log(DayDic);
+            }
         }
-        function addtime(day) {
-            DayDic[day] = [$(this).val()];
+        function addtime(hours) {
+            DayDic[$('#Day').val()].push(hours);
             console.log(DayDic);
             console.log(this);
-
         }
+
 
 
         function postSCB(success) {

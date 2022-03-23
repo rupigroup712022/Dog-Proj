@@ -13,19 +13,16 @@ namespace DOGS1.Models
         int phone;
         string sex;
         int age;
-        DateTime availableDays;
-        DateTime availableHours;
         DateTime ending_date;
-
-        public User(int id, string username, int phone, string sex, int age, DateTime availableDays, DateTime availableHours, DateTime ending_date)
+        Dictionary <string,string[]> avalability;
+        public User(int id, string username, int phone, string sex, int age, DateTime ending_date, Dictionary<string,string[]> avalability)
         {
             Id = id;
             Username = username;
             Phone = phone;
             Sex = sex;
             Age = age;
-            AvailableDays = availableDays;
-            AvailableHours = availableHours;
+            Availablity = avalability;
             Ending_date = ending_date;
         }
 
@@ -34,9 +31,10 @@ namespace DOGS1.Models
         public int Phone { get => phone; set => phone = value; }
         public string Sex { get => sex; set => sex = value; }
         public int Age { get => age; set => age = value; }
-        public DateTime AvailableDays { get => availableDays; set => availableDays = value; }
-        public DateTime AvailableHours { get => availableHours; set => availableHours = value; }
+        public Dictionary<string, string[]> Availablity { get => avalability; set => avalability = value; }
         public DateTime Ending_date { get => ending_date; set => ending_date = value; }
+
+
 
         public int Insert()
         {

@@ -102,7 +102,7 @@ namespace Dog_Proj.Models.DAL
         private SqlCommand CreateInsertCommand(SqlConnection con, User user)
         {
          
-            string commandStr = "INSERT INTO Users (username,phone,sex,age,availableDays,availableHours) VALUES (@username,@phone,@sex,@age,@availableDays,@availableHours)";
+            string commandStr = "INSERT INTO Users (username,phone,sex,age) VALUES (@username,@phone,@sex,@age)";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@username", SqlDbType.NChar);
             cmd.Parameters["@username"].Value = user.Username;
@@ -113,9 +113,9 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters.Add("@age", SqlDbType.Char);
             cmd.Parameters["@age"].Value = user.Age;
             cmd.Parameters.Add("@availableDays", SqlDbType.NChar);
-            cmd.Parameters["@availableDays"].Value = user.AvailableDays;
+           
             cmd.Parameters.Add("@availableHours", SqlDbType.Char);
-            cmd.Parameters["@availableHours"].Value = user.AvailableHours;
+           
              return cmd;
         }
 
@@ -125,7 +125,7 @@ namespace Dog_Proj.Models.DAL
             if (existEmail == 0)
             {
                 SqlConnection con = null;
-                int numEffected = 0;
+                int id = 0;
 
                 try
                 {
@@ -136,8 +136,12 @@ namespace Dog_Proj.Models.DAL
                     SqlCommand insertCommand = CreateInsertCommand(con, account);
 
                     //E Execute
-                    numEffected = insertCommand.ExecuteNonQuery();
+                    //insertCommand.Parameters.Add("@id", SqlDbType.SmallInt).Direction = ParameterDirection.Output;
+
+                    id = Convert.ToInt32(insertCommand.ExecuteScalar());//מחזיר את הערך הראשון בעמודה הראשונה
+
                 }
+
 
                 catch (Exception exep)
                 {
@@ -154,7 +158,7 @@ namespace Dog_Proj.Models.DAL
 
 
                 // num effected
-                return numEffected;
+                return id;
             }
             return 0;
         }
@@ -177,7 +181,7 @@ namespace Dog_Proj.Models.DAL
                 }
                 dataReader.Close();
 
-                if (str == "")
+                if (str=="")
                 {
                     return 0;
                 }
@@ -209,24 +213,32 @@ namespace Dog_Proj.Models.DAL
         private SqlCommand CreateInsertCommand(SqlConnection con, Account account)
         {
            
-            string commandStr = "INSERT INTO Account (familyname,moreAnimals,street,homeNum,email,yardSize,yardSize,passwords) VALUES (@familyname,@moreAnimals,@street,@homeNum,@email,@yardSize,@houseType,@passwords)";
+            string commandStr = "INSERT INTO Accounts (familyname,moreAnimals,city,street,homeNum,linkedUsers,numOfPoints,email,yardSize,houseType,avgPoint,passwords) VALUES (@familyname,@moreAnimals,@city,@street,@homeNum,@linkedUsers,@numOfPoints,@email,@yardSize,@houseType,@avgPoint,@passwords)";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@familyname", SqlDbType.NChar);
             cmd.Parameters["@familyname"].Value = account.Familyname;
-            cmd.Parameters.Add("@moreAnimals", SqlDbType.NChar);
+            cmd.Parameters.Add("@moreAnimals", SqlDbType.Bit);
             cmd.Parameters["@moreAnimals"].Value = account.MoreAnimals;
             cmd.Parameters.Add("@street", SqlDbType.NChar);
             cmd.Parameters["@street"].Value = account.Street;
-            cmd.Parameters.Add("@homeNum", SqlDbType.Char);
+            cmd.Parameters.Add("@homeNum", SqlDbType.Int);
             cmd.Parameters["@homeNum"].Value = account.HomeNum;
-            cmd.Parameters.Add("@email", SqlDbType.Char);
+            cmd.Parameters.Add("@email", SqlDbType.NChar);
             cmd.Parameters["@email"].Value = account.Email;
             cmd.Parameters.Add("@yardSize", SqlDbType.NChar);
             cmd.Parameters["@yardSize"].Value = account.YardSize;
-            cmd.Parameters.Add("@yardSize", SqlDbType.NChar);
-            cmd.Parameters["@yardSize"].Value = account.YardSize;
-            cmd.Parameters.Add("@passwords", SqlDbType.Char);
+            cmd.Parameters.Add("@city", SqlDbType.NChar);
+            cmd.Parameters["@city"].Value = account.CityName;
+            cmd.Parameters.Add("@houseType", SqlDbType.NChar);
+            cmd.Parameters["@houseType"].Value = account.HouseType;
+            cmd.Parameters.Add("@passwords", SqlDbType.NChar);
             cmd.Parameters["@passwords"].Value = account.Passwords;
+            cmd.Parameters.Add("@numOfPoints", SqlDbType.Int);
+            cmd.Parameters["@numOfPoints"].Value = account.NumOfPoints;
+            cmd.Parameters.Add("@linkedUsers", SqlDbType.TinyInt);
+            cmd.Parameters["@linkedUsers"].Value = Convert.ToByte(account.LinkedUsers);
+            cmd.Parameters.Add("@avgPoint", SqlDbType.Int);
+            cmd.Parameters["@avgPoint"].Value = (int)account.AvgPoint;
             return cmd;
         }
 
@@ -320,7 +332,7 @@ namespace Dog_Proj.Models.DAL
         {
             string commandStr = "INSERT INTO Dogs (picture,dogname,dogBreed,age,size,sex,neutering,dog_character) VALUES (@picture,@dogname,@dogBreed,@age,@size,@sex,@neutering,@dog_character)";
             SqlCommand cmd = createCommand(con, commandStr);
-            cmd.Parameters.Add("@picture", SqlDbType.Char);
+            cmd.Parameters.Add("@picture", SqlDbType.NChar);//בטבלה בסוגריים לרשום מקס
             cmd.Parameters["@picture"].Value = dog.Picture;//איך מתייחסים לתמונה 
             cmd.Parameters.Add("@dogname", SqlDbType.NChar);
             cmd.Parameters["@dogname"].Value = dog.Dogname;
