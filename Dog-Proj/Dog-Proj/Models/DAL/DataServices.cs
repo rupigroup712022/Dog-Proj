@@ -104,7 +104,7 @@ namespace Dog_Proj.Models.DAL
          
             string commandStr = "INSERT INTO Users (username,phone,sex,age,availableDays,availableHours) VALUES (@username,@phone,@sex,@age,@availableDays,@availableHours)";
             SqlCommand cmd = createCommand(con, commandStr);
-            cmd.Parameters.Add("@username", SqlDbType.Char);
+            cmd.Parameters.Add("@username", SqlDbType.NChar);
             cmd.Parameters["@username"].Value = user.Username;
             cmd.Parameters.Add("@phone", SqlDbType.Char);
             cmd.Parameters["@phone"].Value = user.Phone;
@@ -112,7 +112,7 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters["@sex"].Value = user.Sex;
             cmd.Parameters.Add("@age", SqlDbType.Char);
             cmd.Parameters["@age"].Value = user.Age;
-            cmd.Parameters.Add("@availableDays", SqlDbType.Char);
+            cmd.Parameters.Add("@availableDays", SqlDbType.NChar);
             cmd.Parameters["@availableDays"].Value = user.AvailableDays;
             cmd.Parameters.Add("@availableHours", SqlDbType.Char);
             cmd.Parameters["@availableHours"].Value = user.AvailableHours;
@@ -213,17 +213,17 @@ namespace Dog_Proj.Models.DAL
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@familyname", SqlDbType.NChar);
             cmd.Parameters["@familyname"].Value = account.Familyname;
-            cmd.Parameters.Add("@moreAnimals", SqlDbType.Char);
+            cmd.Parameters.Add("@moreAnimals", SqlDbType.NChar);
             cmd.Parameters["@moreAnimals"].Value = account.MoreAnimals;
-            cmd.Parameters.Add("@street", SqlDbType.Char);
+            cmd.Parameters.Add("@street", SqlDbType.NChar);
             cmd.Parameters["@street"].Value = account.Street;
             cmd.Parameters.Add("@homeNum", SqlDbType.Char);
             cmd.Parameters["@homeNum"].Value = account.HomeNum;
             cmd.Parameters.Add("@email", SqlDbType.Char);
             cmd.Parameters["@email"].Value = account.Email;
-            cmd.Parameters.Add("@yardSize", SqlDbType.Char);
+            cmd.Parameters.Add("@yardSize", SqlDbType.NChar);
             cmd.Parameters["@yardSize"].Value = account.YardSize;
-            cmd.Parameters.Add("@yardSize", SqlDbType.Char);
+            cmd.Parameters.Add("@yardSize", SqlDbType.NChar);
             cmd.Parameters["@yardSize"].Value = account.YardSize;
             cmd.Parameters.Add("@passwords", SqlDbType.Char);
             cmd.Parameters["@passwords"].Value = account.Passwords;
@@ -322,13 +322,13 @@ namespace Dog_Proj.Models.DAL
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@picture", SqlDbType.Char);
             cmd.Parameters["@picture"].Value = dog.Picture;//איך מתייחסים לתמונה 
-            cmd.Parameters.Add("@dogname", SqlDbType.Char);
+            cmd.Parameters.Add("@dogname", SqlDbType.NChar);
             cmd.Parameters["@dogname"].Value = dog.Dogname;
-            cmd.Parameters.Add("@dogBreed", SqlDbType.Char);
+            cmd.Parameters.Add("@dogBreed", SqlDbType.NChar);
             cmd.Parameters["@dogBreed"].Value = dog.DogBreed;
             cmd.Parameters.Add("@age", SqlDbType.Char);
             cmd.Parameters["@age"].Value = dog.Age;
-            cmd.Parameters.Add("@size", SqlDbType.Char);
+            cmd.Parameters.Add("@size", SqlDbType.NChar);
             cmd.Parameters["@size"].Value = dog.Size;
             cmd.Parameters.Add("@sex", SqlDbType.Char);
             cmd.Parameters["@sex"].Value = dog.Sex;

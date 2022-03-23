@@ -56,13 +56,16 @@
 
             user = {
                 Username: username,
-                Age: age,
                 Phone: phone,
                 Sex: sex,
+                Age: age,
+                DateTime availableDays;??
+                DateTime availableHours;??
                 //זמינויות
 
             }// מערך של יוזר
             ajaxCall("POST", "../api/User", JSON.stringify(user), postSCBuser, postECB); //להוסיף קונרטארול יוזר
+           
 
 
         }
@@ -100,11 +103,10 @@
             }
             else {
                 alert("You signed up successfully");
-                window.location.href = "PasswordSelection.html";
+                window.location.href = "SingInDog.html";
             }
             console.log(success);
         }
-
         function postECB(err) {
             console.log(err);
         }

@@ -20,8 +20,10 @@ namespace DOGS1.Models
         string houseType;
         float avgPoint;
         string passwords;
+        string cityName;
 
-        public Account(int id, string familyname, bool moreAnimals, string street, int homeNum, int linkedUsers, int numOfPoints, string email, string yardSize, string houseType, float avgPoint, string passwords)
+
+        public Account(int id, string familyname, bool moreAnimals, string street, int homeNum, int linkedUsers, int numOfPoints, string email, string yardSize, string houseType, float avgPoint, string passwords, string cityName)
         {
             Id = id;
             Familyname = familyname;
@@ -35,7 +37,7 @@ namespace DOGS1.Models
             HouseType = houseType;
             AvgPoint = avgPoint;
             Passwords = passwords;
-
+            CityName = cityName;
         }
 
         public int Id { get => id; set => id = value; }
@@ -50,6 +52,7 @@ namespace DOGS1.Models
         public string HouseType { get => houseType; set => houseType = value; }
         public float AvgPoint { get => avgPoint; set => avgPoint = value; }
         public string Passwords { get => passwords; set => passwords = value; }
+        public string CityName { get => cityName; set => cityName = value; }
 
 
 

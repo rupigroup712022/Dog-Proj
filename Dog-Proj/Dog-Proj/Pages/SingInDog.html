@@ -37,25 +37,32 @@
         });
 
         function signUp() {
-            //זכר ונקבה
+            var sex = "";
+            var ele = document.getElementsByName('gender');
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].checked)
+                    sex = ele[i].value
+            }
             let dogname = $("#dogname").val();
             let picture = $("#picture").val();
             let age = $("#age").val();
             let dogBreed = $("#dogBreed").val();
             //אופי הכלב
             let size = $("#size").val();
-            let neutering = $("#neutering").val();
+            let neutering = $("#neutering").val();/// כמו הזמינות 
            
 
             Dog = {
-                Dogname: dogname,
                 Picture: picture,
-                Age: age,
+                Dogname: dogname,
                 DogBreed: dogBreed,
+                Age: age,
                 Size: size,
+                Sex: sex,
                 Neutering: neutering,
-                
+                //אופי הכלב
             }
+           
             upload();
             console.log(JSON.stringify(Dog));
 
@@ -161,13 +168,13 @@
                                     <tr>
                                         <td>
                                             <label>
-                                                <input type="radio" name="test" value="small" checked>
+                                                <input type="radio" name="gender" value="Male" checked>
                                                 <img class="imgform" src="../images/כלב.gif" /><span>יש לי כלב </span>
                                             </label>
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="test" value="big">
+                                                <input type="radio" name="gender" value="Female">
                                                 <img class="imgform" src="../images/כלבה.png" /><span>יש לי כלבה</span>
                                             </label>
                                         </td>
@@ -229,8 +236,8 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <input type="submit" value="המשך לבחירת סיסמא ושם משתמש" />
-                                            <a href="PasswordSelection.html">PasswordSelection.html</a>
+                                            <input type="submit" value="היכנס" />
+                                            <a href="mainScreen.html">mainScreen.html</a>
                                         </td>
                                     </tr>
                                 </table>

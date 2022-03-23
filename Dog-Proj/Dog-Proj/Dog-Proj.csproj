@@ -255,7 +255,6 @@
     <Content Include="Pages\index.html" />
     <Content Include="Pages\LogeIn.html" />
     <Content Include="Pages\mainScreen.html" />
-    <Content Include="Pages\PasswordSelection.html" />
     <Content Include="Pages\SingIn.html" />
     <Content Include="Pages\SingInDog.html" />
     <Content Include="Pages\Userselection.html" />

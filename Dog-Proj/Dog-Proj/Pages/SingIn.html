@@ -87,16 +87,16 @@
 
                 account = {
                     Familyname: familyname,
-                    CityName: cityName,
-                    Street: street,
-                    HomeNum: homeNum,
                     MoreAnimals: moreAnimals,
+                    Street = street,
+                    HomeNum: homeNum,
+                    Email: email,
                     YardSize: yardSize,
                     HouseType: houseType,
-                    Email: email,
                     Passwords: passwords,
-
-                }
+                    CityName: cityName,
+            }
+            
                 ajaxCall("POST", "../api/Accounts", JSON.stringify(account), postSCB, postECB);
 
             }
