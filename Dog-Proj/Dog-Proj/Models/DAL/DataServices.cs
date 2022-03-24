@@ -94,7 +94,7 @@ namespace Dog_Proj.Models.DAL
         {
             string str = "SELECT * FROM Users WHERE username LIKE @username";
             SqlCommand cmd = createCommand(con, str);
-            cmd.Parameters.Add("@username", SqlDbType.Char);
+            cmd.Parameters.Add("@username", SqlDbType.NChar);
             cmd.Parameters["@username"].Value = username;
             return cmd;
         }
@@ -102,22 +102,25 @@ namespace Dog_Proj.Models.DAL
         private SqlCommand CreateInsertCommand(SqlConnection con, User user)
         {
          
-            string commandStr = "INSERT INTO Users (username,phone,sex,age) VALUES (@username,@phone,@sex,@age)";
+            string commandStr = "INSERT INTO Users (username,phone,sex,age,availableDays) VALUES (@username,@phone,@sex,@age,@availableDays)";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@username", SqlDbType.NChar);
             cmd.Parameters["@username"].Value = user.Username;
-            cmd.Parameters.Add("@phone", SqlDbType.Char);
+            cmd.Parameters.Add("@phone", SqlDbType.VarChar);
             cmd.Parameters["@phone"].Value = user.Phone;
-            cmd.Parameters.Add("@sex", SqlDbType.Char);
+            cmd.Parameters.Add("@sex", SqlDbType.NChar);
             cmd.Parameters["@sex"].Value = user.Sex;
-            cmd.Parameters.Add("@age", SqlDbType.Char);
+            cmd.Parameters.Add("@age", SqlDbType.Int);
             cmd.Parameters["@age"].Value = user.Age;
-            cmd.Parameters.Add("@availableDays", SqlDbType.NChar);
-           
-            cmd.Parameters.Add("@availableHours", SqlDbType.Char);
-           
-             return cmd;
+            cmd.Parameters.Add("@Availablity", SqlDbType.Char);
+            cmd.Parameters["@availableDays"].Value = user.Availablity;
+       
+
+            return cmd;
         }
+
+       
+
 
         public int Insert(Account account)
         {
@@ -338,15 +341,15 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters["@dogname"].Value = dog.Dogname;
             cmd.Parameters.Add("@dogBreed", SqlDbType.NChar);
             cmd.Parameters["@dogBreed"].Value = dog.DogBreed;
-            cmd.Parameters.Add("@age", SqlDbType.Char);
+            cmd.Parameters.Add("@age", SqlDbType.Int);
             cmd.Parameters["@age"].Value = dog.Age;
             cmd.Parameters.Add("@size", SqlDbType.NChar);
             cmd.Parameters["@size"].Value = dog.Size;
-            cmd.Parameters.Add("@sex", SqlDbType.Char);
+            cmd.Parameters.Add("@sex", SqlDbType.NChar);
             cmd.Parameters["@sex"].Value = dog.Sex;
-            cmd.Parameters.Add("@neutering", SqlDbType.Char);
+            cmd.Parameters.Add("@neutering", SqlDbType.NChar);
             cmd.Parameters["@neutering"].Value = dog.Neutering;
-            cmd.Parameters.Add("@dog_character", SqlDbType.Char);
+            cmd.Parameters.Add("@dog_character", SqlDbType.NChar);
             cmd.Parameters["@dog_character"].Value = dog.Dog_character;
             return cmd;
         }
