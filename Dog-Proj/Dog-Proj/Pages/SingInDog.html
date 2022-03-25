@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- basic -->
@@ -34,7 +34,10 @@
     <script>
         $(document).ready(function () {
             $("#signDog").submit(signUp);
+            $("#dog_character").find(".BTF").click(changeColor);
+         
         });
+        var character = {};
 
         function signUp() {
             var sex = "";
@@ -49,7 +52,7 @@
             let dogBreed = $("#dogBreed").val();
             //אופי הכלב
             let size = $("#size").val();
-            let neutering = $("#neutering").val();/// כמו הזמינות 
+            let neutering = $("#neutering").val();
            
 
             Dog = {
@@ -111,6 +114,51 @@
 
         function postECB(err) {
             console.log(err);
+        }
+
+        //function selectcharacter() {
+        //    character[$(this).val()];
+        //    $("#dog_character").removeClass("hidden");
+        //    console.log(this);
+        //    $("#dog_character").find(".BTF").each(checkColor);
+        //}
+
+        function checkColor() {
+            if (!character[$('#dog_character').val()]) {
+                character[$('#dog_character').val()] = [];
+            }
+            console.log(character);
+            console.log(this);
+            if (character[$('#dog_character').val()].includes($(this).val())) {
+                $(this).css("background-color", "rgb(255, 255, 102)");
+            }
+            else {
+                $(this).css("background-color", "rgb(255, 165, 0)")
+            }
+
+        }
+
+        function changeColor() {
+            console.log(this);
+            var colors = $(this).css("background-color");
+            console.log(colors);
+
+            if ($(this).css("background-color") == "rgb(255, 165, 0)") {
+                $(this).css("background-color", "rgb(255, 255, 102)");
+                add($(this).val());
+            }
+            else {
+                $(this).css("background-color", "rgb(255, 165, 0)")
+                character[$('#dog_character').val()] = character[$('#dog_character').val()].filter(l => l != $(this).val())
+                console.log(character);
+              
+            }
+        }
+
+        function add(characters) {
+            character[$('#dog_character').val()].push(characters);
+            console.log(character);
+            console.log(this);
         }
     </script>
 </head>
@@ -212,7 +260,7 @@
                                         </td>
                                         <td><h3>סוג הכלב/ה</h3></td>
                                     </tr>
-                                    <tr>
+                                    <tr id="dog_character" >
                                         <td>
                                             <input type="button" class="BTF" requiredvalue value="שקט ורגוע" />
                                             <input type="button" class="BTF" required value="פעלתן" />

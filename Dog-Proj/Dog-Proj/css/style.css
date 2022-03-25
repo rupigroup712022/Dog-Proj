@@ -67,7 +67,7 @@ h6 {
 }
 
 h1 {
-     font-size: 48px
+     font-size: 40px
 }
 
 h2 {
@@ -852,10 +852,10 @@ td > p {
 .Ser_bt {
     width: 60%;
     float: right;
-    background-color: orange;
+    background-color:orange;
     border-radius: 60px;
     height: 70px;
-    font-size: 20pt;
+    font-size: 18pt;
     border: 0px;
     color: #fff;
     text-align: center;

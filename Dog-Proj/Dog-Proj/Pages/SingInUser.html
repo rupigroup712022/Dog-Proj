@@ -59,7 +59,7 @@
                 Age: age,
                 //DateTime availableDays;??
                 //DateTime availableHours;??
-                Availablity= DayDic
+                //Availablity= DayDic
 
             }
             ajaxCall("POST", "../api/User", JSON.stringify(user), postSCBuser, postECB); //להוסיף קונרטארול יוזר
@@ -209,7 +209,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="text" class="phone" required  pattern="05[0-9]{10}" />
+                                            <input type="text" class="phone" required  pattern=".{10}" />
 
                                         </td>
                                         <td><h3>מספר טלפון</h3></td>

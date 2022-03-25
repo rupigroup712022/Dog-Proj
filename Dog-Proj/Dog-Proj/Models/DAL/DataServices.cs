@@ -102,7 +102,7 @@ namespace Dog_Proj.Models.DAL
         private SqlCommand CreateInsertCommand(SqlConnection con, User user)
         {
          
-            string commandStr = "INSERT INTO Users (username,phone,sex,age,availableDays) VALUES (@username,@phone,@sex,@age,@availableDays)";
+            string commandStr = "INSERT INTO Users (username,phone,sex,age/*,availableDays*/) VALUES (@username,@phone,@sex,@age/*,@availableDays*/)";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@username", SqlDbType.NChar);
             cmd.Parameters["@username"].Value = user.Username;
@@ -112,9 +112,9 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters["@sex"].Value = user.Sex;
             cmd.Parameters.Add("@age", SqlDbType.Int);
             cmd.Parameters["@age"].Value = user.Age;
-            cmd.Parameters.Add("@Availablity", SqlDbType.Char);
-            cmd.Parameters["@availableDays"].Value = user.Availablity;
-       
+            //cmd.Parameters.Add("@Availablity", SqlDbType.Dictionary);
+            //cmd.Parameters["@availableDays"].Value = user.Availablity;
+
 
             return cmd;
         }
@@ -347,7 +347,7 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters["@size"].Value = dog.Size;
             cmd.Parameters.Add("@sex", SqlDbType.NChar);
             cmd.Parameters["@sex"].Value = dog.Sex;
-            cmd.Parameters.Add("@neutering", SqlDbType.NChar);
+            cmd.Parameters.Add("@neutering", SqlDbType.Bit);
             cmd.Parameters["@neutering"].Value = dog.Neutering;
             cmd.Parameters.Add("@dog_character", SqlDbType.NChar);
             cmd.Parameters["@dog_character"].Value = dog.Dog_character;
