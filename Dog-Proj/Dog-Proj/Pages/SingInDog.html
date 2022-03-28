@@ -29,15 +29,17 @@
     <link rel="stylesheet" href="../css/owl.carousel.min.css">
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 
     <script>
+
         $(document).ready(function () {
             $("#signDog").submit(signUp);
             $("#dog_character").find(".BTF").click(changeColor);
-         
+
         });
-        var character = {};
+        var character = [];
 
         function signUp() {
             var sex = "";
@@ -53,17 +55,18 @@
             //אופי הכלב
             let size = $("#size").val();
             let neutering = $("#neutering").val();
-           
+            let familyNum = localStorage.getItem('familyNum');
 
             Dog = {
                 Picture: picture,
                 Dogname: dogname,
+                FamilyNum: familyNum,
                 DogBreed: dogBreed,
                 Age: age,
                 Size: size,
                 Sex: sex,
                 Neutering: neutering,
-                //אופי הכלב
+                Dog_character: dog_character
             }
 
 
@@ -100,7 +103,7 @@
 
 
         }
-         
+
         function postSCB(success) {
             if (success == 0) {
                 alert("The user is exists");
@@ -123,20 +126,7 @@
         //    $("#dog_character").find(".BTF").each(checkColor);
         //}
 
-        function checkColor() {
-            if (!character[$('#dog_character').val()]) {
-                character[$('#dog_character').val()] = [];
-            }
-            console.log(character);
-            console.log(this);
-            if (character[$('#dog_character').val()].includes($(this).val())) {
-                $(this).css("background-color", "rgb(255, 255, 102)");
-            }
-            else {
-                $(this).css("background-color", "rgb(255, 165, 0)")
-            }
 
-        }
 
         function changeColor() {
             console.log(this);
@@ -151,12 +141,12 @@
                 $(this).css("background-color", "rgb(255, 165, 0)")
                 character[$('#dog_character').val()] = character[$('#dog_character').val()].filter(l => l != $(this).val())
                 console.log(character);
-              
+
             }
         }
 
         function add(characters) {
-            character[$('#dog_character').val()].push(characters);
+            character.push(characters);
             console.log(character);
             console.log(this);
         }
@@ -262,10 +252,10 @@
                                     </tr>
                                     <tr id="dog_character" >
                                         <td>
-                                            <input type="button" class="BTF" requiredvalue value="שקט ורגוע" />
-                                            <input type="button" class="BTF" required value="פעלתן" />
-                                            <input type="button" class="BTF" required value="מסתדר עם חיות אחרות" />
-                                            <input type="button" class="BTF" required value="מסתדר עם ילדים" />
+                                            <input type="button" class="BTF"  value ="שקט ורגוע" />
+                                            <input type="button" class="BTF"  value="פעלתן" />
+                                            <input type="button" class="BTF"  value="מסתדר עם חיות אחרות" />
+                                            <input type="button" class="BTF"  value="מסתדר עם ילדים" />
                                         </td>
                                         <td> <h3>אופי הכלב</h3></td>
                                     </tr>

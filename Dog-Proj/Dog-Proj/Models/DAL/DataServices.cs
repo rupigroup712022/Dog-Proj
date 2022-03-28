@@ -18,7 +18,7 @@ namespace Dog_Proj.Models.DAL
             if (existName == 0)
             {
                 SqlConnection con = null;
-                int numEffected = 0;
+                 int id = 0;//short-=smallint
 
                 try
                 {
@@ -29,7 +29,16 @@ namespace Dog_Proj.Models.DAL
                     SqlCommand insertCommand = CreateInsertCommand(con, user);
 
                     //E Execute
-                    numEffected = insertCommand.ExecuteNonQuery();
+                    id = insertCommand.ExecuteNonQuery();
+                    int numeffected = 0;
+                    foreach (var day in user.Availablity)
+                    {
+                        foreach (var hour in day.Value)
+                        {
+                            SqlCommand insertCommandHours = CreateInsertCommand(con, id, day.Key, hour);
+                            numeffected += insertCommandHours.ExecuteNonQuery();
+                        }
+                    }
                 }
 
                 catch (Exception exep)
@@ -47,7 +56,7 @@ namespace Dog_Proj.Models.DAL
 
 
                 // num effected
-                return numEffected;
+                return 1;
             }
             return 0;
         }
@@ -102,24 +111,41 @@ namespace Dog_Proj.Models.DAL
         private SqlCommand CreateInsertCommand(SqlConnection con, User user)
         {
          
-            string commandStr = "INSERT INTO Users (username,phone,sex,age/*,availableDays*/) VALUES (@username,@phone,@sex,@age/*,@availableDays*/)";
+            string commandStr = "INSERT INTO Users (username,phone,sex,age,familyId) VALUES (@username,@phone,@sex,@age,@familyId)";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@username", SqlDbType.NChar);
             cmd.Parameters["@username"].Value = user.Username;
-            cmd.Parameters.Add("@phone", SqlDbType.VarChar);
+            cmd.Parameters.Add("@phone", SqlDbType.Char);
             cmd.Parameters["@phone"].Value = user.Phone;
             cmd.Parameters.Add("@sex", SqlDbType.NChar);
             cmd.Parameters["@sex"].Value = user.Sex;
             cmd.Parameters.Add("@age", SqlDbType.Int);
             cmd.Parameters["@age"].Value = user.Age;
+            cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
+            cmd.Parameters["@familyId"].Value = user.FamilyId;
             //cmd.Parameters.Add("@Availablity", SqlDbType.Dictionary);
             //cmd.Parameters["@availableDays"].Value = user.Availablity;
+            return cmd;
+        }
 
+        private SqlCommand CreateInsertCommand(SqlConnection con,int id,string availableDays,string availableHours)
+        {
+
+            string commandStr = "INSERT INTO Availablity (id,availableDays,availableHours) VALUES (@id,@availableDays,@availableHours)";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@id", SqlDbType.SmallInt);
+            cmd.Parameters["@id"].Value = id;
+            cmd.Parameters.Add("@availableDays", SqlDbType.NChar);
+            cmd.Parameters["@availableDays"].Value = availableDays;
+            cmd.Parameters.Add("@availableHours", SqlDbType.NChar);
+            cmd.Parameters["@availableHours"].Value = availableHours;
+        
 
             return cmd;
         }
 
-       
+
+
 
 
         public int Insert(Account account)
@@ -333,12 +359,14 @@ namespace Dog_Proj.Models.DAL
 
         private SqlCommand CreateInsertCommand(SqlConnection con, Dog dog)
         {
-            string commandStr = "INSERT INTO Dogs (picture,dogname,dogBreed,age,size,sex,neutering,dog_character) VALUES (@picture,@dogname,@dogBreed,@age,@size,@sex,@neutering,@dog_character)";
+            string commandStr = "INSERT INTO Dogs (picture,dogname,familyNum,dogBreed,age,size,sex,neutering,dog_character) VALUES (@picture,@dogname,@familyNum,@dogBreed,@age,@size,@sex,@neutering,@dog_character)";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@picture", SqlDbType.NChar);//בטבלה בסוגריים לרשום מקס
             cmd.Parameters["@picture"].Value = dog.Picture;//איך מתייחסים לתמונה 
             cmd.Parameters.Add("@dogname", SqlDbType.NChar);
             cmd.Parameters["@dogname"].Value = dog.Dogname;
+            cmd.Parameters.Add("@familyNum", SqlDbType.SmallInt);//הוספתי מהלוקל סטורג 
+            cmd.Parameters["@familyNum"].Value = dog.FamilyNum;//מהלוקל סטורג
             cmd.Parameters.Add("@dogBreed", SqlDbType.NChar);
             cmd.Parameters["@dogBreed"].Value = dog.DogBreed;
             cmd.Parameters.Add("@age", SqlDbType.Int);

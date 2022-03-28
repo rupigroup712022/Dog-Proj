@@ -50,17 +50,15 @@
             let username = $(this).find(".username").val();
             let age = $(this).find(".age").val();
             let phone = $(this).find(".phone").val();
+            let familyId = localStorage.getItem('familyId');
             
-
             user = {
                 Username: username,
                 Phone: phone,
                 Sex: sex,
                 Age: age,
-                //DateTime availableDays;??
-                //DateTime availableHours;??
-                //Availablity= DayDic
-
+                FamilyId:familyId,
+                Availablity: DayDic
             }
             ajaxCall("POST", "../api/User", JSON.stringify(user), postSCBuser, postECB); //להוסיף קונרטארול יוזר
         

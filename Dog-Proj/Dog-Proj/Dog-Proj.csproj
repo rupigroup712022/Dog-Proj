@@ -173,7 +173,7 @@
     <Compile Include="Models\Dogs_breed.cs" />
     <Compile Include="Models\History.cs" />
     <Compile Include="Models\Pricing.cs" />
-    <Compile Include="Models\Time.cs" />
+    <Compile Include="Models\Availablity.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

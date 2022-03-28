@@ -17,14 +17,14 @@ namespace DOGS1.Models
         string size;
         string sex;
         bool neutering;
-        Dictionary<string, string[]> dog_character;
+        string dog_character;
 
     
     
 
         public Dog() { }
 
-        public Dog(int id, string picture, string dogname, int familyNum, string dogBreed, int age, string size, string sex, bool neutering, Dictionary<string, string[]> dog_character)
+        public Dog(int id, string picture, string dogname, int familyNum, string dogBreed, int age, string size, string sex, bool neutering, string dog_character)
         {
             Id = id;
             Picture = picture;
@@ -47,7 +47,8 @@ namespace DOGS1.Models
         public string Size { get => size; set => size = value; }
         public string Sex { get => sex; set => sex = value; }
         public bool Neutering { get => neutering; set => neutering = value; }
-        public Dictionary<string, string[]> Dog_character { get => dog_character; set => dog_character = value; }
+
+        public string Dog_character  { get => dog_character; set => dog_character = value; }
 
         public int Insert()
         {

@@ -111,8 +111,9 @@
                 else {
                     console.log(success);
                     alert("Please add a family member");
-                    localStorage["familyid"] = JSON.stringify(success);
-                    window.location.href = "SingInUser.html";
+                    localStorage["familyId"] = JSON.stringify(success);
+                    window.location.href = "SingInUser.html";//
+                    window.location.href = "SingInDog.html";//הוספתי לכלב לא בטוח שצריך
                 }
                 
             }
