@@ -249,6 +249,7 @@
     <Content Include="images\תשמור עלי.jpg" />
     <Content Include="Pages\pension.html" />
     <Content Include="Pages\SingInUser.html" />
+    <Content Include="Pages\SearchUser.html" />
     <Content Include="Pages\walk.html" />
     <Content Include="Pages\feeding.html" />
     <Content Include="Pages\forgot password.html" />
