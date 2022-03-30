@@ -22,7 +22,7 @@ namespace Dog_Proj.Controllers
         // POST api/<controller>
         public int Post([FromBody] Dog dog)
         {
-            return dog.Insert();
+            return dog.InsertDog();
         }
 
         // PUT api/<controller>/5

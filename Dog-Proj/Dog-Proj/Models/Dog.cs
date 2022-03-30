@@ -4,7 +4,8 @@ using System.Linq;
 using System.Web;
 using Dog_Proj.Models.DAL;
 
-namespace DOGS1.Models
+
+    namespace DOGS1.Models
 {
     public class Dog
     {
@@ -50,10 +51,10 @@ namespace DOGS1.Models
 
         public string Dog_character  { get => dog_character; set => dog_character = value; }
 
-        public int Insert()
+        public int InsertDog()
         {
             DataServices ds = new DataServices();
-            return ds.Insert(this);
+            return ds.InsertDog(this);
         }
 
 

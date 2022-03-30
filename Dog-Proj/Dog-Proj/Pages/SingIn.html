@@ -105,15 +105,14 @@
 
         function postSCB(success) {
             console.log(success)
-                if (!success) {
-                    alert("The email is alredy exists");//לא הגיוני
+            if (success == 0) {
+                    alert("The email is alredy exists");
                 }
                 else {
                     console.log(success);
                     alert("Please add a family member");
                     localStorage["familyId"] = JSON.stringify(success);
-                    window.location.href = "SingInUser.html";//
-                    window.location.href = "SingInDog.html";//הוספתי לכלב לא בטוח שצריך
+                    window.location.href = "SingInUser.html";
                 }
                 
             }

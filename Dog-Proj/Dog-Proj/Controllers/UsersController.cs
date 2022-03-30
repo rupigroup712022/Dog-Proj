@@ -1,4 +1,5 @@
-﻿using DOGS1.Models;
+﻿using Dog_Proj.Models;
+using DOGS1.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,10 @@ namespace Dog_Proj.Controllers
         }
 
         // POST api/<controller>
+        [HttpPost]
         public int Post([FromBody] User user)
         {
-            return user.Insert();
+            return user.InsertUser();
         }
     }
 }

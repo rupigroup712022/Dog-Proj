@@ -30,38 +30,46 @@
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
     <script src="../Scripts/ajaxCall.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../Scripts/jquery-3.4.1.js"></script>
 
     <script>
         $(document).ready(function () {
             $("#Day").change(selectday);
             $("#singUser").submit(signUp);
             $("#time").find(".BTF").click(changeColor);
+
         });
         var DayDic = {};
+        var sex;
 
         function signUp() {
-            var sex = "";
+
             var ele = document.getElementsByName('gender');
             for (i = 0; i < ele.length; i++) {
                 if (ele[i].checked)
                     sex = ele[i].value
             }
-            let username = $(this).find(".username").val();
-            let age = $(this).find(".age").val();
-            let phone = $(this).find(".phone").val();
-            let familyId = localStorage.getItem('familyId');
-            
+            var username = $(this).find(".username").val();
+            var age = $(this).find(".age").val();
+            var phone = $(this).find(".phone").val();
+            var familyId = parseInt(localStorage.getItem('familyId'));
+
             user = {
                 Username: username,
                 Phone: phone,
                 Sex: sex,
                 Age: age,
-                FamilyId:familyId,
-                Availablity: DayDic
+                //Availablity: DayDic,לטפל בזה
+                FamilyId: familyId
+
             }
-            ajaxCall("POST", "../api/User", JSON.stringify(user), postSCBuser, postECB); //להוסיף קונרטארול יוזר
-        
+
+           
+            console.log(user);
+
+            ajaxCall("POST", "../api/Users", JSON.stringify(user), postSCBuser, postECB);
+
+            return false;
         }
         function selectday() {
             DayDic[$(this).val()];
@@ -77,12 +85,12 @@
             console.log(DayDic);
             console.log(this);
             if (DayDic[$('#Day').val()].includes($(this).val())) {
-                    $(this).css("background-color", "rgb(255, 255, 102)");
-                }
-                else {
-                    $(this).css("background-color", "rgb(255, 165, 0)")
-                }
-            
+                $(this).css("background-color", "rgb(255, 255, 102)");
+            }
+            else {
+                $(this).css("background-color", "rgb(255, 165, 0)")
+            }
+
         }
 
         function changeColor() {
@@ -91,7 +99,7 @@
             console.log(colors);
 
             if ($(this).css("background-color") == "rgb(255, 165, 0)") {
-                $(this).css("background-color" ,"rgb(255, 255, 102)");
+                $(this).css("background-color", "rgb(255, 255, 102)");
                 addtime($(this).val());
             }
             else {
@@ -108,8 +116,8 @@
 
 
 
-        function postSCB(success) {
-            if (success == 0) {
+        function postSCBuser(success) {
+            if (success != 0) {
                 alert("The user is exists");
             }
             else {
@@ -122,7 +130,7 @@
             console.log(err);
         }
 
-        
+
 
 
 
@@ -186,13 +194,13 @@
                                     <tr>
                                         <td>
                                             <label>
-                                                <input type="radio" name="gender" value="Male" checked>
+                                                <input type="radio" name="gender" value="M" checked>
                                                 <img class="imgform" src="../images/אני גבר.png" /><span>אני גבר</span>
                                             </label>
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="gender" value="Female">
+                                                <input type="radio" name="gender" value="F">
                                                 <img class="imgform" src="../images/אני אישה.png" /><span>אני אישה</span>
                                             </label>
                                         </td>
@@ -243,7 +251,7 @@
                                             <a href="SingInDog.html"></a>
                                         </td>
                                         <td>
-                                            <input type="button" value="הוסף בן משפחה " />
+                                            <input type="submit"  value="הוסף בן משפחה " />
                                             <a href="SingInUser.html"></a>
                                         </td>
 

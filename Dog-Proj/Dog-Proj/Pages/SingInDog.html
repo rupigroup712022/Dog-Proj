@@ -40,9 +40,8 @@
 
         });
         var character = [];
-
+        var sex;
         function signUp() {
-            var sex = "";
             var ele = document.getElementsByName('gender');
             for (i = 0; i < ele.length; i++) {
                 if (ele[i].checked)
@@ -55,10 +54,11 @@
             //אופי הכלב
             let size = $("#size").val();
             let neutering = $("#neutering").val();
-            let familyNum = localStorage.getItem('familyNum');
+            let familyNum = parseInt(localStorage.getItem('familyId'));
+
 
             Dog = {
-                Picture: picture,
+                //Picture: picture,
                 Dogname: dogname,
                 FamilyNum: familyNum,
                 DogBreed: dogBreed,
@@ -66,11 +66,11 @@
                 Size: size,
                 Sex: sex,
                 Neutering: neutering,
-                Dog_character: dog_character
+            //    Dog_character: dog_character
             }
 
-
-            upload();
+    
+          /*  upload();*/
             console.log(JSON.stringify(Dog));
 
         }
@@ -207,13 +207,13 @@
                                     <tr>
                                         <td>
                                             <label>
-                                                <input type="radio" name="gender" value="Male" checked>
+                                                <input type="radio" name="gender" value="M" checked>
                                                 <img class="imgform" src="../images/כלב.gif" /><span>יש לי כלב </span>
                                             </label>
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="radio" name="gender" value="Female">
+                                                <input type="radio" name="gender" value="F">
                                                 <img class="imgform" src="../images/כלבה.png" /><span>יש לי כלבה</span>
                                             </label>
                                         </td>

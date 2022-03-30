@@ -1,58 +1,61 @@
-﻿using Dog_Proj.Models.DAL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Dog_Proj.Models.DAL;
 
-namespace DOGS1.Models
-{
+namespace DOGS1.Models {
+
+
     public class User
     {
-        int id;
         string username;
-        int phone;
+        string phone;
         string sex;
         int age;
         DateTime ending_date;
-        Dictionary <string,string[]> availablity;
-        int familyId; 
-        public User(int id, string username, int phone, string sex, int age, Dictionary<string,string[]> availablity)
+        Dictionary<string, string[]> availablity;
+        int familyId;
+
+        public User(string username, string phone, string sex, int age, int familyId)
         {
-            Id = id;
-            Username = username;
-            Phone = phone;
-            Sex = sex;
-            Age = age;
-            Availablity = availablity;
-            FamilyId = familyId;
+            this.username = username;
+            this.phone = phone;
+            this.sex = sex;
+            this.age = age;
+            //    this.ending_date = ending_date;
+            //    this.availablity = availablity;
+            this.familyId = familyId;
         }
 
-        public User(int id, string username, int phone, string sex, int age,int familyId)
-        {
-            Id = id;
-            Username = username;
-            Phone = phone;
-            Sex = sex;
-            Age = age;
-            FamilyId = familyId;
-        }
 
-        public int Id { get => id; set => id = value; }
+        //public User(string username, string phone, string sex, int age, DateTime ending_date, Dictionary<string, string[]> availablity, int familyId)
+        //{
+        //    this.username = username;
+        //    this.phone = phone;
+        //    this.sex = sex;
+        //    this.age = age;
+        //    this.ending_date = ending_date;
+        //    this.availablity = availablity;
+        //    this.familyId = familyId;
+        //}
+
         public string Username { get => username; set => username = value; }
-        public int Phone { get => phone; set => phone = value; }
+        public string Phone { get => phone; set => phone = value; }
         public string Sex { get => sex; set => sex = value; }
         public int Age { get => age; set => age = value; }
-        public Dictionary<string, string[]> Availablity { get => availablity; set => availablity = value; }
         public DateTime Ending_date { get => ending_date; set => ending_date = value; }
+        public Dictionary<string, string[]> Availablity { get => availablity; set => availablity = value; }
         public int FamilyId { get => familyId; set => familyId = value; }
 
 
 
-        public int Insert()
+
+
+        public int InsertUser()
         {
             DataServices ds = new DataServices();
-            return ds.Insert(this);
-        }
+            return ds.InsertUser(this);
 
-    }
-}
+        }
+    } }
