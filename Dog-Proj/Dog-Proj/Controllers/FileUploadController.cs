@@ -29,7 +29,7 @@ namespace Dog_Proj.Controllers
                     HttpPostedFile httpPostedFile = httpContext.Request.Files[i];
 
                     // this is an example of how you can extract addional values from the Ajax call
-                    string name = httpContext.Request.Form["name"];
+                    //string name = httpContext.Request.Form["name"];
 
                     if (httpPostedFile != null)
                     {

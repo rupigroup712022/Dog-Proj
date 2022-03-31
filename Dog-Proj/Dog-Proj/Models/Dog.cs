@@ -19,7 +19,7 @@ namespace Dog_Proj.Models
         string dog_character;
         string picture;
 
-        public Dog(string dogname, int familyNum, string dogBreed, int age, string size, string sex, bool neutering)
+        public Dog(string dogname, int familyNum, string dogBreed, int age, string size, string sex, bool neutering, string dog_character ,string picture)
         {
             this.dogname = dogname;
             this.familyNum = familyNum;
@@ -28,8 +28,8 @@ namespace Dog_Proj.Models
             this.size = size;
             this.sex = sex;
             this.neutering = neutering;
-            //this.dog_character = dog_character;
-            //this.picture = picture;
+            this.dog_character = dog_character;
+            this.picture = picture;
         }
 
         public string Dogname { get => dogname; set => dogname = value; }

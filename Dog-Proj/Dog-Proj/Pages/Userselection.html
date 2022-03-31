@@ -28,8 +28,50 @@
     <!-- owl stylesheets -->
     <link rel="stylesheet" href="../css/owl.carousel.min.css">
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
     <link href="../css/Login.css" rel="stylesheet" />
+    <script src="../Scripts/ajaxCall.js"></script>
+    <script src="../Scripts/jquery-3.4.1.js"></script>
+    <script>
+        $(document).ready(function () {
+            logUser();
+
+        });
+
+        function logUser() {
+            var familyId = localStorage.getItem('familyId');
+            let apiCall = "../api/Accounts?Id=" + familyId;
+            ajaxCall("GET", apiCall, "", getUserSCB, getUserECB)
+        }
+
+
+        function getUserSCB(success) {
+            console.log(success)
+            var imgStr = "";
+            for (var i = 0; i < success.length; i + 2) {
+                imgStr = "<div><p>" + success[i] + "</p></div>";
+                //if (success[i + 1] == 'M') {
+                //    imgStr += "<img src='../images/user-gfaaf954f6_640.png' />";
+                //}
+                //else {
+                //    imgStr += "<img src='../images/user-g768722fb2_640.png'/>";
+                //}
+                document.getElementById("ph").innerHTML += imgStr;
+            }
+
+        }
+
+        function getUserECB(err) {
+            console.log(err);
+        }
+
+       
+
+
+
+    </script>
+
+
+    
 </head>
 <body>
     <!-- section banner start -->
@@ -71,45 +113,8 @@
                 </div>
             </div>
             <div class="input_main">
-                <div class="containerUser">
-                    <table>
-                        <tr>
-                            <td>
-                                <img class="userfic" src="../images/user-g409500809_640.png" />
-                            </td>
-                            <td>
-                                <img class="userfic" src="../images/user-g768722fb2_640.png" />
-                            </td>
-                            <td>
-                                <img class="userfic" src="../images/user-gb39fc64c9_640.png" />
-                            </td>
-                        </tr>
-                        <tr>
-
-                            <td><input type="button" class="BTuser" requiredvalue value="דנה" /></td>
-                            <td><input type="button" class="BTuser" required value="יובל" /></td>
-                            <td><input type="button" class="BTuser" required value="רוני" /></td>
-
-                        </tr>
-                        <tr>
-                            <td>
-                                <img  class="userfic" src="../images/user-gfaaf954f6_640.png" />
-                            </td>
-                            <td>
-                                <img  class="userfic" src="../images/head-g29a335954_640.png" />
-                            </td>
-                            <td>
-                                <img class="userfic" src="../images/lady-g2bf3d8541_640.png" />
-                            </td>
-                        </tr>
-                        <tr>
-
-                            <td><input type="button" class="BTuser" requiredvalue value="עמית" /></td>
-                            <td><input type="button" class="BTuser" required value="חן" /></td>
-                            <td><input type="button" class="BTuser" required value="אלה" /></td>
-
-                        </tr>
-                    </table>
+                <div id="ph">
+                    
                     </div>
                 </div>
            </div>
@@ -195,7 +200,7 @@
             <!-- javascript -->
             <script src="../Scripts/owl.carousel.js"></script>
             <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-            <script>
+            <!--<script>
                 $(document).ready(function () {
                     $(".fancybox").fancybox({
                         openEffect: "none",
@@ -221,7 +226,7 @@
                 function closeNav() {
                     document.getElementById("myNav").style.width = "0%";
                 }
-            </script>
+            </script>-->
 
 </body>
 </html>

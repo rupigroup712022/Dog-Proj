@@ -70,7 +70,11 @@ namespace Dog_Proj.Models
             return dbs.ReadAccount(Email, Password);
         }
 
-
+        public List<string> GetUserSelction(int Id)
+        {
+            DataServices dbs = new DataServices();
+            return dbs.GetUserSelction(Id);
+        }
 
 
 

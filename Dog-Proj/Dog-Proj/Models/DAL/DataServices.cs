@@ -14,7 +14,7 @@ namespace Dog_Proj.Models.DAL
 
         public int InsertUser(User user)
         {
-            int existName = checking(user.Username);
+            int existName = checking(user.Username, user.FamilyId);
             if (existName == 0)
             {
                 SqlConnection con = null;
@@ -30,7 +30,7 @@ namespace Dog_Proj.Models.DAL
 
                     //E Execute
                       var numeffected = insertCommand.ExecuteNonQuery();
-                     id = checking(user.Username);
+                     id = checking(user.Username, user.FamilyId);
                     foreach (var day in user.Availablity)
                     {
                         foreach (var hour in day.Value)
@@ -64,7 +64,7 @@ namespace Dog_Proj.Models.DAL
 
 
 
-        public int checking(string username)
+        public int checking(string username,int familyId)
         {
             SqlConnection con = null;
             try
@@ -72,7 +72,7 @@ namespace Dog_Proj.Models.DAL
                 // Connect
                 con = Connect("DogsProjDB");
                 // Create the insert command
-                SqlCommand selectCommand = NameCheck(con, username);
+                SqlCommand selectCommand = NameCheck(con, username, familyId);
                 // Execute the command
                 SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
                 int str = 0;
@@ -105,12 +105,14 @@ namespace Dog_Proj.Models.DAL
 
 
 
-        private SqlCommand NameCheck(SqlConnection con, string username)
+        private SqlCommand NameCheck(SqlConnection con, string username, int familyId)
         {
-            string str = "SELECT id FROM UsersFamliy WHERE username LIKE @username";
+            string str = "SELECT id FROM UsersFamliy WHERE username LIKE @username and familyId = @familyId";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@username", SqlDbType.NChar);
             cmd.Parameters["@username"].Value = username;
+            cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
+            cmd.Parameters["@familyId"].Value = (short)familyId;
             return cmd;
         }
 
@@ -363,12 +365,54 @@ namespace Dog_Proj.Models.DAL
             return cmd;
         }
 
+        public List<string> GetUserSelction(int Id)
+        {
+            SqlConnection con = null;
+            try
+            {
+                // Connect
+                con = Connect("DogsProjDB");
+                // Create the insert command
+                SqlCommand selectCommand = UserSelction(con,Id);
+                // Execute the command
+                SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+               List <string> str=new List<string>() ;
+                while (dataReader.Read())
+                {
+                    str.Add((string)dataReader["username"]);
+                    str.Add((string)dataReader["sex"]);
+                }
+                dataReader.Close();
+
+                return str;
+            }
+            catch (Exception ex)
+            {
+                // write the error to log
+                throw new Exception("failed ", ex);
+            }
+            finally
+            {
+                // Close the connection
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand UserSelction(SqlConnection con, int familyId)
+        {
+            string str = "SELECT username,sex FROM UsersFamliy WHERE familyId LIKE @familyId";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
+            cmd.Parameters["@familyId"].Value =(short)(familyId);
+            return cmd;
+        }
         private SqlCommand CreateInsertCommandDog(SqlConnection con, Dog dog)
         {
-            string commandStr = "INSERT INTO Dogs4 (dogname,familyNum,dogBreed,age,size,sex,neutering) VALUES (@dogname,@familyNum,@dogBreed,@age,@size,@sex,@neutering)";
+                      string commandStr = "INSERT INTO Dogs4 (dogname,familyNum,dogBreed,age,size,sex,neutering,dog_character,picture) VALUES (@dogname,@familyNum,@dogBreed,@age,@size,@sex,@neutering,@dog_character,@picture)";
             SqlCommand cmd = createCommand(con, commandStr);
-            //cmd.Parameters.Add("@picture", SqlDbType.NChar);//בטבלה בסוגריים לרשום מקס
-            //cmd.Parameters["@picture"].Value = dog.Picture;//איך מתייחסים לתמונה 
+            cmd.Parameters.Add("@picture", SqlDbType.NChar);
+            cmd.Parameters["@picture"].Value = dog.Picture;
             cmd.Parameters.Add("@dogname", SqlDbType.NChar);
             cmd.Parameters["@dogname"].Value = dog.Dogname;
             cmd.Parameters.Add("@familyNum", SqlDbType.SmallInt); 
@@ -383,8 +427,8 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters["@sex"].Value = dog.Sex;
             cmd.Parameters.Add("@neutering", SqlDbType.Bit);
             cmd.Parameters["@neutering"].Value = dog.Neutering;
-            //cmd.Parameters.Add("@dog_character", SqlDbType.NChar);
-            //cmd.Parameters["@dog_character"].Value = dog.Dog_character;
+            cmd.Parameters.Add("@dog_character", SqlDbType.NChar);
+            cmd.Parameters["@dog_character"].Value = dog.Dog_character;
             return cmd;
         }
 
@@ -443,6 +487,7 @@ namespace Dog_Proj.Models.DAL
                     con.Close();
             }
         }
+
 
         private SqlCommand emailandpasswordCheck(SqlConnection con, string Email, string Passwords)
         {

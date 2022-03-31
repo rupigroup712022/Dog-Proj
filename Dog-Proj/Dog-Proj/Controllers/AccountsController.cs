@@ -17,6 +17,13 @@ namespace Dog_Proj.Controllers
             Account accounts = new Account();
             return accounts.ReadAccount(Email, Password);
         }
+        //[HttpGet]
+        //[Route("api/Accounts/User")]
+        public List<string> Get(int Id)
+        {
+            Account account = new Account();
+            return account.GetUserSelction(Id);
+        }
 
 
         // GET api/<controller>/5
