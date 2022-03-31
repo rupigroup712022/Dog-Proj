@@ -30,35 +30,89 @@
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+    <script src="../Scripts/ajaxCall.js"></script>
+    <script src="../Scripts/jquery-3.4.1.js"></script>
 
     <script>
 
         $(document).ready(function () {
             $("#signDog").submit(signUp);
             $("#dog_character").find(".BTF").click(changeColor);
+        //    $('#buttonUpload').on('click', function () {
+        //        var data = new FormData();
+        //        var files = $("#files").get(0).files;
 
-        });
+        //        // Add the uploaded file to the form data collection  
+        //        if (files.length > 0) {
+        //            for (f = 0; f < files.length; f++) {
+        //                data.append("UploadedImage", files[f]);
+        //            }
+        //            data.append("name", "yuval"); // append what ever data you want to send along with the files. See how you extract it in the controller.
+        //        }
+
+        //        // Ajax upload  
+        //        $.ajax({
+        //            type: "POST",
+        //            url: "../Api/FileUpload",
+        //            contentType: false,
+        //            processData: false,
+        //            data: data,
+        //            success: showImages,
+        //            error: error
+        //        });
+
+        //        return false;
+        //    });
+
+        //});
+
+        //function showImages(data) {
+        //    console.log(data);
+
+        //    var imgStr = "";
+
+        //    if (Array.isArray(data)) {
+
+        //        for (var i = 0; i < data.length; i++) {
+        //            imgStr += "<img src='../" + data[i] + "'/>";
+        //        }
+
+        //    }
+
+        //    else {
+        //        imgStr = "<img src='../" + data + "'/>";
+        //    }
+
+        //    document.getElementById("ph").innerHTML = imgStr;
+        //}
+
+        //function error(data) {
+        //    console.log(data);
+        //}
+
+
         var character = [];
         var sex;
+
+
         function signUp() {
+
+            console.log(imgStr);
             var ele = document.getElementsByName('gender');
             for (i = 0; i < ele.length; i++) {
                 if (ele[i].checked)
                     sex = ele[i].value
             }
-            let dogname = $("#dogname").val();
-            let picture = $("#picture").val();
-            let age = $("#age").val();
-            let dogBreed = $("#dogBreed").val();
+            var dogname = $("#dogname").val();
+            var age = $("#age").val();
+            var dogBreed = $("#dogBreed").val();
             //אופי הכלב
-            let size = $("#size").val();
-            let neutering = $("#neutering").val();
-            let familyNum = parseInt(localStorage.getItem('familyId'));
+            var size = $("#size").val();
+            let neutering = $("#neutering").is(':checked');
+            var familyNum = parseInt(localStorage.getItem('familyId'));
 
 
             Dog = {
-                //Picture: picture,
                 Dogname: dogname,
                 FamilyNum: familyNum,
                 DogBreed: dogBreed,
@@ -66,51 +120,29 @@
                 Size: size,
                 Sex: sex,
                 Neutering: neutering,
-            //    Dog_character: dog_character
-            }
+                //Dog_character: character,
+                //Picture: imgStr
 
-    
-          /*  upload();*/
-            console.log(JSON.stringify(Dog));
+            }
+          
+
+
+            console.log(Dog);
+            ajaxCall("POST", "../api/Dogs", JSON.stringify(Dog), postSCB, postECB);
+            return false;
 
         }
 
-        function upload() {
-            var data = new FormData();
-            var files = $("#filebutton").get(0).files;
-
-            if (files.length > 0) {
-                for (f = 0; f < files.length; f++) {
-                    data.append("UploadedImage", files[f]);
-                }
-                data.append("name", "Profile_" + '_' + Date.now()); // append what ever data you want to send along with the files. See how you extract it in the controller.
-                // Ajax upload (image)
-                $.ajax({
-                    type: "POST",
-                    url: "../api/FileUpload",
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: successfile,
-                    error: error
-                });
-                return false;
-            }
-            else {
-                ajaxCall("POST", "../api/Dogs", JSON.stringify(Dog), postSCB, postECB);
-                return false;
-            }
 
 
-        }
-
+   
         function postSCB(success) {
             if (success == 0) {
                 alert("The user is exists");
             }
             else {
                 alert("You signed up successfully");
-                window.location.href = "PasswordSelection.html";
+                window.location.href = "Userselection.html";
             }
             console.log(success);
         }
@@ -193,9 +225,7 @@
                     <div class="input_main">
                         <div class="container">
                             <form id="signDog" action="/action_page.php">
-
                                 <table>
-
                                     <tr>
                                         <td>
                                             <img class="imgform" src="../images/dog-human.jpg" />
@@ -224,22 +254,20 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div class="form-group">
-                                                <img class="col-sm-6" id="PP" src="#" />
-                                                <div class="col-sm-6">
-                                                    <input id="filebutton" name="filebutton" class="input-file" type="file">
-                                                </div>
+                                            <div>
+                                                <label for="files">Files</label>
+                                                <input type="file" id="files" name="files" multiple="multiple" />
                                             </div>
-                                        </td>
-                                        <td><label class="col-sm-3 control-label" for="filebutton"></label></td>
-                                        <td><h3>תמונה של הכלב</h3></td>
+                                            <br />
+                                            <button type="button" id="buttonUpload">Upload files</button>
+
                                     </tr>
                                     <tr>
                                         <td><input type="text" id="age" required /></td>
                                         <td><h3>גיל הכלב/ה</h3></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" class="dogBreed" required /></td>
+                                        <td><input type="text" id="dogBreed" required /></td>
                                         <td><h3>סוג הכלב</h3></td>
                                     </tr>
                                     <tr id="dog_character">
@@ -264,17 +292,18 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="radio" name="test" value="big" class="BTF" id="neutering" /> <span>מסורס/מעוקר</span>
+                                            <input type="radio" name="test" value="small" class="BTF" id="neutering" /> <span>מסורס/מעוקר</span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">
+                                        <td>
                                             <input type="submit" value="היכנס" />
                                             <a href="mainScreen.html">mainScreen.html</a>
                                         </td>
                                     </tr>
                                 </table>
                             </form>
+                            <div id="ph"></div>
                         </div>
 
                     </div>

@@ -49,6 +49,7 @@
                 if (ele[i].checked)
                     sex = ele[i].value
             }
+
             var username = $(this).find(".username").val();
             var age = $(this).find(".age").val();
             var phone = $(this).find(".phone").val();
@@ -59,7 +60,7 @@
                 Phone: phone,
                 Sex: sex,
                 Age: age,
-                //Availablity: DayDic,לטפל בזה
+                Availablity: DayDic, 
                 FamilyId: familyId
 
             }
@@ -117,12 +118,19 @@
 
 
         function postSCBuser(success) {
-            if (success != 0) {
+            if (success == 0) {
                 alert("The user is exists");
             }
             else {
                 alert("You signed up successfully");
-                window.location.href = "SingInDog.html";
+                localStorage["UserId"] = JSON.stringify(success);
+                $("#nextdog").click(function () {
+                    window.location.href = "SingInDog.html";
+                });
+                $("#nextuser").click(function () {
+                    window.location.href = "SingInUser.html";
+                });
+               
             }
             console.log(success);
         }
@@ -247,11 +255,11 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="submit" value="אני רוצה להמשיך להרשמת כלב  " />
+                                            <input type="submit" id="nextdog" value="אני רוצה להמשיך להרשמת כלב  " />
                                             <a href="SingInDog.html"></a>
                                         </td>
                                         <td>
-                                            <input type="submit"  value="הוסף בן משפחה " />
+                                            <input type="submit" id="nextuser" value="הוסף בן משפחה " />
                                             <a href="SingInUser.html"></a>
                                         </td>
 

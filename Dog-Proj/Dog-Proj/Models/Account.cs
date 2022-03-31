@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Dog_Proj.Models.DAL;
 
-namespace DOGS1.Models
+namespace Dog_Proj.Models
 {
     public class Account
     {

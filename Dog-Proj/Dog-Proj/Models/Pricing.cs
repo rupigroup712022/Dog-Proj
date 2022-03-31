@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DOGS1.Models
+namespace Dog_Proj.Models
 {
     public class Pricing
     {

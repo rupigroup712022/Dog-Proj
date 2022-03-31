@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -8,10 +9,11 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Http;
 
-namespace MakeAble.Controllers
+namespace Dog_Proj.Controllers
 {
     public class FileUploadController : ApiController
     {
+
         [HttpPost]
         public HttpResponseMessage Post()
         {
@@ -27,18 +29,17 @@ namespace MakeAble.Controllers
                     HttpPostedFile httpPostedFile = httpContext.Request.Files[i];
 
                     // this is an example of how you can extract addional values from the Ajax call
-                    string end = httpPostedFile.FileName.Split('.').Last();
-                    string name = (httpContext.Request.Form["name"] + i + '.' + end);
+                    string name = httpContext.Request.Form["name"];
 
                     if (httpPostedFile != null)
                     {
                         // Construct file save path  
                         //var fileSavePath = Path.Combine(HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"]), httpPostedFile.FileName);
                         string fname = httpPostedFile.FileName.Split('\\').Last();
-                        var fileSavePath = Path.Combine(HostingEnvironment.MapPath("~/UploadedImageGalleries"), name);
+                        var fileSavePath = Path.Combine(HostingEnvironment.MapPath("~/uploadedFiles"), fname);
                         // Save the uploaded file  
                         httpPostedFile.SaveAs(fileSavePath);
-                        imageLinks.Add("UploadedImageGalleries/" + name);
+                        imageLinks.Add("uploadedFiles/" + fname);
                     }
                 }
             }
@@ -46,7 +47,6 @@ namespace MakeAble.Controllers
             // Return status code  
             return Request.CreateResponse(HttpStatusCode.Created, imageLinks);
         }
-
 
     }
 }

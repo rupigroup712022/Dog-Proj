@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Dog_Proj.Models.DAL;
 
-namespace DOGS1.Models {
+namespace Dog_Proj.Models {
 
 
     public class User
@@ -23,7 +23,6 @@ namespace DOGS1.Models {
             this.phone = phone;
             this.sex = sex;
             this.age = age;
-            //    this.ending_date = ending_date;
             //    this.availablity = availablity;
             this.familyId = familyId;
         }

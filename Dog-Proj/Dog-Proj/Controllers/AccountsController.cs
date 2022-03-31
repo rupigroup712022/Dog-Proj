@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using DOGS1.Models;
+using Dog_Proj.Models;
 
 namespace Dog_Proj.Controllers
 {
