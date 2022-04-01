@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- basic -->
@@ -51,12 +51,13 @@
             function nextlevel() {
 
                 let serviceDate = $('#meeting-time_walk').val();
-                let serviceByDate = serviceDate.split("T")[0];
-                console.log(serviceByDate);
-                const serviceHour = new Date(serviceDate).toLocaleTimeString('en',
-                    { timeStyle: 'short', hour12: false });
-                console.log(serviceHour);
-                const dayinnum = new Date(serviceByDate).getDay();
+                //let serviceByDate = serviceDate.split("T")[0];
+                //console.log(serviceByDate);
+                //const serviceHour = new Date(serviceDate).toLocaleTimeString('en',
+                //    { timeStyle: 'short', hour12: false });
+                //console.log(serviceHour);
+                let serviceHour = $("#selectime").val();
+                const dayinnum = new Date(serviceDate).getDay();
                 console.log(dayinnum);
                 var days = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
                 var serviceDay = days[dayinnum];
@@ -118,10 +119,10 @@
                 <div class="col col">
                     <button id="LogOut">Log Out</button>
                 </div>
-                <div class="col-md-4">
+                <div class="col-sm-2">
                     <div><a href="index.html"><img src="../images/LOGO1.png" /></a></div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-sm-6">
                     <div class="menu_text">
                         <ul>
 
@@ -156,14 +157,36 @@
 	<!-- section banner end -->
 	<!-- section about start -->
 	<div class="about_section_walk">
-		<div class="about_text">
+        <div class="about_text">
             <div class="container">
-                        <h1 class="about_taital"><strong><span style="color: orange;">בחר תאריך ושעה  </span>לטיול</strong></h1>
-                    </div>
-                            <input type="datetime-local" id="meeting-time_walk"
-                                   name="meeting-time" value="2022-03-11T00:00"
-                                   min="2022-03-11T00:00" max="2022-12-31T00:00">
-                    </div>
+                <h1 class="about_taital"><strong><span style="color: orange;">בחר תאריך ושעה  </span>לטיול</strong></h1>
+            </div>
+            <table>
+                <tr>
+                    <td>
+                        <input type="date" id="meeting-time_walk"
+                               name="meeting-time" value="2022-03-11T00:00"
+                               min="2022-03-11T00:00" max="2022-12-31T00:00">
+                    </td>
+                    </tr>
+                       <tr>
+                    <td>
+                        <select id="selectime">
+                            <option>בחר טווח שעות</option>
+                            <option>07:00-08:00</option>
+                            <option>08:00-12:00</option>
+                            <option>12:00-14:00</option>
+                            <option>14:00-16:00</option>
+                            <option>16:00-20:00</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            
+            
+               
+          
+        </div>
                 </div>
             </div>
 	<!-- section about end -->

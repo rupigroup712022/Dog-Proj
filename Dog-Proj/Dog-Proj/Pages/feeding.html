@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- basic -->
@@ -38,6 +38,7 @@
         $(document).ready(function () {
             $('#Next').click(nextlevel);
             $("#LogOut").click(LogOut);
+            
 
         });
 
@@ -45,17 +46,19 @@
         function LogOut() {
             localStorage.clear();
             window.location.href = "index.html";
+
         }
 
         function nextlevel() {
 
             let serviceDate = $('#meeting-time').val(); 
-            let serviceByDate = serviceDate.split("T")[0];
-            console.log(serviceByDate);
-            const serviceHour = new Date(serviceDate).toLocaleTimeString('en',
-                { timeStyle: 'short', hour12: false });
-            console.log(serviceHour);
-            const dayinnum = new Date(serviceByDate).getDay();
+            //let serviceByDate = serviceDate.split("T")[0];
+            console.log(serviceDate);
+            let serviceHour = $("#selectime").val();
+            //const serviceHour = new Date(serviceDate).toLocaleTimeString('en',
+            //    { timeStyle: 'short', hour12: false });
+            //console.log(serviceHour);
+            const dayinnum = new Date(serviceDate).getDay();
             console.log(dayinnum);
             var days = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
             var serviceDay = days[dayinnum];
@@ -113,17 +116,17 @@
     </script>
 </head>
 <body>
-	<!-- section banner start -->
-	<div class="header_section_food">
-		<div class="container-fluid">
+    <!-- section banner start -->
+    <!--<div class="header_section_food">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col col">
                     <button id="LogOut">Log Out</button>
                 </div>
-                <div class="col-md-4">
+                <div class="col-sm-4">
                     <div><a href="index.html"><img src="../images/LOGO1.png" /></a></div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-sm-6">
                     <div class="menu_text">
                         <ul>
 
@@ -142,191 +145,239 @@
                         </ul>
                     </div>
                 </div>
+            </div>-->
+    <div class="header_section_food">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div><a href="index.html"><img src="../images/LOGO1.png" /></a></div>
+                </div>
+                <div class="col-md-8">
+                    <div class="menu_text">
+                        <ul>
+                            <li class="LogeIn">
+
+                                <button id="LogOut">Log Out</button>
+                            </li>
+                            <li class="active">
+
+                                <div id="myNav" class="overlay">
+                                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                                    <div class="overlay-content">
+                                        <a href="index.html">Home</a>
+                                        <a href="about.html">About</a>
+                                        <a href="gallery.html">Gallery</a>
+                                        <a href="contact.html">Contact</a>
+                                    </div>
+                                </div>
+                                <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-		<div class="banner_main">
-			<div class="container">
-				<div class="ram">
-					<div class="row">
-                        <div class="col-sm-12">
-                            <h1   dir="rtl" class="about_taital"><strong><span style="color:orange;">מי מאכיל אותי</span>? </strong></h1>
-                            <p id="textime">בחירת תאריך ושעה  </p>
-                            <div>
-                                <input type="datetime-local" id="meeting-time"
-                                       name="meeting-time" value="2022-03-11T00:00"
-                                       min="2022-03-11T00:00" max="2022-12-31T00:00">
+            <div class="banner_main">
+                <div class="container">
+                    <div class="ram">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h1 dir="rtl" class="about_taital"><strong><span style="color:orange;">מי מאכיל אותי</span>? </strong></h1>
+
+                                <h3 class="about_taital" style="color: black;"> נא בחר תאריך ושעה </h3>
+
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="date" id="meeting-time"
+                                                   name="meeting-time" value="2022-03-11T00:00"
+                                                   min="2022-03-11T00:00" max="2022-12-31T00:00">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <select id="selectime">
+                                                <option>בחר טווח שעות</option>
+                                                <option>07:00-08:00</option>
+                                                <option>08:00-12:00</option>
+                                                <option>12:00-14:00</option>
+                                                <option>14:00-16:00</option>
+                                                <option>16:00-20:00</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
-				    </div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- section banner end -->
-	<!-- section about start -->
-	<div class="about_section_FOOD">
-		<div class="about_text">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- section banner end -->
+        <!-- section about start -->
+        <div class="about_section_FOOD">
+            <div class="about_text">
+                <div class="container">
+                    <h1 class="about_taital_food"><strong><span style="color:orange;">בחר את סוג השירות המבוקש  </span> להאכלה</strong></h1>
+                    <ul class="donate-now">
+                        <li>
+                            <input type="radio" id="10" name="amount" value="10" />
+                            <label for="20">האכלה אחת ביום <br />עלות: 20 <br /> נקודות זכות</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="20" name="amount" value="20" />
+                            <label for="20">שתי האכלות ביום <br />עלות: 20 <br /> נקודות זכות</label>
+                        </li>
+                    </ul>
+                      
+                </div>
+            </div>
+        </div>
+        <!-- section about end -->
+        <!-- section gallery start -->
+        <div class="gallery_main layout_padding">
             <div class="container">
-                <h1 class="about_taital_food"><strong><span style="color:orange;">בחר את סוג השירות המבוקש  </span> להאכלה</strong></h1>
-                <ul class="donate-now">
-                    <li>
-                        <input type="radio" id="10" name="amount" value="10"/>
-                        <label for="10">האכלה אחת ביום - 10 נקודות זכות</label>
-                    </li>
-                    <li>
-                        <input type="radio" id="20" name="amount" value="20" />
-                        <label for="20">שתי האכלות ביום- 20 נקודות זכות</label>
-                    </li>
-                </ul>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="dog_img"> <img src="../images/golden-retriever.png" style="max-width: 100%;"></div>
+                    </div>
+                    <div class="col-sm-8">
+                        <h1 class="about_taital"><strong><span style="color: black">כמות </span> אוכל</strong></h1>
+                        <p class="sed_text">אנא ציין את כמות האוכל הרצוי-עפ"י כוס חד פעמי</p>
+                        <input type="text" id="foodSize" required />
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="gallery_section_2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="about_taital"><strong><span style="color: orange;">הערות  </span>מיוחדות</strong></h1>
+                        <input type="text" id="note" required />
+
+                    </div>
+                    <input type="button" id="Next" value=" המשך לצפייה בנתוני השירות " />
+                    
+                    <!--<div class="col-sm-4">
+        <div class="dog_img"><img src="../images/dog-g.png" style="max-width: 100%;"></div>
+    </div>-->
+
+                </div>
                
             </div>
-		</div>
-	</div>
-	<!-- section about end -->
-	<!-- section gallery start -->
-    <div class="gallery_main layout_padding">
-    	<div class="container">
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="dog_img"> <img src="../images/golden-retriever.png" style="max-width: 100%;"></div>
-                </div>
-                <div class="col-sm-8">
-                    <h1 class="about_taital"><strong><span style="color: #ffffff;">כמות </span> אוכל</strong></h1>
-                    <p class="sed_text">אנא ציין את כמות האוכל הרצוי-עפ"י כוס חד פעמי</p>
-                    <input type="text" id="foodSize" required />
-                </div>
 
+        </div>
+
+       
+        <!-- section footer start -->
+        <div class="section_footer">
+            <div class="container">
+                <div class="mail_section">
+                    <ul>
+
+                        <li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
+                        <!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
+                        <li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
+                        <li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
+                    </ul>
+                </div>
+                <div class="footer_section_2">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <h2 class="shop_text">About Petcom</h2>
+                            <p class="dummy_text">קהילה חברתית יזמית המושתת על עזרה הדדית, שיוויוניות ועזרה לקהילה </p>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <h2 class="shop_text">Useful Links</h2>
+                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
+                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
+                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
+                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <h2 class="shop_text">Overview</h2>
+                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
+                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <h2 class="adderess_text">Instagram</h2>
+                            <div class="footer-img">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="footer-img"><img src="../images/footer-img1.png" style="width: 100%;"></div>
+                                        <div class="footer-img"><img src="../images/footer-img2.png" style="width: 100%;"></div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="footer-img"><img src="../images/footer-img3.png" style="width: 100%;"></div>
+                                        <div class="footer-img"><img src="../images/footer-img4.png" style="width: 100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="social-icon">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="icons">
+                                <ul>
+                                    <li><a href="#"><img src="../images/fb-icon.png"></a></li>
+                                    <li><a href="#"><img src="../images/twitter-icon.png"></a></li>
+                                    <li><a href="#"><img src="../images/google-icon.png"></a></li>
+                                    <li><a href="#"><img src="../images/linkedin-icon.png"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-    		
-    	</div>
+        </div>
     </div>
-    <div class="gallery_section_2">
-    	<div class="container">
-            <div class="row">
-                <div class="box_3">
-                    <h1 class="numbar">03</h1>
-                </div>
-                <div class="col-sm-8">
-                    <h1 class="about_taital"><strong><span style="color: orange;">הערות  </span>מיוחדות</strong></h1>
-                    <input type="text" id="note" required />
-                </div>
-                <div class="col-sm-4">
-                    <div class="dog_img"><img src="../images/dog-g.png" style="max-width: 100%;"></div>
-                </div>
-                <div>
-                    <input type="button" id="Next" value="המשך " />
-
-                </div>
-            </div>
-    	</div>
-    </div>
-	
-	<!-- section footer start -->
-    <div class="section_footer">
-    	<div class="container">
-    		<div class="mail_section">
-    			<ul>
-                  
-    				<li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
-    				<!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
-    				<li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
-    				<li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
-    			</ul>
-    	    </div> 
-    	    <div class="footer_section_2">
-		        <div class="row">
-    		        <div class="col-sm-6 col-md-6 col-lg-3">
-    		        	<h2 class="shop_text">About Petcom</h2>
-    		        	<p class="dummy_text">קהילה חברתית יזמית המושתת על עזרה הדדית, שיוויוניות ועזרה לקהילה </p>
-    		        </div>
-    		        <div class="col-sm-6 col-md-6 col-lg-3">
-    		        	<h2 class="shop_text">Useful Links</h2>
-    		        	<div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
-    		        </div>
-    		        <div class="col-sm-6 col-md-6 col-lg-3">
-    				    <h2 class="shop_text">Overview</h2>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>    				
-    		        </div>
-    			<div class="col-sm-6 col-md-6 col-lg-3">
-    				<h2 class="adderess_text">Instagram</h2>
-    				<div class="footer-img">
-    					<div class="row">
-    						<div class="col-sm-6">
-    							<div class="footer-img"><img src="../images/footer-img1.png" style="width: 100%;"></div>
-    							<div class="footer-img"><img src="../images/footer-img2.png" style="width: 100%;"></div>
-    						</div>
-    						<div class="col-sm-6">
-    							<div class="footer-img"><img src="../images/footer-img3.png" style="width: 100%;"></div>
-    							<div class="footer-img"><img src="../images/footer-img4.png" style="width: 100%;"></div>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    			</div>
-    	        </div>
-    	        <div class="social-icon">
-	        	    <div class="row">
-	        		    <div class="col-sm-12">
-	        			    <div class="icons">
-	        				    <ul>
-	        					    <li><a href="#"><img src="../images/fb-icon.png"></a></li>
-	        					    <li><a href="#"><img src="../images/twitter-icon.png"></a></li>
-	        					    <li><a href="#"><img src="../images/google-icon.png"></a></li>
-	        					    <li><a href="#"><img src="../images/linkedin-icon.png"></a></li>
-	        				    </ul>
-	        			    </div>
-	        		    </div>
-	        	    </div>
-	            </div>
-	        </div>
-    	</div>
-    </div>
-	<!-- section footer end -->
-
+    <!-- section footer end -->
     <!-- Javascript files-->
     <script src="../Scripts/jquery.min.js"></script>
     <script src="../Scripts/popper.min.js"></script>
     <script src="../Scripts/bootstrap.bundle.min.js"></script>
-      <script src="../Scripts/jquery-3.0.0.min.js"></script>
-      <script src="../Scripts/plugin.js"></script>
-      <!-- sidebar -->
-      <script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
-      <script src="../Scripts/custom.js"></script>
-      <!-- javascript --> 
-      <script src="../Scripts/owl.carousel.js"></script>
-      <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-      <script>
-      $(document).ready(function(){
-      $(".fancybox").fancybox({
-         openEffect: "none",
-         closeEffect: "none"
-         });
-         
-         $(".zoom").hover(function(){
-         
-         $(this).addClass('transition');
-         }, function(){
-         
-         $(this).removeClass('transition');
-         });
-         });
-         </script> 
+    <script src="../Scripts/jquery-3.0.0.min.js"></script>
+    <script src="../Scripts/plugin.js"></script>
+    <!-- sidebar -->
+    <script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../Scripts/custom.js"></script>
+    <!-- javascript -->
+    <script src="../Scripts/owl.carousel.js"></script>
+    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function () {
+
+                $(this).addClass('transition');
+            }, function () {
+
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
 
 
-   <script>
-    function openNav() {
-    document.getElementById("myNav").style.width = "100%";
-    }
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
 
-    function closeNav() {
-   document.getElementById("myNav").style.width = "0%";
-   }
-</script>
-     
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>
+
 </body>
 </html>

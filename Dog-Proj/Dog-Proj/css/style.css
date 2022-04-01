@@ -960,36 +960,40 @@ input#foodSize, input#note {
         float: left;
         margin: 0 5px 0 0;
         width: 100px;
-        height: 40px;
+        height: 500px;
         position: relative;
+
     }
 
     .donate-now label,
     .donate-now input {
         display: block;
         position: inherit;
-        top: 0;
-        left: 0;
-        right: 0;
+        top: 100px;
+        left: 500px;
+        right: 50px;
         bottom: 0;
+        background: white;
     }
 
         .donate-now input[type="radio"] {
             opacity: 0.01;
             z-index: 100;
+            
         }
 
             .donate-now input[type="radio"]:checked + label,
             .Checked + label {
-                background: yellow;
+                background: orange;
             }
 
     .donate-now label {
-        padding: 5px;
+        padding: 0px;
         border: 1px solid #CCC;
         cursor: pointer;
         z-index: 90;
         text-align: center;
+        margin-left:10px;
 
     }
 
