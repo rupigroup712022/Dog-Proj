@@ -36,48 +36,95 @@
     <script>
        $(document).ready(function () {
             $('#Next').click(nextlevel);
+           $("#LogOut").click(LogOut);
 
         });
 
-
-
-
-        function nextlevel() {
-
-            let now = new Date();
-            let today = now.getDate() + '/' + (now.getMonth() + 1) + '/' + now.getFullYear();
-            console.log(today);
-            let dateOfService = $('#meeting-time_walk').val(today);//האם זה השם הנכון ?
-
-
-            var typeOfService = "";//מה השם ?
-            var amo = document.getElementsByName('amount');
-            for (i = 0; i < amo.length; i++) {
-                if (amo[i].checked)
-                    typeOfService = amo[i].value
-            }
-            let note = $(this).find("#note").val();//לראות מה השם
-
-
-
-
-
-
+        function LogOut() {
+            localStorage.clear();
+            window.location.href = "index.html";
         }
+
+
+
+
+            function nextlevel() {
+
+                let serviceDate = $('#meeting-time_walk').val();
+                let serviceByDate = serviceDate.split("T")[0];
+                console.log(serviceByDate);
+                const serviceHour = new Date(serviceDate).toLocaleTimeString('en',
+                    { timeStyle: 'short', hour12: false });
+                console.log(serviceHour);
+                const dayinnum = new Date(serviceByDate).getDay();
+                console.log(dayinnum);
+                var days = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
+                var serviceDay = days[dayinnum];
+                console.log(serviceDay);
+
+
+                var servicetype = "";
+                var amo = document.getElementsByName('amount');
+                for (i = 0; i < amo.length; i++) {
+                    if (amo[i].checked)
+                        servicetype = amo[i].value
+                }
+                let note = $("#note").val();
+                let serviceName = "walk";
+                var familyId = parseInt(localStorage.getItem('familyId'));
+                var UserId = parseInt(localStorage.getItem('UserId'));
+
+
+                walk = {
+                    ServiceName: serviceName,
+                    ServiceDate: serviceDate,
+                    ServiceDay: serviceDay,
+                    ServiceHour: serviceHour,
+                    Note: note,
+                    Servicetype: servicetype,
+                    UserId: UserId,
+                    FamilyId: familyId
+
+                }
+
+
+                console.log(walk);
+                let api = "../api/Services?UserId=" + UserId;
+                ajaxCall("POST", api, JSON.stringify(walk), postSCB, postECB);
+                return false;
+            }
+
+
+            function postSCB(service) {
+                alert("עכשיו רק נשאר לבחור מי יבצע את השירות");
+                $("#Next").click(function () {
+                    window.location.href = "SingInDog.html";// להוסיף דף בחירה 
+                });
+            }
+
+            function postECB(err) {
+                alert("Error");
+            }
+
+
+
     </script>
 </head>
 <body>
 	<!-- section banner start -->
 	<div class="header_section_walk">
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-4">
-					<div ><a href="index.html"><img src="../images/LOGO1.png" /></a></div>
-				</div>
+            <div class="row">
+                <div class="col col">
+                    <button id="LogOut">Log Out</button>
+                </div>
+                <div class="col-md-4">
+                    <div><a href="index.html"><img src="../images/LOGO1.png" /></a></div>
+                </div>
                 <div class="col-md-8">
                     <div class="menu_text">
                         <ul>
-                       
+
                             <li class="active">
                                 <div id="myNav" class="overlay">
                                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -90,10 +137,10 @@
                                 </div>
                                 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
                             </li>
-						</ul>
-					</div>
-			</div>
-		</div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 		<div class="banner_main">
 			<div class="container">
 				<div class="ram">
@@ -127,11 +174,11 @@
                 <h1 class="about_taital_food"><strong><span style="color:white;">בחר את סוג השירות המבוקש  </span> לטיול</strong></h1>
                 <ul class="donate-now">
                     <li>
-                        <input type="radio" id="20" name="amount" />
+                        <input type="radio" id="20" name="amount" value="20" />
                         <label for="20">טיול למשך 15 דקות- 20 נקודות זכות</label>
                     </li>
                     <li>
-                        <input type="radio" id="40"  name="amount" />
+                        <input type="radio" id="40"  name="amount" value="40" />
                         <label for="40">טיול למשך 30 דקות- 40 נקודות זכות</label>
                     </li>
                 </ul>
@@ -146,7 +193,7 @@
                     <h1 class="numbar">03</h1>
                 </div>
                 <div class="col-sm-8">
-                    <h1 id="note"class="about_taital"><strong><span style="color: orange;">הערות  </span>מיוחדות</strong></h1>
+                    <h1 class="about_taital"><strong><span style="color: orange;">הערות  </span>מיוחדות</strong></h1>
                     <input type="text" id="note" required />
                 </div>
                 <div class="col-sm-4">

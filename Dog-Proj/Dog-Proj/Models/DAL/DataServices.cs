@@ -79,7 +79,8 @@ namespace Dog_Proj.Models.DAL
                 while (dataReader.Read())
                 {
 
-                    str = Convert.ToInt32(dataReader["id"]);
+                    str += Convert.ToInt32(dataReader["id"]);
+                    
                 }
                 dataReader.Close();
 
@@ -107,7 +108,7 @@ namespace Dog_Proj.Models.DAL
 
         private SqlCommand NameCheck(SqlConnection con, string username, int familyId)
         {
-            string str = "SELECT id FROM UsersFamliy WHERE username LIKE @username and familyId = @familyId";
+            string str = "SELECT  FROM UsersFamliy WHERE username LIKE @username and familyId = @familyId";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@username", SqlDbType.NChar);
             cmd.Parameters["@username"].Value = username;
@@ -499,6 +500,127 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters["@passwords"].Value = Passwords;
             return cmd;
         }
+
+
+        public int InsertServices(int UserId, Service service)
+        {
+
+                SqlConnection con = null;
+                 int numEffected = 0;
+
+                try
+                {
+                    //C - Connect to the Database
+                    con = Connect("DogsProjDB");
+
+                //C Create the Insert SqlCommand
+                if (service.ServiceName == "feeding")
+                {
+                    SqlCommand insertCommand = CreateInsertCommandservice(UserId, service, con);
+                    numEffected = insertCommand.ExecuteNonQuery();
+
+                }
+                if (service.ServiceName == "pension")
+                {
+                    SqlCommand insertCommand = CreateInsertCommandservicepension(UserId, service, con);
+                    numEffected = insertCommand.ExecuteNonQuery();
+
+                }
+                if (service.ServiceName == "walk")
+                {
+                    SqlCommand insertCommand = CreateInsertCommandservicewalk(UserId, service, con);
+                    numEffected = insertCommand.ExecuteNonQuery();
+
+                }
+                //E Execute
+            }
+
+                catch (Exception exep)
+                {
+                    // this code needs to write the error to a log file
+                    throw new Exception("Error", exep);
+                }
+
+                finally
+                {
+                    //C Close Connction
+                    con.Close();
+                }
+
+
+                // num effected
+                return numEffected;
+            }
+
+            private SqlCommand CreateInsertCommandservicewalk(int UserId, Service service,SqlConnection con)
+        {
+
+            string commandStr = "INSERT INTO ServicesDog (serviceName,serviceDate,serviceDay,serviceHour,note,servicetype,UserId,familyId) VALUES (@serviceName,@serviceDate,@serviceDay,@serviceHour,@note,@servicetype,@UserId,@familyId)";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@serviceName", SqlDbType.NChar);
+            cmd.Parameters["@serviceName"].Value = service.ServiceName;
+            cmd.Parameters.Add("@serviceDate", SqlDbType.NChar);
+            cmd.Parameters["@serviceDate"].Value = service.ServiceDate;
+            cmd.Parameters.Add("@serviceDay", SqlDbType.NChar);
+            cmd.Parameters["@serviceDay"].Value = service.ServiceDay;
+            cmd.Parameters.Add("@serviceHour", SqlDbType.NChar);
+            cmd.Parameters["@serviceHour"].Value = service.ServiceHour;
+            cmd.Parameters.Add("@note", SqlDbType.NChar);
+            cmd.Parameters["@note"].Value = service.Note;
+            cmd.Parameters.Add("@servicetype", SqlDbType.NChar);
+            cmd.Parameters["@servicetype"].Value = service.Servicetype;
+             cmd.Parameters.Add("@UserId", SqlDbType.SmallInt);
+            cmd.Parameters["@UserId"].Value = UserId;
+            cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
+            cmd.Parameters["@familyId"].Value = service.FamilyId;
+            return cmd;
+        }
+        private SqlCommand CreateInsertCommandservice(int UserId, Service service, SqlConnection con)
+        {
+
+            string commandStr = "INSERT INTO ServicesDog (serviceName,serviceDate,serviceDay,serviceHour,note,servicetype,quantity,UserId,familyId) VALUES (@serviceName,@serviceDate,@serviceDay,@serviceHour,@note,@servicetype,@quantity,@UserId,@familyId)";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@serviceName", SqlDbType.NChar);
+            cmd.Parameters["@serviceName"].Value = service.ServiceName;
+            cmd.Parameters.Add("@serviceDate", SqlDbType.NChar);
+            cmd.Parameters["@serviceDate"].Value = service.ServiceDate;
+            cmd.Parameters.Add("@serviceDay", SqlDbType.NChar);
+            cmd.Parameters["@serviceDay"].Value = service.ServiceDay;
+            cmd.Parameters.Add("@serviceHour", SqlDbType.NChar);
+            cmd.Parameters["@serviceHour"].Value = service.ServiceHour;
+            cmd.Parameters.Add("@note", SqlDbType.NChar);
+            cmd.Parameters["@note"].Value = service.Note;
+            cmd.Parameters.Add("@servicetype", SqlDbType.NChar);
+            cmd.Parameters["@servicetype"].Value = service.Servicetype;
+            cmd.Parameters.Add("@quantity", SqlDbType.NChar);
+            cmd.Parameters["@quantity"].Value = service.Quantity;
+            cmd.Parameters.Add("@UserId", SqlDbType.SmallInt);
+            cmd.Parameters["@UserId"].Value = UserId;
+            cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
+            cmd.Parameters["@familyId"].Value = service.FamilyId;
+            return cmd;
+        }
+        private SqlCommand CreateInsertCommandservicepension(int UserId, Service service, SqlConnection con)
+        {
+
+            string commandStr = "INSERT INTO ServicesDog (serviceName,serviceDate,note,servicetype,UserId,familyId) VALUES (@serviceName,@serviceDate,@note,@servicetype,@UserId,@familyId)";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@serviceName", SqlDbType.NChar);
+            cmd.Parameters["@serviceName"].Value = service.ServiceName;
+            cmd.Parameters.Add("@serviceDate", SqlDbType.NChar);
+            cmd.Parameters["@serviceDate"].Value = service.ServiceDate;
+            cmd.Parameters.Add("@note", SqlDbType.NChar);
+            cmd.Parameters["@note"].Value = service.Note;
+            cmd.Parameters.Add("@servicetype", SqlDbType.NChar);
+            cmd.Parameters["@servicetype"].Value = service.Servicetype;
+            cmd.Parameters.Add("@UserId", SqlDbType.SmallInt);
+            cmd.Parameters["@UserId"].Value = UserId;
+            cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
+            cmd.Parameters["@familyId"].Value = service.FamilyId;
+            return cmd;
+        }
+
+
         SqlConnection Connect(string connectionStringName)
         {
 

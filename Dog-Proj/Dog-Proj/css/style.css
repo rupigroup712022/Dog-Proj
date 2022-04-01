@@ -996,3 +996,10 @@ input#foodSize, input#note {
         .donate-now label:hover {
             background: #DDD;
         }
+#ph_head {
+    background-color: white;
+    COLOR: GREEN;
+    HEIGHT: 100PX;
+    WIDTH: 200PX;
+    TEXT-ALIGN: CENTER;
+}

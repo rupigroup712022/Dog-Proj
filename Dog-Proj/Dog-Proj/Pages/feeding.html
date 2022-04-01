@@ -37,49 +37,96 @@
 
         $(document).ready(function () {
             $('#Next').click(nextlevel);
+            $("#LogOut").click(LogOut);
 
         });
 
 
-
+        function LogOut() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
 
         function nextlevel() {
 
-            let now = new Date();
-            let today = now.getDate() + '/' + (now.getMonth() + 1) + '/' + now.getFullYear();
-            console.log(today);
-            let dateOfService = $('#meeting-time').val(today);//האם זה השם הנכון ?
+            let serviceDate = $('#meeting-time').val(); 
+            let serviceByDate = serviceDate.split("T")[0];
+            console.log(serviceByDate);
+            const serviceHour = new Date(serviceDate).toLocaleTimeString('en',
+                { timeStyle: 'short', hour12: false });
+            console.log(serviceHour);
+            const dayinnum = new Date(serviceByDate).getDay();
+            console.log(dayinnum);
+            var days = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
+            var serviceDay = days[dayinnum];
+            console.log(serviceDay);
 
 
-            var typeOfService = "";//מה השם ?
+            var servicetype = "";
             var amo = document.getElementsByName('amount');
             for (i = 0; i < amo.length; i++) {
                 if (amo[i].checked)
-                    typeOfService = amo[i].value
+                    servicetype = amo[i].value
             }
-            let foodSize = $(this).find("#foodSize").val();//לראות מה השם
-            let note = $(this).find("#note").val();//לראות מה השם
+            let quantity = $("#foodSize").val();
+            let note = $("#note").val();
+            let serviceName = "feeding";
+            var familyId = parseInt(localStorage.getItem('familyId'));
+            var UserId = parseInt(localStorage.getItem('UserId'));
 
 
+            feeding = {
+                ServiceName: serviceName,
+                ServiceDate: serviceDate,
+                ServiceDay: serviceDay,
+                ServiceHour: serviceHour,
+                Note: note,
+                Servicetype: servicetype,
+                Quantity: quantity,
+                UserId: UserId,
+                FamilyId: familyId
+
+            }
 
 
-
-
+            console.log(feeding);
+            let api = "../api/Services?UserId=" + UserId;
+            ajaxCall("POST", api, JSON.stringify(feeding), postSCB, postECB);
+            return false;
         }
+
+
+        function postSCB(service) {
+            alert("עכשיו רק נשאר לבחור מי יבצע את השירות");
+            $("#Next").click(function () {
+                window.location.href = "SingInDog.html";// להוסיף דף בחירה 
+            });
+        }
+
+        function postECB(err) {
+            alert("Error");
+        }
+
+
+
+
     </script>
 </head>
 <body>
 	<!-- section banner start -->
 	<div class="header_section_food">
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-4">
-					<div ><a href="index.html"><img src="../images/LOGO1.png" /></a></div>
-				</div>
+            <div class="row">
+                <div class="col col">
+                    <button id="LogOut">Log Out</button>
+                </div>
+                <div class="col-md-4">
+                    <div><a href="index.html"><img src="../images/LOGO1.png" /></a></div>
+                </div>
                 <div class="col-md-8">
                     <div class="menu_text">
                         <ul>
-                       
+
                             <li class="active">
                                 <div id="myNav" class="overlay">
                                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -92,10 +139,10 @@
                                 </div>
                                 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
                             </li>
-						</ul>
-					</div>
-			</div>
-		</div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 		<div class="banner_main">
 			<div class="container">
 				<div class="ram">
@@ -122,11 +169,11 @@
                 <h1 class="about_taital_food"><strong><span style="color:orange;">בחר את סוג השירות המבוקש  </span> להאכלה</strong></h1>
                 <ul class="donate-now">
                     <li>
-                        <input type="radio" id="10" name="amount" />
+                        <input type="radio" id="10" name="amount" value="10"/>
                         <label for="10">האכלה אחת ביום - 10 נקודות זכות</label>
                     </li>
                     <li>
-                        <input type="radio" id="20" name="amount" />
+                        <input type="radio" id="20" name="amount" value="20" />
                         <label for="20">שתי האכלות ביום- 20 נקודות זכות</label>
                     </li>
                 </ul>

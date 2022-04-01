@@ -29,6 +29,8 @@
 <link rel="stylesheet" href="../css/owl.carousel.min.css">
 <link rel="stylesheet" href="../css/owl.theme.default.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+<script src="../Scripts/ajaxCall.js"></script>
+<script src="../Scripts/jquery-3.4.1.js"></script>
     <style>
         .Ser_bt {
             font-family: "Times New Roman", Times, serif;
@@ -43,6 +45,48 @@
         }
 
     </style>
+    <script>
+        $(document).ready(function () {
+            username = JSON.parse(localStorage["username"]);
+            welcome(username);
+            $("#LogOut").click(LogOut);
+
+          
+
+
+
+        });
+
+
+
+        function welcome(username) {
+            console.log(username);
+
+            let str = "<h1> Welcome " + username + "</h1>";
+            $("#ph_head").html(str);
+        }
+        function LogOut() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
 </head>
 <body>
 	<!-- section banner start -->
@@ -50,14 +94,18 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col col">
+                    <button id="LogOut">Log Out</button>
+                </div>
+                <div class="col col">
                     <div><a href="index.html"> <img src="../images/LOGO1.png" /></a></div>
                 </div>
-                <div class="col col">
-                    <h1 class="BTMAIN"> <a href="LogeIn.html">יש לך בקשות ממתינות</a></h1>
-                </div>
-                <div class="col col">
-                    <h1 class="BTMAIN"> <a href="LogeIn.html">השירות הסתיים ?לחץ כאן להשארת חוות דעת</a></h1>
-                </div>
+
+                <!--<div class="col col">
+        <h1 class="BTMAIN"> <a href="LogeIn.html">יש לך בקשות ממתינות</a></h1>
+    </div>
+    <div class="col col">
+        <h1 class="BTMAIN"> <a href="LogeIn.html">השירות הסתיים ?לחץ כאן להשארת חוות דעת</a></h1>
+    </div>-->
                 <div class="col-5">
                     <div class="menu_text">
                         <ul>
@@ -83,35 +131,36 @@
         <!-- section about start -->
         <div class="Service_section">
             <div class="container">
-                
-                    <div class="col col">
-                        <h1 class="about_taital_1"><strong><span style="color: #f7941d;">איזה שירות</span> תצטרכו היום</strong></h1>
-                    </div>
-                    <div id="NameSer" class="row" >
 
-                        <div class="col col">
-                            <h1 class="Ser_bt" ><a href="walk.html">תטייל איתי</a></h1>
-                        </div>
-                        <div class="col col">
-                            <h1 class="Ser_bt"><a href="feeding.html">תאכיל אותי</a></h1>
-                        </div>
-                        <div class="col col">
-                            <h1 class="Ser_bt"><a href="pension.html">תשמור עלי</a></h1>
-                        </div>
-                    </div>
-                    <div id="ImgSer" class="row">
-                        <div class="col col">
-                            <img class="typeSer" src="../images/תטייל איתי.jpg" />
-                        </div>
-                        <div class="col col">
-                            <img class="typeSer" src="../images/תאכיל אותי.jpg" />
-                        </div>
-                        <div class="col col">
-                            <img class="typeSer" src="../images/תשמור עלי.jpg" />
-                        </div>
-                    </div>
-
+                <div class="col col">
+                    <h1 class="about_taital_1"><strong><span style="color: #f7941d;">איזה שירות</span> תצטרכו היום</strong></h1>
                 </div>
+                <div id="ph_head"></div>
+                <div id="NameSer" class="row">
+
+                    <div class="col col">
+                        <h1 class="Ser_bt"><a href="walk.html">תטייל איתי</a></h1>
+                    </div>
+                    <div class="col col">
+                        <h1 class="Ser_bt"><a href="feeding.html">תאכיל אותי</a></h1>
+                    </div>
+                    <div class="col col">
+                        <h1 class="Ser_bt"><a href="pension.html">תשמור עלי</a></h1>
+                    </div>
+                </div>
+                <div id="ImgSer" class="row">
+                    <div class="col col">
+                        <img class="typeSer" src="../images/תטייל איתי.jpg" />
+                    </div>
+                    <div class="col col">
+                        <img class="typeSer" src="../images/תאכיל אותי.jpg" />
+                    </div>
+                    <div class="col col">
+                        <img class="typeSer" src="../images/תשמור עלי.jpg" />
+                    </div>
+                </div>
+
+            </div>
                 </div>
         <!-- section about end -->
         <!-- section footer start -->

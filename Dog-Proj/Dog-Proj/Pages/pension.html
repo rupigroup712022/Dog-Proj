@@ -4,6 +4,7 @@
     <!-- basic -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- mobile metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,54 +31,111 @@
     <link rel="stylesheet" href="../css/owl.carousel.min.css">
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script src="../Scripts/ajaxCall.js"></script>
     <script>
 
 
         $(document).ready(function () {
             $('#Next').click(nextlevel);
+            $("#LogOut").click(LogOut);
+
 
         });
 
+        $(function () {
+            $('#regervation').daterangepicker({
+                "autoapply": true,
+                "linkedCalendars": false,
+            },
+                function (start, end, label) {
+                    $('#displayRegervation').text('Registration date is: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                });
+            $('.drp-calendar.right').hide();
+            $('.drp-calendar.left').addClass('single');
 
+            $('.calendar-table').on('DOMSubtreeModified', function () {
+                var el = $(".prev.available").parent().children().last();
+                if (el.hasClass('next available')) {
+                    return;
+                }
+                el.addClass('next available');
+                el.append('<span></span>');
+            });
+        });
 
+        function LogOut() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
 
         function nextlevel() {
 
-            let now = new Date();
-            let today = now.getDate() + '/' + (now.getMonth() + 1) + '/' + now.getFullYear();
-            console.log(today);
-            let dateOfService = $('#meeting-time_Pension').val(today);//האם זה השם הנכון ?
+            let serviceDate = $('#regervation').val();
+            console.log(serviceDate);
 
-
-            var typeOfService = "";//מה השם ?
+           
+            var servicetype = "";
             var amo = document.getElementsByName('amount');
             for (i = 0; i < amo.length; i++) {
                 if (amo[i].checked)
-                    typeOfService = amo[i].value
+                    servicetype = amo[i].value
             }
-            let foodSize = $(this).find("#foodSize").val();//לראות מה השם
-            let note = $(this).find("#note").val();//לראות מה השם
+            let note = $("#note").val();
+            let serviceName = "pension";
+            var familyId = parseInt(localStorage.getItem('familyId'));
+            var UserId = parseInt(localStorage.getItem('UserId'));
+
+
+            pension = {
+                ServiceName: serviceName,
+                ServiceDate: serviceDate,
+                Note: note,
+                Servicetype: servicetype,
+                UserId: UserId,
+                FamilyId: familyId
+
+            }
 
 
 
+            console.log(pension);
+            let api = "../api/Services?UserId=" + UserId;
+            ajaxCall("POST", api, JSON.stringify(pension), postSCB, postECB);
+           return false;
+        }
 
 
+        function postSCB(service) {
+            alert("עכשיו רק נשאר לבחור מי יבצע את השירות");
+            $("#Next").click(function () {
+                window.location.href = "SingInDog.html";// להוסיף דף בחירה
+            });
+        }
 
+        function postECB(err) {
+            alert("Error");
         }
     </script>
 </head>
 <body>
-	<!-- section banner start -->
-	<div class="header_section_walk">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-4">
-					<div ><a href="index.html"><img src="../images/LOGO1.png" /></a></div>
-				</div>
+    <!-- section banner start -->
+    <div class="header_section_walk">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col col">
+                    <button id="LogOut">Log Out</button>
+                </div>
+                <div class="col-md-4">
+                    <div><a href="index.html"><img src="../images/LOGO1.png" /></a></div>
+                </div>
                 <div class="col-md-8">
                     <div class="menu_text">
                         <ul>
-                       
+
                             <li class="active">
                                 <div id="myNav" class="overlay">
                                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -90,62 +148,64 @@
                                 </div>
                                 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
                             </li>
-						</ul>
-					</div>
-			</div>
-		</div>
-		<div class="banner_main">
-			<div class="container">
-				<div class="ram">
-					<div class="row">
-                        <div class="col-sm-12">
-                            <h1   dir="rtl" class="about_taital"><strong><span style="color:orange;">מי שומר עלי </span>? </strong></h1>
-                        </div>
-				    </div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- section banner end -->
-	<!-- section about start -->
-	<div class="about_section_walk">
-		<div class="about_text">
-            <div class="container">
-                        <h1 class="about_taital"><strong><span style="color: orange;">בחר תאריך ושעה  </span>לטיול</strong></h1>
-                    </div>
-                            <input type="datetime-local" id="meeting-time_Pension"
-                                   name="meeting-time" value="2022-03-11T00:00"
-                                   min="2022-03-11T00:00" max="2022-12-31T00:00">
+                        </ul>
                     </div>
                 </div>
             </div>
-	<!-- section about end -->
-	<!-- section gallery start -->
+            <div class="banner_main">
+                <div class="container">
+                    <div class="ram">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h1 dir="rtl" class="about_taital"><strong><span style="color:orange;">מי שומר עלי </span>? </strong></h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- section banner end -->
+    <!-- section about start -->
+    
+    <div class="about_section_walk">
+        <div class="about_text">
+            <div class="container">
+                <div>
+                    <h1>בחר טווח תאריכים מתאים</h1>
+                    <input type="text" name="regervation" id="regervation" placeholder="Please select regervation date!" />
+                    <div id="displayRegervation"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- section about end -->
+    <!-- section gallery start -->
     <div class="gallery_main layout_padding">
         <div class="container">
             <div class="about_text">
-            <div>
-                <h1 class="about_taital_food"><strong><span style="color:white;">בחר את סוג השירות המבוקש  </span> לטיול</strong></h1>
-            </div>
+                <div>
+                    <h1 class="about_taital_food"><strong><span style="color:white;">בחר את סוג השירות המבוקש  </span> לטיול</strong></h1>
+                </div>
                 <div>
                     <ul class="donate-now">
                         <li>
-                            <input type="radio" id="100" name="amount" />
+                            <input type="radio" id="100" name="amount" value="100" />
                             <label for="100">שמירה על הכלב בין יום אחד לחמישה -100 נקודות זכות ליום</label>
                         </li>
                         <li>
-                            <input type="radio" id="110" name="amount" />
+                            <input type="radio" id="110" name="amount"  value="110"/>
                             <label for="110">שמירה על הכלב מעל שישה ימים-110 נקודות זכות ליום</label>
                         </li>
                     </ul>
                 </div>
-                
+
             </div>
-            
+
         </div>
     </div>
     <div class="gallery_section_2">
-    	<div class="container">
+        <div class="container">
             <div class="row">
                 <div class="box_3">
                     <h1 class="numbar">03</h1>
@@ -155,118 +215,122 @@
                     <input type="text" id="note" required />
                 </div>
                 <div class="col-sm-4">
-                    <div class="dog_img"><img src="../images/bichon-g.png"  style="max-width: 100%;"></div>
+                    <div class="dog_img"><img src="../images/bichon-g.png" style="max-width: 100%;"></div>
+                </div>
+                <div>
+                    <input type="button" id="Next" value="המשך " />
+
                 </div>
             </div>
-    	</div>
+        </div>
     </div>
-	
-	<!-- section footer start -->
-    <div class="section_footer">
-    	<div class="container">
-    		<div class="mail_section">
-    			<ul>
-                  
-    				<li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
-    				<!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
-    				<li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
-    				<li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
-    			</ul>
-    	    </div> 
-    	    <div class="footer_section_2">
-		        <div class="row">
-    		        <div class="col-sm-6 col-md-6 col-lg-3">
-    		        	<h2 class="shop_text">About Petcom</h2>
-    		        	<p class="dummy_text">קהילה חברתית יזמית המושתת על עזרה הדדית, שיוויוניות ועזרה לקהילה </p>
-    		        </div>
-    		        <div class="col-sm-6 col-md-6 col-lg-3">
-    		        	<h2 class="shop_text">Useful Links</h2>
-    		        	<div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
-    		        </div>
-    		        <div class="col-sm-6 col-md-6 col-lg-3">
-    				    <h2 class="shop_text">Overview</h2>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>    				
-    		        </div>
-    			<div class="col-sm-6 col-md-6 col-lg-3">
-    				<h2 class="adderess_text">Instagram</h2>
-    				<div class="footer-img">
-    					<div class="row">
-    						<div class="col-sm-6">
-    							<div class="footer-img"><img src="../images/footer-img1.png" style="width: 100%;"></div>
-    							<div class="footer-img"><img src="../images/footer-img2.png" style="width: 100%;"></div>
-    						</div>
-    						<div class="col-sm-6">
-    							<div class="footer-img"><img src="../images/footer-img3.png" style="width: 100%;"></div>
-    							<div class="footer-img"><img src="../images/footer-img4.png" style="width: 100%;"></div>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    			</div>
-    	        </div>
-    	        <div class="social-icon">
-	        	    <div class="row">
-	        		    <div class="col-sm-12">
-	        			    <div class="icons">
-	        				    <ul>
-	        					    <li><a href="#"><img src="../images/fb-icon.png"></a></li>
-	        					    <li><a href="#"><img src="../images/twitter-icon.png"></a></li>
-	        					    <li><a href="#"><img src="../images/google-icon.png"></a></li>
-	        					    <li><a href="#"><img src="../images/linkedin-icon.png"></a></li>
-	        				    </ul>
-	        			    </div>
-	        		    </div>
-	        	    </div>
-	            </div>
-	        </div>
-    	</div>
-	<!-- section footer end -->
 
+    <!-- section footer start -->
+    <div class="section_footer">
+        <div class="container">
+            <div class="mail_section">
+                <ul>
+
+                    <li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
+                    <!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
+                    <li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
+                    <li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
+                </ul>
+            </div>
+            <div class="footer_section_2">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">About Petcom</h2>
+                        <p class="dummy_text">קהילה חברתית יזמית המושתת על עזרה הדדית, שיוויוניות ועזרה לקהילה </p>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">Useful Links</h2>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">Overview</h2>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="adderess_text">Instagram</h2>
+                        <div class="footer-img">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="footer-img"><img src="../images/footer-img1.png" style="width: 100%;"></div>
+                                    <div class="footer-img"><img src="../images/footer-img2.png" style="width: 100%;"></div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="footer-img"><img src="../images/footer-img3.png" style="width: 100%;"></div>
+                                    <div class="footer-img"><img src="../images/footer-img4.png" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="social-icon">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="icons">
+                            <ul>
+                                <li><a href="#"><img src="../images/fb-icon.png"></a></li>
+                                <li><a href="#"><img src="../images/twitter-icon.png"></a></li>
+                                <li><a href="#"><img src="../images/google-icon.png"></a></li>
+                                <li><a href="#"><img src="../images/linkedin-icon.png"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- section footer end -->
     <!-- Javascript files-->
-    <script src="../Scripts/jquery.min.js"></script>
+    <!--<script src="../Scripts/jquery.min.js"></script>
     <script src="../Scripts/popper.min.js"></script>
     <script src="../Scripts/bootstrap.bundle.min.js"></script>
-      <script src="../Scripts/jquery-3.0.0.min.js"></script>
-      <script src="../Scripts/plugin.js"></script>
-      <!-- sidebar -->
-      <script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
-      <script src="../Scripts/custom.js"></script>
-      <!-- javascript --> 
-      <script src="../Scripts/owl.carousel.js"></script>
-      <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-      <script>
-      $(document).ready(function(){
-      $(".fancybox").fancybox({
-         openEffect: "none",
-         closeEffect: "none"
-         });
-         
-         $(".zoom").hover(function(){
-         
-         $(this).addClass('transition');
-         }, function(){
-         
-         $(this).removeClass('transition');
-         });
-         });
-         </script> 
+    <script src="../Scripts/jquery-3.0.0.min.js"></script>
+    <script src="../Scripts/plugin.js"></script>-->
+    <!-- sidebar -->
+    <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../Scripts/custom.js"></script>-->
+    <!-- javascript -->
+    <!--<script src="../Scripts/owl.carousel.js"></script>
+    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function () {
+
+                $(this).addClass('transition');
+            }, function () {
+
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
 
 
-   <script>
-    function openNav() {
-    document.getElementById("myNav").style.width = "100%";
-    }
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
 
-    function closeNav() {
-   document.getElementById("myNav").style.width = "0%";
-   }
-</script>
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>-->
      
+
 </body>
 </html>

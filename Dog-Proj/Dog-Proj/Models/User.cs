@@ -23,11 +23,10 @@ namespace Dog_Proj.Models {
             this.phone = phone;
             this.sex = sex;
             this.age = age;
-            //    this.availablity = availablity;
             this.familyId = familyId;
         }
 
-
+        public User() { }
         //public User(string username, string phone, string sex, int age, DateTime ending_date, Dictionary<string, string[]> availablity, int familyId)
         //{
         //    this.username = username;
@@ -58,6 +57,8 @@ namespace Dog_Proj.Models {
 
         }
 
+       
 
-        
-    } }
+
+    }
+}
