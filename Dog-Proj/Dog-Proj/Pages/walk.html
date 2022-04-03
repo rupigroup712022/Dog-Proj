@@ -114,13 +114,15 @@
 <body>
 	<!-- section banner start -->
 	<div class="header_section_walk">
-		<div class="container-fluid">
+        <div class="container-fluid">
+
             <div class="row">
+
                 <div class="col col">
                     <button id="LogOut">Log Out</button>
                 </div>
                 <div class="col-sm-2">
-                    <div><a href="index.html"><img src="../images/LOGO1.png" /></a></div>
+                    <div id="img_walk"><a href="index.html"><img src="../images/LOGO1.png" /></a></div>
                 </div>
                 <div class="col-sm-6">
                     <div class="menu_text">
@@ -142,28 +144,28 @@
                     </div>
                 </div>
             </div>
-		<div class="banner_main">
-			<div class="container">
-				<div class="ram">
-					<div class="row">
-                        <div class="col-sm-12">
-                            <h1   dir="rtl" class="about_taital"><strong><span style="color:orange;">מי מטייל איתי</span>? </strong></h1>
+            <div class="banner_main">
+                <div class="container">
+                    <div class="ram">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h1 dir="rtl" class="about_taital"><strong><span style="color:orange;">מי מטייל איתי?</span> </strong></h1>
+                            </div>
                         </div>
-				    </div>
-				</div>
-			</div>
-		</div>
-	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 	<!-- section banner end -->
 	<!-- section about start -->
 	<div class="about_section_walk">
         <div class="about_text">
             <div class="container">
-                <h1 class="about_taital"><strong><span style="color: orange;">בחר תאריך ושעה  </span>לטיול</strong></h1>
+                <h1 class="about_taital_timing"><strong><span style="color: darkorange;"> :בחר תאריך ושעה לטיול  </span></strong></h1>
             </div>
             <table>
                 <tr>
-                    <td>
+                    <td id="timing">
                         <input type="date" id="meeting-time_walk"
                                name="meeting-time" value="2022-03-11T00:00"
                                min="2022-03-11T00:00" max="2022-12-31T00:00">
@@ -194,15 +196,15 @@
     <div class="gallery_main layout_padding">
         <div class="container">
             <div class="about_text">
-                <h1 class="about_taital_food"><strong><span style="color:white;">בחר את סוג השירות המבוקש  </span> לטיול</strong></h1>
+                <h1 class="about_taital_walking"><strong><span style="color:white;">בחר את סוג הטיול המבוקש  </span></strong></h1>
                 <ul class="donate-now">
                     <li>
                         <input type="radio" id="20" name="amount" value="20" />
-                        <label for="20">טיול למשך 15 דקות- 20 נקודות זכות</label>
+                        <label class="labels_walking" for="20">טיול למשך 15 דקות- 20 נקודות זכות</label>
                     </li>
                     <li>
                         <input type="radio" id="40"  name="amount" value="40" />
-                        <label for="40">טיול למשך 30 דקות- 40 נקודות זכות</label>
+                        <label class="labels_walking" for="40">טיול למשך 30 דקות- 40 נקודות זכות</label>
                     </li>
                 </ul>
             </div>
