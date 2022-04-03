@@ -57,16 +57,16 @@
 
             var imgStr = "";
         
-            for (var i = 0; i < success.length; i + 2) {
+            for (var i = 0; i < success.length; i=i+2 ) {
 
                 console.log(success[1])
 
-                imgStr = "<div> < input type = 'button' class='NameUser' value = " + success[i] + " /></div>";
-                if (success[i + 1] == 'M') {
-                    imgStr += "<img src='../images/user-gfaaf954f6_640.png' />";
+                imgStr = "<div><input type = 'button' class='NameUser' value = " + success[i] + "/></div>";
+                if (success[i + 1] == 'F') {
+                    imgStr += "<div><img src='../images/user-gfaaf954f6_640.png' /></div>";
                 }
                 else {
-                    imgStr += "<img src='../images/user-g768722fb2_640.png'/>";
+                    imgStr += "<div><img src='../images/user-g768722fb2_640.png'/></div>";
                 }
                 document.getElementById("ph").innerHTML += imgStr;
             }
