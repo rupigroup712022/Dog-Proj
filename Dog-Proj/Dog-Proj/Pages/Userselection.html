@@ -35,13 +35,18 @@
         $(document).ready(function () {
             logUser();
             userid = JSON.parse(localStorage["UserId"]);
-            $(".NameUser").click(function () {
-                let username = $(".NameUser").val();
-                localStorage["username"] = JSON.stringify(username);
-                window.location.href = "mainScreen.html";///לבדוק על העברה של השם
-            });
+            $(document).on("click", ".NameUser", name);
+           
 
         });
+
+
+        function name() {
+            let username = $(".NameUser").val();
+            console.log(username);
+            localStorage["username"] = JSON.stringify(username);
+            window.location.href = "mainScreen.html";///לבדוק על העברה של השם
+        }
 
         function logUser() {
             var familyId = localStorage.getItem('familyId');
