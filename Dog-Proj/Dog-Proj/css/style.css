@@ -165,16 +165,17 @@ a {
     float: left;
     height: 1000px;
     padding-top: 20px;
-    background-size: 2000px;
-    background-position-x:center;
-    background-image: url('../images/KingRio.jpg');
+    background-image: url('../images/תטייל איתי.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .active {
     background-color: #ffffff;
+    padding-top: 0px;
     padding-bottom: 5px;
     color: #000;
-    margin-left:180px;
+    margin-top: 0px;
     float: left;
 }
 .LogeIn{
@@ -276,44 +277,17 @@ a {
 }
 
 
-
-.about_text {
-    width: 100%;
-    float: left;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 20px;
-
+.about_text{
+	width: 100%;
+	float: left;
 }
 
-.labels_walking {
-    width: 100%;
-    float: left;
-}
+.about_taital{
+	width: 100%;
+	float: left;
+	font-size: 50pt;
+	text-align: right;
 
-
-
-.about_taital {
-    width: 100%;
-    float: left;
-    font-size: 50pt;
-    text-align: right;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    left: 100px;
-    text-align: center;
-}
-
-.about_taital_timing {
-    width: 100%;
-    float: left;
-    font-size: 30pt;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    right: 500px;
-    top:500px;
-    text-align: center;
-}
-
-.about_taital_walking {
-    margin-left:300px;
 }
 
 
@@ -323,15 +297,16 @@ a {
     float: left;
     font-size: 50pt;
     text-align: right;
-    margin-bottom: 150px;
+    margin-bottom:150px;
 }
-.about_taital_1 {
-    width: 100%;
-    float: left;
-    font-size: 50pt;
-    text-align: right;
-    margin-top: 70px;
-    margin-bottom: 70px;
+.about_taital_1{
+  width: 100%;
+  float: left;
+  font-size: 50pt;
+  text-align: right;
+  margin-top: 70px;
+  margin-bottom:70px;
+
 }
 
 
@@ -436,13 +411,11 @@ a {
 	padding-top: 0px;
 }
 
-
-
-.pet_taital {
-    width: 100%;
-    float: left;
-    font-size: 44pt;
-    color: #353434;
+.pet_taital{
+	width: 100%;
+	float: left;
+	font-size: 44pt;
+	color: #353434;
 }
 
 .lorem_text {
@@ -916,16 +889,16 @@ height:100%;
 .about_section_walk {
     width: 100%;
     float: inherit;
+    background-image: url('../images/dog-food.jpg');
     height: auto;
     background-size: 100%;
     height: 80%;
     background-repeat: no-repeat;
 }
 
-
-
 input#meeting-time {
     font-size: 30px;
+    color: black;
     margin-bottom: 150PX;
     margin-top: 50px;
     margin-left:30px;
@@ -933,20 +906,10 @@ input#meeting-time {
 
 input#meeting-time_walk{
 font-size: 30px;
-margin-top: 500px;
-margin-left:800px;
+color: black;
+margin-bottom: 150PX;
+margin-top: 150px;
 
-}
-
-#img_walk {
-    margin-left:1450px;
-}
-
-#selectime {
-    font-size: 22px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: bold;
-    margin-bottom: 1000px;
 }
 
 
@@ -997,7 +960,7 @@ input#foodSize, input#note {
         float: left;
         margin: 0 5px 0 0;
         width: 100px;
-        height: 500px;
+        height: 40px;
         position: relative;
 
     }
@@ -1010,21 +973,19 @@ input#foodSize, input#note {
         left: 500px;
         right: 50px;
         bottom: 0;
-        background: white;
-        width:140px;
-        float:left;
+        
+            
     }
 
         .donate-now input[type="radio"] {
             opacity: 0.01;
             z-index: 100;
-            
+            background: white;
         }
 
             .donate-now input[type="radio"]:checked + label,
             .Checked + label {
                 background: orange;
-              
             }
 
     .donate-now label {

@@ -108,7 +108,7 @@ namespace Dog_Proj.Models.DAL
 
         private SqlCommand NameCheck(SqlConnection con, string username, int familyId)
         {
-            string str = "SELECT  FROM UsersFamliy WHERE username LIKE @username and familyId = @familyId";
+            string str = "SELECT id FROM UsersFamliy WHERE username LIKE @username and familyId = @familyId";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@username", SqlDbType.NChar);
             cmd.Parameters["@username"].Value = username;
@@ -139,7 +139,7 @@ namespace Dog_Proj.Models.DAL
         private SqlCommand CreateInsertCommand(SqlConnection con,int userId, string availableDays, string availableHours)
         {
 
-            string commandStr = "INSERT INTO TimesU (userId,availableDays,availableHours) VALUES (@userId,@availableDays,@availableHours)";
+            string commandStr = "INSERT INTO TimesAvailablity (userId,availableDays,availableHours) VALUES (@userId,@availableDays,@availableHours)";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@userId", SqlDbType.SmallInt);
             cmd.Parameters["@userId"].Value = userId;
