@@ -203,6 +203,7 @@
     <Content Include="images\1624226406_149766_gif-url.gif" />
     <Content Include="images\about-img.jpg" />
     <Content Include="images\banner.jpg" />
+    <Content Include="images\boy.jpg" />
     <Content Include="images\bulit-icon.png" />
     <Content Include="images\call-icon.png" />
     <Content Include="images\dog-food.jpg" />
@@ -214,6 +215,8 @@
     <Content Include="images\english-cocker-spanie.jpg" />
     <Content Include="images\english-cocker-spaniel-jpg.jpg" />
     <Content Include="images\fb-icon.png" />
+    <Content Include="images\female.jpg" />
+    <Content Include="images\female3.jpg" />
     <Content Include="images\footer-img1.png" />
     <Content Include="images\footer-img2.png" />
     <Content Include="images\footer-img3.png" />
@@ -224,6 +227,7 @@
     <Content Include="images\gallery-img3.jpg" />
     <Content Include="images\gallery-img4.jpg" />
     <Content Include="images\gallery-img5.jpg" />
+    <Content Include="images\girl.jpg" />
     <Content Include="images\golden-retriever.png" />
     <Content Include="images\google-icon.png" />
     <Content Include="images\head-g29a335954_640.png" />
@@ -232,6 +236,9 @@
     <Content Include="images\linkedin-icon.png" />
     <Content Include="images\LOGO1.png" />
     <Content Include="images\LOGO1S.png" />
+    <Content Include="images\male.jpg" />
+    <Content Include="images\male1.jpg" />
+    <Content Include="images\male3.jpg" />
     <Content Include="images\map-icon.png" />
     <Content Include="images\search-icon.png" />
     <Content Include="images\twitter-icon.png" />
@@ -239,12 +246,14 @@
     <Content Include="images\user-g768722fb2_640.png" />
     <Content Include="images\user-gb39fc64c9_640.png" />
     <Content Include="images\user-gfaaf954f6_640.png" />
+    <Content Include="images\WhatsApp Image 2022-04-06 at 14.22.49.jpeg" />
     <Content Include="images\אני אישה.png" />
     <Content Include="images\אני גבר.png" />
     <Content Include="images\חיות.jpg" />
     <Content Include="images\כלב.gif" />
     <Content Include="images\כלבה.png" />
     <Content Include="images\עצמך.png" />
+    <Content Include="images\צילום מסך 2022-04-06 154137.jpg" />
     <Content Include="images\תאכיל אותי.jpg" />
     <Content Include="images\תאכיל אותי1.jpg" />
     <Content Include="images\תטייל איתי.jpg" />
@@ -285,6 +294,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="images\77700971-couleur-silhouette-dessin-animé-orange-façade-grande-maison-confortable-avec-deux-étages-vector-illu.webp" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
