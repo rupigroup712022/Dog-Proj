@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="../css/owl.carousel.min.css">
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../Scripts/ajaxCall.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
@@ -38,7 +39,6 @@
         $(document).ready(function () {
             $('#Next').click(nextlevel);
             $("#LogOut").click(LogOut);
-            
 
         });
 
@@ -51,7 +51,7 @@
 
         function nextlevel() {
 
-            let serviceDate = $('#meeting-time').val(); 
+            let serviceDate = $('#meeting-time').val();
             //let serviceByDate = serviceDate.split("T")[0];
             console.log(serviceDate);
             let serviceHour = $("#selectime").val();
@@ -66,7 +66,20 @@
             localStorage["serviceDay"] = JSON.stringify(serviceDay);
             localStorage["serviceHour"] = JSON.stringify(serviceHour);
 
+            
+            var diffDays = new Date(serviceDate) - Date.now();
+            var Difference_In_Days = diffDays / (1000 * 3600 * 24);
+            console.log(Difference_In_Days);
 
+            console.log(Difference_In_Days);
+            if (Difference_In_Days <= 1) {
+                console.log('1 day');
+                localStorage["Difference_In_Days"] = JSON.stringify(1);
+            }
+            else {
+                localStorage["Difference_In_Days"] = JSON.stringify(0);
+
+            }
 
             var servicetype = "";
             var amo = document.getElementsByName('amount');
@@ -102,11 +115,27 @@
         }
 
 
-        function postSCB(service) {
-            alert("עכשיו רק נשאר לבחור מי יבצע את השירות");
-            $("#Next").click(function () {
-                window.location.href = "OpUser.html";
-            });
+        function postSCB(id) {
+            localStorage["ServicesId"] = JSON.stringify(id);
+
+            if (parseInt(localStorage.getItem('Difference_In_Days')) == '1') {
+                Swal.fire({
+                    title: "בחר שלושה נותני שירות!",
+                    icon: "success",
+                //    timer: 2500,
+                }).then(function () {
+                    window.location.href = 'OpUser.html';
+                });
+            }
+            else {
+                Swal.fire({
+                    title: "בחר נותן שירות אחד!",
+                    icon: "success",
+                //    timer: 2500,
+                }).then(function () {
+                    window.location.href = 'OpUser.html';
+                });
+            }
         }
 
         function postECB(err) {
@@ -156,7 +185,7 @@
                     <div><a href="index.html"><img src="../images/LOGO1.png" /></a></div>
                 </div>
                 <div class="col-md-8">
-                    <div class="menu_text">
+                    <div class="menu_text-sign">
                         <ul>
                             <li class="LogeIn">
 
@@ -362,16 +391,16 @@
     </div>
     <!-- section footer end -->
     <!-- Javascript files-->
-    <script src="../Scripts/jquery.min.js"></script>
+    <!--<script src="../Scripts/jquery.min.js"></script>
     <script src="../Scripts/popper.min.js"></script>
     <script src="../Scripts/bootstrap.bundle.min.js"></script>
-    <script src="../Scripts/jquery-3.0.0.min.js"></script>
+    <script src="../Scripts/jquery-3.0.0.min.js"></script>-->
     <!--<script src="../Scripts/plugin.js"></script>-->
     <!-- sidebar -->
-    <script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="../Scripts/custom.js"></script>
+    <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../Scripts/custom.js"></script>-->
     <!-- javascript -->
-    <script src="../Scripts/owl.carousel.js"></script>
+    <!--<script src="../Scripts/owl.carousel.js"></script>
     <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -399,7 +428,7 @@
         function closeNav() {
             document.getElementById("myNav").style.width = "0%";
         }
-    </script>
+    </script>-->
 
 </body>
 </html>

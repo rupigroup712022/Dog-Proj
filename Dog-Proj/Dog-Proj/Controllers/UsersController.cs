@@ -12,13 +12,13 @@ namespace Dog_Proj.Controllers
     {
 
         //GET api/<controller>/5
-        [HttpGet]
-        [Route("api/Users/?day =" + UserAv.day + "& hour=" + UserAv.hour;")]
-        public List<List<string>> Get(string day, string hour )
+        [HttpPost]
+        [Route("api/Users/userAv")]
+
+        public List<List<string>> Post([FromBody]Dictionary<string, string> userAv)
         {
-            Console.WriteLine(day,hour);
             User user = new User();
-            return user.GetAvUser(day,hour);
+            return user.GetAvUser(userAv["day"], userAv["hour"]);
         }
 
         // POST api/<controller>

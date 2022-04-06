@@ -122,7 +122,6 @@
                 alert("The user is exists");
             }
             else {
-                alert("You signed up successfully");
                 localStorage["UserId"] = JSON.stringify(success);
                 $("#nextdog").click(function () {
                     window.location.href = "SingInDog.html";
@@ -193,7 +192,7 @@
                                     <tr>
                                         <td>
                                             
-                                            <img class="imgform" src="../images/dog-human.jpg" />
+                                           
                                         </td>
                                         <td>
                                             <p>הגיע הזמן לספר לי קצת על עצמך</p>
@@ -258,6 +257,7 @@
                                             <input type="button" class="BTF" value="16:00-20:00" />
                                         </td>
                                     </tr>
+                                   
                                     <tr>
                                         <td>
                                             <input type="submit" id="nextdog" value="אני רוצה להמשיך להרשמת כלב  " />

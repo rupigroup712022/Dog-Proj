@@ -152,8 +152,52 @@ namespace Dog_Proj.Models.DAL
             return cmd;
         }
 
+        public int InsertReqServices(int idService, int idUser)
+        {
+                SqlConnection con = null;
+                 int numeffected;
+                try
+                {
+                    //C - Connect to the Database
+                    con = Connect("DogsProjDB");
+
+                    //C Create the Insert SqlCommand
+                    SqlCommand insertCommand = CreateInsertServiceReq(con, idService, idUser);
+
+                    //E Execute
+                     numeffected = insertCommand.ExecuteNonQuery();
+                    
+                }
+
+                catch (Exception exep)
+                {
+                    // this code needs to write the error to a log file
+                    throw new Exception("Exeption", exep);
+                }
+
+                finally
+                {
+                    //C Close Connction
+                    if (con != null)
+                        con.Close();
+                }
 
 
+                // num effected
+                return numeffected;
+            
+        }
+        private SqlCommand CreateInsertServiceReq(SqlConnection con, int idService, int idUser)
+        {
+
+            string commandStr = "INSERT INTO PendingReq (idService,idUser) VALUES (@idService,@idUser)";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@idService", SqlDbType.SmallInt);
+            cmd.Parameters["@idService"].Value = (short)idService;
+            cmd.Parameters.Add("@idUser", SqlDbType.SmallInt);
+            cmd.Parameters["@idUser"].Value =(short)idUser;
+            return cmd;
+        }
 
 
         public int Insert(Account account)
@@ -275,8 +319,8 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters["@numOfPoints"].Value = account.NumOfPoints;
             cmd.Parameters.Add("@linkedUsers", SqlDbType.TinyInt);
             cmd.Parameters["@linkedUsers"].Value = Convert.ToByte(account.LinkedUsers);
-            cmd.Parameters.Add("@avgPoint", SqlDbType.Int);
-            cmd.Parameters["@avgPoint"].Value = (int)account.AvgPoint;
+            cmd.Parameters.Add("@avgPoint", SqlDbType.Float);
+            cmd.Parameters["@avgPoint"].Value = account.AvgPoint;
             return cmd;
         }
 
@@ -507,7 +551,6 @@ namespace Dog_Proj.Models.DAL
 
                 SqlConnection con = null;
                  int numEffected = 0;
-
                 try
                 {
                     //C - Connect to the Database
@@ -530,11 +573,21 @@ namespace Dog_Proj.Models.DAL
                 {
                     SqlCommand insertCommand = CreateInsertCommandservicewalk(UserId, service, con);
                     numEffected = insertCommand.ExecuteNonQuery();
-
                 }
-                //int id = checkingSer(service.ServiceName, service.ServiceDate, service.UserId1, service.ServiceHour);
+                SqlCommand getSerIdCommsnd = getSerIdCom(con, service.ServiceName, service.ServiceDate, service.UserId1, service.ServiceHour);
+                SqlDataReader dataReader = getSerIdCommsnd.ExecuteReader(CommandBehavior.CloseConnection);
+                int i = 0;
+                while (dataReader.Read())
+                {
+                    i = Convert.ToInt32(dataReader["id"].ToString());
+                }
+
+                dataReader.Close();
+
+                return i;
+          
                 //E Execute
-            }
+                }
 
                 catch (Exception exep)
                 {
@@ -549,22 +602,24 @@ namespace Dog_Proj.Models.DAL
                 }
 
 
-                // num effected
-                return numEffected;
             }
 
-        //private SqlCommand checkingSer(SqlConnection con, string serviceName, string serviceDate, int userId, string serviceHour)
-        //{
-        //    string str = "SELECT id FROM ServicesDog WHERE serviceName LIKE @serviceName and serviceDate LIKE @serviceDate and userId LIKE @userId and serviceHour LIKE @serviceHour ";
-        //    SqlCommand cmd = createCommand(con, str);
-        //    cmd.Parameters.Add("@email", SqlDbType.Char);
-        //    cmd.Parameters["@email"].Value = Email;
-        //    cmd.Parameters.Add("@passwords", SqlDbType.Char);
-        //    cmd.Parameters["@passwords"].Value = Passwords;
-        //    return cmd;
-        //}
+        private SqlCommand getSerIdCom(SqlConnection con, string serviceName, string serviceDate, int UserId, string serviceHour)
+        {
+            string str = "SELECT id FROM ServicesDog WHERE serviceName LIKE @serviceName and serviceDate LIKE @serviceDate and UserId LIKE @UserId and serviceHour LIKE @serviceHour ";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@serviceName", SqlDbType.NChar);
+            cmd.Parameters["@serviceName"].Value = serviceName;
+            cmd.Parameters.Add("@serviceDate", SqlDbType.NChar);
+            cmd.Parameters["@serviceDate"].Value = serviceDate;
+            cmd.Parameters.Add("@UserId", SqlDbType.Int);
+            cmd.Parameters["@UserId"].Value = UserId;
+            cmd.Parameters.Add("@serviceHour", SqlDbType.NChar);
+            cmd.Parameters["@serviceHour"].Value = serviceHour;
+            return cmd;
+            }
 
-        private SqlCommand CreateInsertCommandservicewalk(int UserId, Service service,SqlConnection con)
+            private SqlCommand CreateInsertCommandservicewalk(int UserId, Service service,SqlConnection con)
         {
 
             string commandStr = "INSERT INTO ServicesDog (serviceName,serviceDate,serviceDay,serviceHour,note,servicetype,UserId,familyId) VALUES (@serviceName,@serviceDate,@serviceDay,@serviceHour,@note,@servicetype,@UserId,@familyId)";
@@ -614,7 +669,6 @@ namespace Dog_Proj.Models.DAL
         }
         private SqlCommand CreateInsertCommandservicepension(int UserId, Service service, SqlConnection con)
         {
-
             string commandStr = "INSERT INTO ServicesDog (serviceName,serviceDate,note,servicetype,UserId,familyId) VALUES (@serviceName,@serviceDate,@note,@servicetype,@UserId,@familyId)";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@serviceName", SqlDbType.NChar);
@@ -644,11 +698,16 @@ namespace Dog_Proj.Models.DAL
                 List<List<string>>user = new List<List<string>>();
                 while (dataReader.Read())
                 {
-                    user[i].Add ((string)dataReader["username"]);
-                    user[i].Add((string)dataReader["age"]);
+                    user.Add(new List<string>());
+                    user[i].Add((string)dataReader["username"]);
+                    user[i].Add(Convert.ToInt32(dataReader["age"]).ToString());
                     user[i].Add((string)dataReader["phone"]);
-                    user[i].Add((string)dataReader["avgPoint"]);
-                    user[i].Add((string)dataReader["UserId"]);
+                    user[i].Add((dataReader["avgPoint"]).ToString());
+                    user[i].Add(Convert.ToInt32(dataReader["UserId"]).ToString());
+                    user[i].Add((dataReader["city"]).ToString());
+                    user[i].Add((dataReader["street"]).ToString());
+                    user[i].Add((dataReader["homeNum"]).ToString());
+
                     i++;
                 }
 
@@ -674,7 +733,7 @@ namespace Dog_Proj.Models.DAL
 
         private SqlCommand AvDayHourCheck(SqlConnection con, string day, string hour)
         {
-            string str = "SELECT username,age,phone,avgPoint,UserId FROM TimesAvailablity T JOIN  UsersFamliy U ON T.UserId=U.id JOIN Accounts A on U.familyId=A.id WHERE T.availableDays LIKE @availableDays and T.availableHours LIKE @availableHours";
+            string str = "SELECT username,age,phone,avgPoint,UserId,city,street,homeNum FROM TimesAvailablity T JOIN  UsersFamliy U ON T.UserId=U.id JOIN Accounts A on U.familyId=A.id WHERE T.availableDays LIKE @availableDays and T.availableHours LIKE @availableHours";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@availableDays", SqlDbType.Char);
             cmd.Parameters["@availableDays"].Value = day;

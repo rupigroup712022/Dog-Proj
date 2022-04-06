@@ -61,6 +61,15 @@ namespace Dog_Proj.Models
             return ds.InsertServices( UserId, this);
 
         }
+        
+
+       public int InsertReqServices(int idService, int idUser)
+        {
+            DataServices ds = new DataServices();
+            return ds.InsertReqServices(idService, idUser);
+
+        }
+
 
     }
 }
