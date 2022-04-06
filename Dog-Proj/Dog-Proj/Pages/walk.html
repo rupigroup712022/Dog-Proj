@@ -50,9 +50,11 @@
 
             function nextlevel() {
 
-                let serviceDate = $('#meeting-time_walk').val();
-                //let serviceByDate = serviceDate.split("T")[0];
-                //console.log(serviceByDate);
+                let serviceByDate = $('#meeting-time_walk').val();
+                console.log(serviceByDate);
+
+                let serviceDate = serviceByDate.split("T")[0];
+                console.log(serviceByDate);
                 //const serviceHour = new Date(serviceDate).toLocaleTimeString('en',
                 //    { timeStyle: 'short', hour12: false });
                 //console.log(serviceHour);
@@ -74,7 +76,8 @@
                 let serviceName = "walk";
                 var familyId = parseInt(localStorage.getItem('familyId'));
                 var UserId = parseInt(localStorage.getItem('UserId'));
-
+                localStorage["serviceDay"] = JSON.stringify(serviceDay);
+                localStorage["serviceHour"] = JSON.stringify(serviceHour);
 
                 walk = {
                     ServiceName: serviceName,
@@ -99,7 +102,7 @@
             function postSCB(service) {
                 alert("עכשיו רק נשאר לבחור מי יבצע את השירות");
                 $("#Next").click(function () {
-                    window.location.href = "SingInDog.html";// להוסיף דף בחירה 
+                    window.location.href = "OpUser.html";
                 });
             }
 
@@ -154,7 +157,7 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <input type="date" id="meeting-time"
+                                            <input type="date" id="meeting-time_walk"
                                                    name="meeting-time" value="2022-03-11T00:00"
                                                    min="2022-03-11T00:00" max="2022-12-31T00:00">
                                         </td>
@@ -184,8 +187,7 @@
 
 
     </div>
-        </div>
-    </div>
+      
 	<!-- section about end -->
 	<!-- section gallery start -->
     <div class="gallery_main layout_padding">

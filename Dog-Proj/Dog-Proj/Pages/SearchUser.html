@@ -17,17 +17,16 @@
     <!-- Site Icons -->
     <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
-
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/cssNew/bootstrap.min.css">
     <!-- Site CSS -->
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../css/cssNew/style.css">
     <!-- ALL VERSION CSS -->
-    <link rel="stylesheet" href="../css/versions.css">
+    <link rel="stylesheet" href="../css/cssNew/versions.css">
     <!-- Responsive CSS -->
-    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/cssNew/responsive.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../css/custom.css">
+    <link rel="stylesheet" href="../css/cssNew/custom.css">
 
     <!-- Modernizer for Portfolio -->
 
@@ -40,10 +39,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js" defer></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <link rel="stylesheet" type="text/css" href="./style.css" />
-
-    <script src="../Scripts/ajaxCalls.js"></script>
-    <link href="../Style/Searchmakerspace_style.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../css/cssNew/style.css" />
+    <link href="../css/cssNew/Searchmakerspace_style.css" rel="stylesheet" />
+    <script src="../Scripts/ajaxCall.js"></script>
+    <script src="../Scripts/jquery-3.4.1.js"></script>
     <script>
         $(document).ready(function () {
             m = JSON.parse(sessionStorage.getItem('MakerspacesForSearch'));
@@ -126,11 +125,11 @@
         $(document).ready(function () {
             $("#submitLogin").click(fLogin);
             $("#ResForm_finish").submit(AddRes);
-            checklogin();
-            getdays();
-            getAllProf();
-            getAlltools();
-            getAllmakers();
+            //checklogin();
+            //getdays();
+            //getAllProf();
+            //getAlltools();
+            //getAllmakers();
             $("#filebutton").change(function () {
                 readURL(this);
             });
@@ -155,27 +154,27 @@
             for (var i = 0; i < data.length; i++) {
                 //הדרך המתאימה ביותר
                 if (data[i].City == m.City) {
-                   
-                                for (var o = 0; o < data[i].Professions.length; o++) {
-                                    for (var p = 0; (m.professionArr != null) && (p < m.professionArr.length); p++) {
-                                        if (data[i].Professions[o] == m.professionArr[p]) {
-                                            //ימי זמינות
-                                            
-                                                                break;
-                                                            }
-                                                        }
 
-                                                    }
+                    for (var o = 0; o < data[i].Professions.length; o++) {
+                        for (var p = 0; (m.professionArr != null) && (p < m.professionArr.length); p++) {
+                            if (data[i].Professions[o] == m.professionArr[p]) {
+                                //ימי זמינות
 
-                                                }
-                                            }
-                                        
-                                    
-                                }
-                            
-                        
-                    
-           
+                                break;
+                            }
+                        }
+
+                    }
+
+                }
+            }
+
+
+        }
+
+
+
+
         //להכניס תמונה לתצוגה מקדימה
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -735,10 +734,10 @@
         </div>
     </div>
     <!-- ALL JS FILES -->
-    <script src="../js/all.js"></script>
+    <script src="../Scripts/all.js"></script>
     <!-- ALL PLUGINS -->
-    <script src="../js/custom.js"></script>
+    <script src="../Scripts/custom.js"></script>
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvzoQmQxO_ZcKkiV87oOF3uSpNN8dx1iQ&callback=initMap&libraries=&v=weekly"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_b7WIuckZ56JNQMXK8AlbSuf6K88dsIU&callback=initMap&libraries=&v=weekly"></script>
 </body>
 </html>

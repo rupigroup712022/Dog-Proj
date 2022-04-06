@@ -16,7 +16,7 @@ namespace Dog_Proj.Models {
         DateTime ending_date;
         Dictionary<string, string[]> availablity;
         int familyId;
-
+        public User() { }
         public User(string username, string phone, string sex, int age, int familyId)
         {
             this.username = username;
@@ -26,7 +26,6 @@ namespace Dog_Proj.Models {
             this.familyId = familyId;
         }
 
-        public User() { }
         //public User(string username, string phone, string sex, int age, DateTime ending_date, Dictionary<string, string[]> availablity, int familyId)
         //{
         //    this.username = username;
@@ -57,7 +56,14 @@ namespace Dog_Proj.Models {
 
         }
 
-       
+        public List<List<string>> GetAvUser(string day, string hour)
+        {
+            DataServices dbs = new DataServices();
+            return dbs.GetAvUser(day, hour);
+        }
+
+
+
 
 
     }

@@ -63,6 +63,9 @@
             var days = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
             var serviceDay = days[dayinnum];
             console.log(serviceDay);
+            localStorage["serviceDay"] = JSON.stringify(serviceDay);
+            localStorage["serviceHour"] = JSON.stringify(serviceHour);
+
 
 
             var servicetype = "";
@@ -102,7 +105,7 @@
         function postSCB(service) {
             alert("עכשיו רק נשאר לבחור מי יבצע את השירות");
             $("#Next").click(function () {
-                window.location.href = "SingInDog.html";// להוסיף דף בחירה 
+                window.location.href = "OpUser.html";
             });
         }
 

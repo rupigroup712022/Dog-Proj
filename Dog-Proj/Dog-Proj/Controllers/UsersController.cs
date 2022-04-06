@@ -12,9 +12,13 @@ namespace Dog_Proj.Controllers
     {
 
         //GET api/<controller>/5
-        public string Get(int id)
+        [HttpGet]
+        [Route("api/Users/?day =" + UserAv.day + "& hour=" + UserAv.hour;")]
+        public List<List<string>> Get(string day, string hour )
         {
-            return "value";
+            Console.WriteLine(day,hour);
+            User user = new User();
+            return user.GetAvUser(day,hour);
         }
 
         // POST api/<controller>

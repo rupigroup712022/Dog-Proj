@@ -532,6 +532,7 @@ namespace Dog_Proj.Models.DAL
                     numEffected = insertCommand.ExecuteNonQuery();
 
                 }
+                //int id = checkingSer(service.ServiceName, service.ServiceDate, service.UserId1, service.ServiceHour);
                 //E Execute
             }
 
@@ -552,7 +553,18 @@ namespace Dog_Proj.Models.DAL
                 return numEffected;
             }
 
-            private SqlCommand CreateInsertCommandservicewalk(int UserId, Service service,SqlConnection con)
+        //private SqlCommand checkingSer(SqlConnection con, string serviceName, string serviceDate, int userId, string serviceHour)
+        //{
+        //    string str = "SELECT id FROM ServicesDog WHERE serviceName LIKE @serviceName and serviceDate LIKE @serviceDate and userId LIKE @userId and serviceHour LIKE @serviceHour ";
+        //    SqlCommand cmd = createCommand(con, str);
+        //    cmd.Parameters.Add("@email", SqlDbType.Char);
+        //    cmd.Parameters["@email"].Value = Email;
+        //    cmd.Parameters.Add("@passwords", SqlDbType.Char);
+        //    cmd.Parameters["@passwords"].Value = Passwords;
+        //    return cmd;
+        //}
+
+        private SqlCommand CreateInsertCommandservicewalk(int UserId, Service service,SqlConnection con)
         {
 
             string commandStr = "INSERT INTO ServicesDog (serviceName,serviceDate,serviceDay,serviceHour,note,servicetype,UserId,familyId) VALUES (@serviceName,@serviceDate,@serviceDay,@serviceHour,@note,@servicetype,@UserId,@familyId)";
@@ -620,6 +632,56 @@ namespace Dog_Proj.Models.DAL
             return cmd;
         }
 
+        public List<List<string>> GetAvUser(string day, string hour)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = Connect("DogsProjDB");
+                SqlCommand selectCommand = AvDayHourCheck(con, day, hour);
+                SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                int i=0;
+                List<List<string>>user = new List<List<string>>();
+                while (dataReader.Read())
+                {
+                    user[i].Add ((string)dataReader["username"]);
+                    user[i].Add((string)dataReader["age"]);
+                    user[i].Add((string)dataReader["phone"]);
+                    user[i].Add((string)dataReader["avgPoint"]);
+                    user[i].Add((string)dataReader["UserId"]);
+                    i++;
+                }
+
+                dataReader.Close();
+                
+                return user;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed", ex);
+            }
+            finally
+            {
+
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+
+
+
+        private SqlCommand AvDayHourCheck(SqlConnection con, string day, string hour)
+        {
+            string str = "SELECT username,age,phone,avgPoint,UserId FROM TimesAvailablity T JOIN  UsersFamliy U ON T.UserId=U.id JOIN Accounts A on U.familyId=A.id WHERE T.availableDays LIKE @availableDays and T.availableHours LIKE @availableHours";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@availableDays", SqlDbType.Char);
+            cmd.Parameters["@availableDays"].Value = day;
+            cmd.Parameters.Add("@availableHours", SqlDbType.Char);
+            cmd.Parameters["@availableHours"].Value = hour;
+            return cmd;
+        }
 
         SqlConnection Connect(string connectionStringName)
         {

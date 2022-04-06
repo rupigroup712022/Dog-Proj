@@ -1,0 +1,354 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- mobile metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- site metas -->
+    <title>D-pot</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <!-- Responsive-->
+    <link rel="stylesheet" href="../css/responsive.css">
+    <!-- fevicon -->
+    <link rel="icon" href="../images/fevicon.png" type="image/gif" />
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="../css/jquery.mCustomScrollbar.min.css">
+    <!-- Tweaks for older IEs-->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <!-- owl stylesheets -->
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <script src="../Scripts/ajaxCall.js"></script>
+    <script src="../Scripts/jquery-3.4.1.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            username = JSON.parse(localStorage["username"]);
+            welcome(username);
+            getAllmakers();
+
+            $("#LogOut").click(LogOut);
+
+
+
+
+
+        });
+
+
+
+        function welcome(username) {
+            console.log(username);
+
+            let str = "<h1 class='welcome'> Welcome " + username + "</h1>";
+            $("#ph_head").html(str);
+        }
+        function LogOut() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+
+        //מפת גוגל
+        var map;
+        var markers = [];
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 32.067, lng: 34.785 },
+                zoom: 9,
+            });
+
+            infowindow = new google.maps.InfoWindow();
+        }
+
+        var marker, i;
+        function postaddress(addresses, data) {
+            console.log(addresses);
+            console.log(data);
+            for (i = 0; i < addresses.length; i++) {
+
+                let contentString =
+                    '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    "</div>" +
+                    '<h1 id="firstHeading" class="firstHeading">' + data[i].MakerspaceName + '</h1>' +
+                    '<div id="bodyContent">' +
+                    "<p>טלפון להתקשרות: <b>" + data[i].PhoneNumber + "</b></p>" +
+                    "<button type='button' class='btn btn-info btn-lg' onclick='openmodal(" + i + ")' id='BTNRes' data-toggle='modal'>ליצירת הזמנה</button>";
+                if (login) {
+                    contentString += "<button type='button' class='btn btn-info btn-lg' onclick='addToFavorite(" + data[i].MakerspaceId + ")' id='BTNLike' >הוספה לFavorites</button>";
+                }
+                "</div>" +
+                    "</div>";
+                let id = data[i].MakerspaceId;
+                $.ajax({
+                    url: "https://maps.googleapis.com/maps/api/geocode/json",
+                    type: "GET",
+                    data: {
+                        address: addresses[i],
+                        key: "AIzaSyAXHTRIwUGpCgzoDJmDFXQcEK38dbUuFSk"
+                    },
+                    success: function (response) {
+                        var coordi = {};
+                        coordi.lat = response.results[0].geometry.location.lat;
+                        coordi.lng = response.results[0].geometry.location.lng;
+
+                        const marker = new google.maps.Marker({
+                            position: coordi,
+                            map: map,
+                            animation: google.maps.Animation.DROP,
+                        });
+
+                        marker.set("id", id);
+                        markers.push(marker);
+
+                        marker.addListener("click", () => {
+                            map.setZoom(17);
+                            map.setCenter(marker.getPosition());
+
+                            infowindow.close();
+                            infowindow.setContent(contentString);
+                            infowindow.open(map, marker);
+                        });
+                    }
+                });
+            }
+        }
+
+         UserAv = {
+            day: (localStorage.getItem("serviceDay")),
+            hour: (localStorage.getItem("serviceHour")),
+        }
+
+        function getAllmakers() {
+        
+
+            console.log(UserAv);
+
+            let api = "../api/Users/?day ="+ UserAv.day + "& hour=" + UserAv.hour;
+            ajaxCall("GET", api,"", getSuccessAllmakers, error);
+        }
+        function getSuccessAllmakers(data) {
+            console.log(data);
+            renderMakers(data);
+        }
+        function error(err) {
+            alert("error!");
+        }
+
+        function renderMakers(d) { //רנדור מקיירספייסים
+            $("#MakerList").html("");
+            let str = "";
+            makersArr = d;
+            for (var i = 0; i < d.length; i++) {
+                for (var j = 0; j < d[i].length; j = j + 5)
+                    str += "<div id='" + i + "'>";
+                str += "<table class='table'>";
+                str += "<tr class='row'>";
+                str += "<td class='col-12'><h1><a href='#'></a>" + d[i][j] + "</h1></td>";
+                str += "</tr>";
+                str += "<tr class='row'>";
+                str += "<td class='col-12'><h1><a href='#'></a>" + d[i][j] + "</h1></td>";
+                str += "</tr>";
+                str += "<tr class='row'>";
+                str += "<td class='col-12'><h6><b>טלפון:</b>" + d[i][j] + "</h6 ></td>";
+                str += "</tr>";
+                str += "<tr class='row'>";
+                str += "<td class='col-12'><h6>" + d[i][j] + " <b>דירוג: </b></h6></td>";
+                str += "</tr>";
+                str += "</table>";
+                str += "</div><br/>";
+
+            }
+            $("#MakerList").append(str);
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+</head>
+<body>
+    <!-- section banner start -->
+    <div class="header-main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col col">
+                    <button id="LogOut">Log Out</button>
+                </div>
+                <div class="col col">
+                    <div><a href="index.html"> <img src="../images/LOGO1.png" /></a></div>
+                </div>
+
+                <div class="col-5">
+                    <div class="menu_text">
+                        <ul>
+
+                            <li class="active">
+                                <div id="myNav" class="overlay">
+                                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                                    <div class="overlay-content">
+                                        <a href="index.html">Home</a>
+                                        <a href="about.html">About</a>
+                                        <a href="gallery.html">Gallery</a>
+                                        <a href="contact.html">Contact</a>
+                                    </div>
+                                </div>
+                                <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- section about start -->
+  
+        <div class="container">
+            <div id="divSearch" class="container-fluid">
+                <div class="row" id="divSearchRow">
+                    <div class="col-3" id="MakerList"></div>
+                    <div class="col-9" id="map"></div>
+                </div>
+            </div>
+
+        </div>
+ 
+    <!-- section about end -->
+    <!-- section footer start -->
+    <div class="section_footer">
+        <div class="container">
+            <div class="mail_section">
+                <ul>
+
+                    <li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
+                    <!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
+                    <li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
+                    <li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
+                </ul>
+            </div>
+            <div class="footer_section_2">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">About Petcom</h2>
+                        <p class="dummy_text">קהילה חברתית יזמית המושתת על עזרה הדדית, שיוויוניות ועזרה לקהילה </p>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">Useful Links</h2>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">Overview</h2>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="adderess_text">Instagram</h2>
+                        <div class="footer-img">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="footer-img"><img src="../images/footer-img1.png" style="width: 100%;"></div>
+                                    <div class="footer-img"><img src="../images/footer-img2.png" style="width: 100%;"></div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="footer-img"><img src="../images/footer-img3.png" style="width: 100%;"></div>
+                                    <div class="footer-img"><img src="../images/footer-img4.png" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="social-icon">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="icons">
+                        <ul>
+                            <li><a href="#"><img src="../images/fb-icon.png"></a></li>
+                            <li><a href="#"><img src="../images/twitter-icon.png"></a></li>
+                            <li><a href="#"><img src="../images/google-icon.png"></a></li>
+                            <li><a href="#"><img src="../images/linkedin-icon.png"></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- section footer end -->
+    <!-- Javascript files-->
+    <!--<script src="../Scripts/jquery.min.js"></script>
+    <script src="../Scripts/popper.min.js"></script>
+    <script src="../Scripts/bootstrap.bundle.min.js"></script>
+    <script src="../Scripts/jquery-3.0.0.min.js"></script>
+    <script src="../Scripts/plugin.js"></script>-->
+    <!-- sidebar -->
+    <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../Scripts/custom.js"></script>-->
+    <!-- javascript -->
+    <!--<script src="../Scripts/owl.carousel.js"></script>
+    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function () {
+
+                $(this).addClass('transition');
+            }, function () {
+
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
+
+
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
+
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>-->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_b7WIuckZ56JNQMXK8AlbSuf6K88dsIU&callback=initMap&libraries=&v=weekly"></script>
+
+</body>
+</html>
+
