@@ -98,9 +98,15 @@
         }
 
         function SuccessSlectoin(secc) {
-            console.log(secc)
-
+            Swal.fire({
+                title: "צפה בבקשות שלך!",
+                icon: "success",
+                //    timer: 2500,
+            }).then(function () {
+                window.location.href = 'OpUser.html';
+            });
         }
+      
 
         //מפת גוגל
         var map;
