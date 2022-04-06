@@ -50,7 +50,7 @@
 
             function nextlevel() {
 
-                let serviceByDate = $('#meeting-time_walk').val();
+                let serviceByDate = $('#meeting-time-walk').val();
                 console.log(serviceByDate);
 
                 let serviceDate = serviceByDate.split("T")[0];
@@ -115,7 +115,7 @@
     </script>
 </head>
 <body>
-	<!-- section banner start -->
+    <!-- section banner start -->
     <div class="header_section_walk">
         <div class="container-fluid">
             <div class="row">
@@ -152,17 +152,16 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <h1 dir="rtl" class="about_taital"><strong><span style="color:orange;">מי מטייל איתי</span>? </strong></h1>
-                                <h3 class="about_taital" style="color: black;"> נא בחר תאריך ושעה </h3>
+                                <h5 class="about_taital" style="color:whitesmoke;"> אנא בחר תאריך ושעה </h5>
 
                                 <table>
                                     <tr>
                                         <td>
-                                            <input type="date" id="meeting-time_walk"
-                                                   name="meeting-time" value="2022-03-11T00:00"
+                                            <input type="date" id="meeting-time-walk"
+                                                   name="meeting-time-walk" value="2022-03-11T00:00"
                                                    min="2022-03-11T00:00" max="2022-12-31T00:00">
                                         </td>
-                                    </tr>
-                                    <tr>
+
                                         <td>
                                             <select id="selectime">
                                                 <option>בחר טווח שעות</option>
@@ -187,33 +186,33 @@
 
 
     </div>
-      
-	<!-- section about end -->
-	<!-- section gallery start -->
+
+    <!-- section about end -->
+    <!-- section gallery start -->
     <div class="gallery_main layout_padding">
         <div class="container">
             <div class="about_text">
                 <h1 class="about_taital_food"><strong><span style="color:white;">בחר את סוג השירות המבוקש  </span> לטיול</strong></h1>
-                <ul class="donate-now">
+                <ul class="donate-now-walk">
                     <li>
                         <input type="radio" id="20" name="amount" value="20" />
-                        <label for="20">טיול למשך 15 דקות- 20 נקודות זכות</label>
+
+                        <label for="20">טיול למשך 15 דקות <br />עלות: 20 <br /> נקודות זכות</label>
                     </li>
                     <li>
-                        <input type="radio" id="40"  name="amount" value="40" />
-                        <label for="40">טיול למשך 30 דקות- 40 נקודות זכות</label>
+                        <input type="radio" id="40" name="amount" value="40" />
+
+                        <label for="40">טיול למשך 30 דקות <br />עלות: 40 <br /> נקודות זכות</label>
                     </li>
                 </ul>
             </div>
-            
+
         </div>
     </div>
-    <div class="gallery_section_2">
-    	<div class="container">
+    <!--<div class="gallery_section_2">
+        <div class="container">
             <div class="row">
-                <div class="box_3">
-                    <h1 class="numbar">03</h1>
-                </div>
+
                 <div class="col-sm-8">
                     <h1 class="about_taital"><strong><span style="color: orange;">הערות  </span>מיוחדות</strong></h1>
                     <input type="text" id="note" required />
@@ -222,79 +221,108 @@
                     <div class="dog_img"><img src="../images/bichon-g.png" style="max-width: 100%;"></div>
                 </div>
                 <div>
-                    <input type="button"  id="Next" value="המשך " />
-                    
+                    <input type="button" id="Next" value="המשך " />
+
                 </div>
             </div>
-    	</div>
+        </div>
+    </div>-->
+
+    <div class="gallery_section_2">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="about_taital"><strong><span style="color: orange;">הערות  </span>מיוחדות</strong></h1>
+                    <input type="text" id="note" required />
+
+                </div>
+                <input type="button" id="Next" value=" המשך לצפייה בנתוני השירות " />
+
+                <!--<div class="col-sm-4">
+                    <div class="dog_img"><img src="../images/dog-g.png" style="max-width: 100%;"></div>
+                </div>-->
+
+            </div>
+
+        </div>
+
     </div>
-	
-	<!-- section footer start -->
+
+    <!-- section footer start -->
     <div class="section_footer">
-    	<div class="container">
-    		<div class="mail_section">
-    			<ul>
-                  
-    				<li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
-    				<!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
-    				<li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
-    				<li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
-    			</ul>
-    	    </div> 
-    	    <div class="footer_section_2">
-		        <div class="row">
-    		        <div class="col-sm-6 col-md-6 col-lg-3">
-    		        	<h2 class="shop_text">About Petcom</h2>
-    		        	<p class="dummy_text">קהילה חברתית יזמית המושתת על עזרה הדדית, שיוויוניות ועזרה לקהילה </p>
-    		        </div>
-    		        <div class="col-sm-6 col-md-6 col-lg-3">
-    		        	<h2 class="shop_text">Useful Links</h2>
-    		        	<div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
-    		        </div>
-    		        <div class="col-sm-6 col-md-6 col-lg-3">
-    				    <h2 class="shop_text">Overview</h2>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
-    				    <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>    				
-    		        </div>
-    			<div class="col-sm-6 col-md-6 col-lg-3">
-    				<h2 class="adderess_text">Instagram</h2>
-    				<div class="footer-img">
-    					<div class="row">
-    						<div class="col-sm-6">
-    							<div class="footer-img"><img src="../images/footer-img1.png" style="width: 100%;"></div>
-    							<div class="footer-img"><img src="../images/footer-img2.png" style="width: 100%;"></div>
-    						</div>
-    						<div class="col-sm-6">
-    							<div class="footer-img"><img src="../images/footer-img3.png" style="width: 100%;"></div>
-    							<div class="footer-img"><img src="../images/footer-img4.png" style="width: 100%;"></div>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    			</div>
-    	        </div>
-    	        <div class="social-icon">
-	        	    <div class="row">
-	        		    <div class="col-sm-12">
-	        			    <div class="icons">
-	        				    <ul>
-	        					    <li><a href="#"><img src="../images/fb-icon.png"></a></li>
-	        					    <li><a href="#"><img src="../images/twitter-icon.png"></a></li>
-	        					    <li><a href="#"><img src="../images/google-icon.png"></a></li>
-	        					    <li><a href="#"><img src="../images/linkedin-icon.png"></a></li>
-	        				    </ul>
-	        			    </div>
-	        		    </div>
-	        	    </div>
-	            </div>
-	        </div>
-    	</div>
-	<!-- section footer end -->
+        <div class="container">
+            <div class="mail_section">
+                <ul>
+
+                    <li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
+                    <!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
+                    <li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
+                    <li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
+                </ul>
+            </div>
+            <div class="footer_section_2">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">About Petcom</h2>
+                        <p class="dummy_text">קהילה חברתית יזמית המושתת על עזרה הדדית, שיוויוניות ועזרה לקהילה </p>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">Useful Links</h2>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">Overview</h2>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="adderess_text">Instagram</h2>
+                        <div class="footer-img">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="footer-img"><img src="../images/footer-img1.png" style="width: 100%;"></div>
+                                    <div class="footer-img"><img src="../images/footer-img2.png" style="width: 100%;"></div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="footer-img"><img src="../images/footer-img3.png" style="width: 100%;"></div>
+                                    <div class="footer-img"><img src="../images/footer-img4.png" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="social-icon">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="icons">
+                            <ul>
+                                <li><a href="#"><img src="../images/fb-icon.png"></a></li>
+                                <li><a href="#"><img src="../images/twitter-icon.png"></a></li>
+                                <li><a href="#"><img src="../images/google-icon.png"></a></li>
+                                <li><a href="#"><img src="../images/linkedin-icon.png"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- section footer end -->
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
+
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>
 
 </body>
 </html>

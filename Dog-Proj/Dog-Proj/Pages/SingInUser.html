@@ -147,7 +147,7 @@
     </script>
 </head>
 <body>
-	<!-- section banner start -->
+    <!-- section banner start -->
     <div class="header-main">
         <div class="container-fluid">
             <div class="row">
@@ -156,7 +156,7 @@
                 </div>
                 <div class="col-md-8">
                     <div class="menu_text">
-                       <ul>
+                        <ul>
                             <li class="active">
                                 <div id="myNav" class="overlay">
                                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -192,24 +192,29 @@
 
                                     <tr>
                                         <td>
-                                            <img class="imgform" src="../images/עצמך.png" />
+                                            
+                                            <img class="imgform" src="../images/dog-human.jpg" />
                                         </td>
                                         <td>
                                             <p>הגיע הזמן לספר לי קצת על עצמך</p>
                                         </td>
                                     </tr>
-                                 
+
                                     <tr>
                                         <td>
                                             <label>
+                                               
+
+                                                <img class="imgform-user" src="../images/male3.jpg"/>
                                                 <input type="radio" name="gender" value="M" checked>
-                                                <img class="imgform" src="../images/אני גבר.png" /><span>אני גבר</span>
                                             </label>
                                         </td>
                                         <td>
                                             <label>
+                                                
+
+                                                <img class="imgform-user" src="../images/female3.jpg" />
                                                 <input type="radio" name="gender" value="F">
-                                                <img class="imgform" src="../images/אני אישה.png" /><span>אני אישה</span>
                                             </label>
                                         </td>
                                     </tr>
@@ -223,7 +228,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="text" class="phone" required  pattern=".{10}" />
+                                            <input type="text" class="phone" required pattern=".{10}" />
 
                                         </td>
                                         <td><h3>מספר טלפון</h3></td>
@@ -244,13 +249,13 @@
                                         </td>
                                         <td><h3>?מתי זמין</h3></td>
                                     </tr>
-                                    <tr id="time"  class="hidden">
-                                        <td >
-                                            <input type="button" class="BTF"  value="07:00-08:00" />
-                                            <input type="button" class="BTF"  value="08:00-12:00" />
-                                            <input type="button" class="BTF"  value="12:00-14:00" />
-                                            <input type="button" class="BTF"  value="14:00-16:00" />
-                                            <input type="button" class="BTF"  value="16:00-20:00" />
+                                    <tr id="time" class="hidden">
+                                        <td>
+                                            <input type="button" class="BTF" value="07:00-08:00" />
+                                            <input type="button" class="BTF" value="08:00-12:00" />
+                                            <input type="button" class="BTF" value="12:00-14:00" />
+                                            <input type="button" class="BTF" value="14:00-16:00" />
+                                            <input type="button" class="BTF" value="16:00-20:00" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -266,8 +271,8 @@
                                     </tr>
 
                                 </table>
-                                </form>
-                                
+                            </form>
+
                         </div>
 
                     </div>
@@ -343,47 +348,57 @@
                 </div>
             </div>
         </div>
-</div>
+    </div>
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
 
-        <!-- Javascript files-->
-        <!--<script src="../Scripts/jquery.min.js"></script>
-        <script src="../Scripts/popper.min.js"></script>
-        <script src="../Scripts/bootstrap.bundle.min.js"></script>
-        <script src="../Scripts/jquery-3.0.0.min.js"></script>
-        <script src="../Scripts/plugin.js"></script>-->
-        <!-- sidebar -->
-        <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
-        <script src="../Scripts/custom.js"></script>-->
-        <!-- javascript -->
-        <!--<script src="../Scripts/owl.carousel.js"></script>
-        <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $(".fancybox").fancybox({
-                    openEffect: "none",
-                    closeEffect: "none"
-                });
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>
 
-                $(".zoom").hover(function () {
 
-                    $(this).addClass('transition');
-                }, function () {
-
-                    $(this).removeClass('transition');
-                });
+    <!-- Javascript files-->
+    <!--<script src="../Scripts/jquery.min.js"></script>
+    <script src="../Scripts/popper.min.js"></script>
+    <script src="../Scripts/bootstrap.bundle.min.js"></script>
+    <script src="../Scripts/jquery-3.0.0.min.js"></script>
+    <script src="../Scripts/plugin.js"></script>-->
+    <!-- sidebar -->
+    <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../Scripts/custom.js"></script>-->
+    <!-- javascript -->
+    <!--<script src="../Scripts/owl.carousel.js"></script>
+    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
             });
-        </script>
+
+            $(".zoom").hover(function () {
+
+                $(this).addClass('transition');
+            }, function () {
+
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
 
 
-        <script>
-            function openNav() {
-                document.getElementById("myNav").style.width = "100%";
-            }
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
 
-            function closeNav() {
-                document.getElementById("myNav").style.width = "0%";
-            }
-        </script>-->
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>-->
 
 </body>
 </html>

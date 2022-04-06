@@ -162,16 +162,29 @@ a {
     float: left;
     background-image: url('../images/english-cocker-spanie.jpg');
     height: 1000px;
-    padding-top: 20px;
+    padding-top: 0px;
     background-size: cover;
     background-repeat: no-repeat;
+    background-color:orange;
 }
 .header_section_walk {
     width: 100%;
     float: left;
+    height: 900px;
+    padding-top: 20px;
+    background-image: url('../images/WhatsApp Image 2022-04-06 at 14.22.49.jpeg');
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.header_section_pension {
+    width: 100%;
+    float: left;
     height: 1000px;
     padding-top: 20px;
-    background-image: url('../images/תטייל איתי.jpg');
+    background-image: url('../images/תשמור עלי.jpg');
+ 
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -188,13 +201,21 @@ a {
     padding-top:0px;
 }
 
-.menu_text {
-    width: 25%;
+.menu_text-sign {
+    width: 30%;
     float: right;
 }
+
+.menu_text {
+    width: 20%;
+    float: right;
+    padding-left: 70px;
+}
+
 .menu_text ul{ margin:10px; padding: 0px;}
 .menu_text li{ 
 	float: left; 
+    
 	padding-right: 15px;
   padding-left: 15px; 
 	font-size: 17pt;
@@ -203,6 +224,50 @@ a {
 	color: #ffffff;
 } 
 
+.menu_text ul{ margin:10px; padding: 0px;}
+.menu_text li{ 
+	float: left; 
+    
+	padding-right: 15px;
+  padding-left: 15px; 
+	font-size: 17pt;
+}
+.menu_text li a{
+	color: #ffffff;
+}
+
+
+    .menu_text-sign ul {
+        margin: 10px;
+        padding: 0px;
+    }
+
+    .menu_text-sign li {
+        float: left;
+        padding-right: 15px;
+        padding-left: 15px;
+        font-size: 17pt;
+    }
+
+        .menu_text-sign li a {
+            color: #ffffff;
+        }
+
+    .menu_text-sign ul {
+        margin: 10px;
+        padding: 0px;
+    }
+
+    .menu_text-sign li {
+        float: left;
+        padding-right: 15px;
+        padding-left: 15px;
+        font-size: 17pt;
+    }
+
+        .menu_text-sign li a {
+            color: #ffffff;
+        } 
 .last {
 	padding-top: 120px;
 	color: #ff9900;
@@ -275,10 +340,10 @@ a {
 .about_section_FOOD {
     width: 100%;
     float: left;
-    background-image: url('../images/dog-food.jpg');
+    /*background-image: url('../images/dog-food.jpg');*/
     height: auto;
     background-size: 100%;
-    height: 80%;
+    height: 40%;
     background-repeat: no-repeat;
 }
 
@@ -411,9 +476,10 @@ a {
 
 .gallery_section_2{
 	width: 100%; 
+    height:25%;
 	float: left;
 	background-color: #ffffff;
-	height: auto;
+	/*height: auto;*/
 	padding-top: 0px;
 }
 
@@ -492,13 +558,15 @@ a {
 }
 
 .email_box{
-	width: 100%;
+	width: 90%;
 	float: left;
 	background-color: #ffffff;
 	border-radius: 20px;
 	height: auto;
+    padding-left:50px;
+    margin-left:100px;
     padding: 50px 20px;
-    opacity: 0.80;
+    opacity: 0.70;
 }
 
 .email-bt {
@@ -787,9 +855,10 @@ button.btn.btn-primary, button.btn.btn-primary:hover, button.btn.btn-primary:foc
 	width: 100%;
 	float: left;
 	background-color: #1d1b1c;
-	height: auto;
-	padding-top: 20px;
-	padding-bottom: 20px;
+	height:auto;
+    margin:0px;
+	padding-top: 10px;
+	padding-bottom: 30px;
 }
 
 .box .numbar_text {
@@ -805,9 +874,15 @@ button.btn.btn-primary, button.btn.btn-primary:hover, button.btn.btn-primary:foc
     text-align-last:right;
 }
 .imgform {
-    width: 100px;
-    height: 100px;
+    width:40%;
+    height: 80px;
     padding-left:0px;
+}
+
+.imgform-user {
+    width: 80%;
+    height: 90px;
+    padding-left: 0px;
 }
 #sign > tr > td {
     text-align: right;
@@ -907,7 +982,15 @@ input#meeting-time {
     color: black;
     margin-bottom: 150PX;
     margin-top: 50px;
-    margin-left:30px;
+    margin-left:200px;
+}
+
+input#meeting-time-walk {
+    font-size: 30px;
+    color: black;
+    margin-bottom: 150PX;
+    margin-top: 50px;
+    margin-left: 290px;
 }
 
 input#meeting-time_walk{
@@ -965,7 +1048,7 @@ input#foodSize, input#note {
     .donate-now li {
         float: left;
         margin: 0 5px 0 0;
-        width: 100px;
+        width: 130px;
         height: 40px;
         position: relative;
 
@@ -975,13 +1058,16 @@ input#foodSize, input#note {
     .donate-now input {
         display: block;
         position: inherit;
-        top: 100px;
+        top: -50px;
         left: 500px;
         right: 50px;
         bottom: 0;
+        background-color:white;
         
             
     }
+
+
 
         .donate-now input[type="radio"] {
             opacity: 0.01;
@@ -995,12 +1081,16 @@ input#foodSize, input#note {
             }
 
     .donate-now label {
-        padding: 0px;
-        border: 1px solid #CCC;
+       
+        padding: 10px;
+        padding-bottom:10px;
+        border: 1px solid black;
+       
         cursor: pointer;
         z-index: 90;
         text-align: center;
         margin-left:10px;
+        width:100px;
 
     }
 
@@ -1021,4 +1111,137 @@ input#foodSize, input#note {
 }
 
 
+#selectime {
+    display: block;
+    position: relative;
+    top: 10px;
+    left: -220px;
+    right: 48px;
+    padding-left: 20px;
+    padding-right:20px;
+}
 
+
+.donate-now-walk {
+    list-style-type: none;
+    margin: 25px 0 0 0;
+    padding: 0;
+}
+
+    .donate-now-walk li {
+        float: left;
+        margin: 0 5px 0 0;
+        width: 130px;
+        height: 40px;
+        position: relative;
+    }
+
+    .donate-now-walk label,
+    .donate-now-walk input {
+        display: block;
+        position: inherit;
+        top: -100px;
+        left: 500px;
+        right: 50px;
+        bottom: 0;
+        background-color: white;
+    }
+
+
+
+.donate-now-walk input[type="radio"] {
+    opacity: 0.01;
+    z-index: 100;
+    background: white;
+}
+
+    .donate-now-walk input[type="radio"]:checked + label,
+    .Checked + label {
+        background: orange;
+    }
+
+.donate-now-walk label {
+    padding: 10px;
+    padding-bottom: 10px;
+    border: 1px solid black;
+    cursor: pointer;
+    z-index: 90;
+    text-align: center;
+    margin-left: 10px;
+    width: 100px;
+}
+
+    .donate-now-walk label:hover {
+        background: #DDD;
+    }
+
+
+.donate-now-pension {
+    list-style-type: none;
+    margin: 25px 0 0 0;
+    padding: 0;
+}
+
+    .donate-now-pension li {
+        float: left;
+        margin: 0 5px 0 0;
+        width: 130px;
+        height: 40px;
+        position: relative;
+    }
+
+    .donate-now-pension label,
+    .donate-now-pension input {
+        display: block;
+        position: inherit;
+        top: -120px;
+        left: 500px;
+        right: 50px;
+        bottom: 0;
+        background-color: white;
+    }
+
+
+
+        .donate-now-pension input[type="radio"] {
+            opacity: 0.01;
+            z-index: 100;
+            background: white;
+        }
+
+            .donate-now-pension input[type="radio"]:checked + label,
+            .Checked + label {
+                background: orange;
+            }
+
+    .donate-now-pension label {
+        padding: 10px;
+        padding-bottom: 10px;
+        border: 1px solid black;
+        cursor: pointer;
+        z-index: 90;
+        text-align: center;
+        margin-left: 10px;
+        width: 120px;
+    }
+
+        .donate-now-pension label:hover {
+            background: #DDD;
+        }
+
+
+
+input#regervation {
+    display: block;
+    position: inherit;
+    top: 10px;
+    left: 270px;
+    right: 50px;
+    bottom: 0;
+    background-color: white;
+}
+
+.homepic{
+    width:40%;
+
+}

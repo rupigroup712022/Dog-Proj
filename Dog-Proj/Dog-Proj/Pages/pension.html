@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- basic -->
@@ -123,20 +123,21 @@
 </head>
 <body>
     <!-- section banner start -->
-    <div class="header_section_walk">
+    <div class="header_section_pension">
         <div class="container-fluid">
             <div class="row">
-                <div class="col col">
-                    <button id="LogOut">Log Out</button>
-                </div>
                 <div class="col-md-4">
                     <div><a href="index.html"><img src="../images/LOGO1.png" /></a></div>
                 </div>
                 <div class="col-md-8">
                     <div class="menu_text">
                         <ul>
+                            <li class="LogeIn">
 
+                                <button id="LogOut">Log Out</button>
+                            </li>
                             <li class="active">
+
                                 <div id="myNav" class="overlay">
                                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                                     <div class="overlay-content">
@@ -158,6 +159,9 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <h1 dir="rtl" class="about_taital"><strong><span style="color:orange;">מי שומר עלי </span>? </strong></h1>
+                                <h5 class="about_taital" style="color:black;"> אנא בחר טווח תאריכים </h5>
+                                <input type="text" name="regervation" id="regervation" placeholder="Please select regervation date!" />
+                                <div id="displayRegervation"></div>
                             </div>
                         </div>
                     </div>
@@ -167,8 +171,7 @@
     </div>
     <!-- section banner end -->
     <!-- section about start -->
-    
-    <div class="about_section_walk">
+    <!--<div class="about_section_walk">
         <div class="about_text">
             <div class="container">
                 <div>
@@ -178,24 +181,26 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <!-- section about end -->
     <!-- section gallery start -->
     <div class="gallery_main layout_padding">
         <div class="container">
             <div class="about_text">
                 <div>
-                    <h1 class="about_taital_food"><strong><span style="color:white;">בחר את סוג השירות המבוקש  </span> לטיול</strong></h1>
+                    <h1 class="about_taital_food"><strong><span style="color:white;">בחר את סוג השירות המבוקש  </span> </strong></h1>
                 </div>
                 <div>
-                    <ul class="donate-now">
+                    <ul class="donate-now-pension">
                         <li>
                             <input type="radio" id="100" name="amount" value="100" />
-                            <label for="100">שמירה על הכלב בין יום אחד לחמישה -100 נקודות זכות ליום</label>
+
+                            <label for="100"> שמירה על הכלב בין יום אחד לחמישה ימים<br />עלות: 100 <br /> נקודות זכות</label>
                         </li>
                         <li>
-                            <input type="radio" id="110" name="amount"  value="110"/>
-                            <label for="110">שמירה על הכלב מעל שישה ימים-110 נקודות זכות ליום</label>
+                            <input type="radio" id="110" name="amount" value="110" />
+
+                            <label for="110"> שמירה על הכלב לשישה ימים ומעלה<br />עלות: 110 <br /> נקודות זכות</label>
                         </li>
                     </ul>
                 </div>
@@ -207,23 +212,23 @@
     <div class="gallery_section_2">
         <div class="container">
             <div class="row">
-                <div class="box_3">
-                    <h1 class="numbar">03</h1>
-                </div>
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <h1 class="about_taital"><strong><span style="color: orange;">הערות  </span>מיוחדות</strong></h1>
                     <input type="text" id="note" required />
-                </div>
-                <div class="col-sm-4">
-                    <div class="dog_img"><img src="../images/bichon-g.png" style="max-width: 100%;"></div>
-                </div>
-                <div>
-                    <input type="button" id="Next" value="המשך " />
 
                 </div>
+                <input type="button" id="Next" value=" המשך לצפייה בנתוני השירות " />
+
+                <!--<div class="col-sm-4">
+                    <div class="dog_img"><img src="../images/dog-g.png" style="max-width: 100%;"></div>
+                </div>-->
+
             </div>
+
         </div>
+
     </div>
+
 
     <!-- section footer start -->
     <div class="section_footer">
@@ -290,6 +295,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
+
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>
+
     <!-- section footer end -->
     <!-- Javascript files-->
     <!--<script src="../Scripts/jquery.min.js"></script>
@@ -302,35 +318,26 @@
     <script src="../Scripts/custom.js"></script>-->
     <!-- javascript -->
     <!--<script src="../Scripts/owl.carousel.js"></script>
-    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $(".fancybox").fancybox({
-                openEffect: "none",
-                closeEffect: "none"
+        <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $(".fancybox").fancybox({
+                    openEffect: "none",
+                    closeEffect: "none"
+                });
+
+                $(".zoom").hover(function () {
+
+                    $(this).addClass('transition');
+                }, function () {
+
+                    $(this).removeClass('transition');
+                });
             });
-
-            $(".zoom").hover(function () {
-
-                $(this).addClass('transition');
-            }, function () {
-
-                $(this).removeClass('transition');
-            });
-        });
-    </script>
+        </script>
 
 
-    <script>
-        function openNav() {
-            document.getElementById("myNav").style.width = "100%";
-        }
 
-        function closeNav() {
-            document.getElementById("myNav").style.width = "0%";
-        }
-    </script>-->
-     
 
-</body>
-</html>
+    </body>
+    </html>
