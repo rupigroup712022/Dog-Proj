@@ -31,12 +31,13 @@
     <link href="../css/Login.css" rel="stylesheet" />
     <script src="../Scripts/ajaxCall.js"></script>
     <script src="../Scripts/jquery-3.4.1.js"></script>
+    <link href="../css/style.css" rel="stylesheet" />
     <script>
         $(document).ready(function () {
             logUser();
             userid = JSON.parse(localStorage["UserId"]);
             $(document).on("click", ".NameUser", name);
-           
+
 
         });
 
@@ -61,18 +62,19 @@
             console.log(success.length)
 
             var imgStr = "";
-        
-            for (var i = 0; i < success.length; i=i+2 ) {
+
+            for (var i = 0; i < success.length; i = i + 2) {
 
                 console.log(success[1])
 
                 imgStr = "<div><input type = 'button' class='NameUser' value = " + success[i] + "></div>";
                 if (success[i + 1] == 'F') {
-                    imgStr += "<div><img src='../images/user-gfaaf954f6_640.png' /></div>";
+                    imgStr += "<div class='userclass'><img class='imguser' src='../images/user-gfaaf954f6_640.png' /></div>";
                 }
                 else {
-                    imgStr += "<div><img src='../images/user-g768722fb2_640.png'/></div>";
+                    imgStr += "<div  class='userclass'><img class='imguser' src='../images/user-g768722fb2_640.png'/></div>";
                 }
+                
                 document.getElementById("ph").innerHTML += imgStr;
             }
 
@@ -82,14 +84,14 @@
             console.log(err);
         }
 
-       
+
 
 
 
     </script>
 
 
-    
+
 </head>
 <body>
     <!-- section banner start -->
@@ -127,13 +129,17 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1 class="about_taital"><strong><span style="color: #ffffff;">בחר את </span> המשתמש</strong></h1>
+                    <h1 class="about_taital_users"><strong><span style="color: #ffffff;">בחר את </span> המשתמש</strong></h1>
                 </div>
             </div>
             <div class="input_main">
                 <div id="ph">
-                    
+                    <div id="ph2">
+                        <img id="selectionImg" src="../images/RON KOBI-241.jpg" />
+         
                     </div>
+
+                </div>
                 </div>
            </div>
 
