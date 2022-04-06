@@ -85,7 +85,7 @@
                 let api = "../api/Services/req";
                 ajaxCall("POST", api, JSON.stringify(req), SuccessSlectoin, error);
             }
-            if (selcDiv.length == 0) {
+            if (selcDiv.length == 0 || (JSON.parse(localStorage.getItem("Difference_In_Days") == "0" && selcDiv.length > 1))) {
                 Swal.fire({
                     title: "אנא בחר נותן שירות!",
                     icon: "error",

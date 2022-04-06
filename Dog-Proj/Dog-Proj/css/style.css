@@ -37,7 +37,7 @@ html {
 body {
     color: #666666;
     font-size: 14px;
-    font-family: 
+    font-family: 'Josefin Sans', sans-serif;
     line-height: 1.80857;
     font-weight: normal;
     overflow-x: hidden;
@@ -45,6 +45,7 @@ body {
     margin: 0;
     padding: 0;
 }
+
 
 a {
      color: #1f1f1f;
@@ -1111,7 +1112,16 @@ input#foodSize, input#note {
 
     .donate-now label,
     .donate-now input {
-        display: block;#gallery_main layout_padding
+        display: block;
+        position: inherit;
+        top: -50px;
+        left: 500px;
+        right: 50px;
+        bottom: 0;
+        background-color: white;
+    }
+
+   /*     #gallery_main layout_padding{
         position: inherit;
         top: -50px;
         left: 500px;
@@ -1121,7 +1131,7 @@ input#foodSize, input#note {
         
             
     }
-
+*/
 
 
         .donate-now input[type="radio"] {
