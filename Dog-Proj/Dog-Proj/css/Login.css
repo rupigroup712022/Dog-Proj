@@ -19,14 +19,22 @@ main {
 
 
 .form_class {
-    width: 1000px;
-    height: 700px;
+    width: 800px;
+    height: 600px;
+    margin-top:300px;
     padding: 40px;
     border-radius: 8px;
     background-color: white;
     font-family: Arial;
+    position:center;
     box-shadow: 5px 5px 10px rgb(0,0,0,0.3);
 }
+
+.pass{
+    text-align:center;
+}
+
+
 
 .form_div {
     text-transform: uppercase;

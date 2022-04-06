@@ -169,7 +169,7 @@
     </script>
 </head>
 <body>
-	<!-- section banner start -->
+    <!-- section banner start -->
     <div class="header-main">
         <div class="container-fluid">
             <div class="row">
@@ -178,7 +178,7 @@
                 </div>
                 <div class="col-md-8">
                     <div class="menu_text">
-                       <ul>
+                        <ul>
                             <li class="active">
                                 <div id="myNav" class="overlay">
                                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -208,11 +208,10 @@
                 <div class="email_box">
                     <div class="input_main">
                         <div class="container">
-                            <form id="signDog" >
+                            <form id="signDog">
                                 <table>
                                     <tr>
                                         <td>
-                                            
                                         </td>
                                         <td>
                                             <p>הגיע הזמן לספר על הכלב/ה שלך</p>
@@ -221,15 +220,17 @@
                                     <tr>
                                         <td>
                                             <label>
+                                             
 
-                                                <img class="imgform" src="../images/כלב.gif" /><span>יש לי כלב </span>
+                                                <img class="imgform-dog" src="../images/boy.jpg" /><!--<span>יש לי כלב </span>-->
                                                 <input type="radio" name="gender" value="M" checked>
                                             </label>
                                         </td>
                                         <td>
                                             <label>
+                                               
 
-                                                <img class="imgform" src="../images/כלבה.png" /><span>יש לי כלבה</span>
+                                                <img class="imgform-dog"  src="../images/girl.jpg" /><!--<span>יש לי כלבה</span>-->
                                                 <input type="radio" name="gender" value="F">
                                             </label>
                                         </td>
@@ -240,17 +241,20 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div>
-                                                <label for="files">Files</label>
-                                                <input type="file" id="files" name="files" multiple="multiple" />
-                                            </div>
-                                            <br />
-                                            <button type="button" id="buttonUpload">Upload files</button>
+                                            <input type="file" id="files" name="files" multiple="multiple" />
 
+                                            <br/>
+                                            <button type="button" id="buttonUpload">העלאת תמונה</button>
+                                            
+                                        </td>
+                                        <td><h3>הוספת תמונה</h3></td>
                                     </tr>
                                     <tr>
+                                        
                                         <td><input type="text" id="age" required /></td>
-                                        <td><h3>גיל הכלב/ה</h3></td>
+                                        <td><h3>גיל הכלב/ה</h3>
+                                            <br/>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><input type="text" id="dogBreed" required /></td>
@@ -278,11 +282,13 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="checkbox" name="test" value="small" class="BTF" id="neutering" /> <span>מסורס/מעוקרת</span>
+                                            <span>מסורס/מעוקרת</span> <input type="checkbox" name="test" value="small" class="BTF" id="neutering" /> 
                                         </td>
                                     </tr>
+                                   
                                     <tr>
                                         <td>
+                                            <br />
                                             <input type="submit" value="היכנס" />
                                         </td>
                                     </tr>
@@ -362,47 +368,58 @@
                 </div>
             </div>
         </div>
-</div>
+    </div>
 
-        <!-- Javascript files-->
-        <!--<script src="../Scripts/jquery.min.js"></script>
-        <script src="../Scripts/popper.min.js"></script>
-        <script src="../Scripts/bootstrap.bundle.min.js"></script>
-        <script src="../Scripts/jquery-3.0.0.min.js"></script>
-        <script src="../Scripts/plugin.js"></script>-->
-        <!-- sidebar -->
-        <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
-        <script src="../Scripts/custom.js"></script>-->
-        <!-- javascript -->
-        <!--<script src="../Scripts/owl.carousel.js"></script>
-        <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $(".fancybox").fancybox({
-                    openEffect: "none",
-                    closeEffect: "none"
-                });
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
 
-                $(".zoom").hover(function () {
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>
 
-                    $(this).addClass('transition');
-                }, function () {
-
-                    $(this).removeClass('transition');
-                });
+    <!-- Javascript files-->
+    <!--<script src="../Scripts/jquery.min.js"></script>
+    <script src="../Scripts/popper.min.js"></script>
+    <script src="../Scripts/bootstrap.bundle.min.js"></script>
+    <script src="../Scripts/jquery-3.0.0.min.js"></script>
+    <script src="../Scripts/plugin.js"></script>-->
+    <!-- sidebar -->
+    <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../Scripts/custom.js"></script>-->
+    <!-- javascript -->
+    <!--<script src="../Scripts/owl.carousel.js"></script>
+    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
             });
-        </script>
+
+            $(".zoom").hover(function () {
+
+                $(this).addClass('transition');
+            }, function () {
+
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
 
 
-        <script>
-            function openNav() {
-                document.getElementById("myNav").style.width = "100%";
-            }
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
 
-            function closeNav() {
-                document.getElementById("myNav").style.width = "0%";
-            }
-        </script>-->
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>-->
+
 
 </body>
 </html>

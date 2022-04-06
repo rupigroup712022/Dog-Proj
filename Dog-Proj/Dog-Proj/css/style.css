@@ -136,7 +136,7 @@ p {
 }
 
 a {
-     color: #ffffff;
+     color: orange;
      text-decoration: none;
      outline: none !important;
 }
@@ -204,6 +204,7 @@ a {
 .menu_text-sign {
     width: 30%;
     float: right;
+    padding-left:80px;
 }
 
 .menu_text {
@@ -212,7 +213,18 @@ a {
     padding-left: 70px;
 }
 
-.menu_text ul{ margin:10px; padding: 0px;}
+.menu_text-log{
+
+    width: 50%;
+    float: right;
+    padding-left: 250px;
+}
+
+
+.menu_text ul {
+    margin: 10px;
+    padding: 0px;
+}
 .menu_text li{ 
 	float: left; 
     
@@ -235,6 +247,38 @@ a {
 .menu_text li a{
 	color: #ffffff;
 }
+
+.menu_text-log ul {
+    margin: 10px;
+    padding: 0px;
+}
+
+.menu_text-log li {
+    float: left;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-size: 17pt;
+}
+
+    .menu_text-log li a {
+        color: #ffffff;
+    }
+
+.menu_text-log ul {
+    margin: 10px;
+    padding: 0px;
+}
+
+.menu_text-log li {
+    float: left;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-size: 17pt;
+}
+
+    .menu_text-log li a {
+        color: #ffffff;
+    }
 
 
     .menu_text-sign ul {
@@ -855,7 +899,7 @@ button.btn.btn-primary, button.btn.btn-primary:hover, button.btn.btn-primary:foc
 	width: 100%;
 	float: left;
 	background-color: #1d1b1c;
-	height:auto;
+	height:100px;
     margin:0px;
 	padding-top: 10px;
 	padding-bottom: 30px;
@@ -877,6 +921,12 @@ button.btn.btn-primary, button.btn.btn-primary:hover, button.btn.btn-primary:foc
     width:40%;
     height: 80px;
     padding-left:0px;
+}
+
+.imgform-dog {
+    width: 100%;
+    height: 120px;
+    padding-left: 0px;
 }
 
 .imgform-user {
