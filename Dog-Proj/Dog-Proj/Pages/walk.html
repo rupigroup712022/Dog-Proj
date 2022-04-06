@@ -33,10 +33,12 @@
     <script src="../Scripts/ajaxCall.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../Scripts/jquery-3.4.1.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
-       $(document).ready(function () {
+        $(document).ready(function () {
             $('#Next').click(nextlevel);
-           $("#LogOut").click(LogOut);
+            $("#LogOut").click(LogOut);
 
         });
 
@@ -48,67 +50,88 @@
 
 
 
-            function nextlevel() {
+        function nextlevel() {
 
-                let serviceByDate = $('#meeting-time_walk').val();
-                console.log(serviceByDate);
+            let serviceByDate = $('#meeting-time_walk').val();
+            console.log(serviceByDate);
 
-                let serviceDate = serviceByDate.split("T")[0];
-                console.log(serviceByDate);
-                //const serviceHour = new Date(serviceDate).toLocaleTimeString('en',
-                //    { timeStyle: 'short', hour12: false });
-                //console.log(serviceHour);
-                let serviceHour = $("#selectime").val();
-                const dayinnum = new Date(serviceDate).getDay();
-                console.log(dayinnum);
-                var days = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
-                var serviceDay = days[dayinnum];
-                console.log(serviceDay);
-
-
-                var servicetype = "";
-                var amo = document.getElementsByName('amount');
-                for (i = 0; i < amo.length; i++) {
-                    if (amo[i].checked)
-                        servicetype = amo[i].value
-                }
-                let note = $("#note").val();
-                let serviceName = "walk";
-                var familyId = parseInt(localStorage.getItem('familyId'));
-                var UserId = parseInt(localStorage.getItem('UserId'));
-                localStorage["serviceDay"] = JSON.stringify(serviceDay);
-                localStorage["serviceHour"] = JSON.stringify(serviceHour);
-
-                walk = {
-                    ServiceName: serviceName,
-                    ServiceDate: serviceDate,
-                    ServiceDay: serviceDay,
-                    ServiceHour: serviceHour,
-                    Note: note,
-                    Servicetype: servicetype,
-                    UserId: UserId,
-                    FamilyId: familyId
-
-                }
+            let serviceDate = serviceByDate.split("T")[0];
+            console.log(serviceByDate);
+            //const serviceHour = new Date(serviceDate).toLocaleTimeString('en',
+            //    { timeStyle: 'short', hour12: false });
+            //console.log(serviceHour);
+            let serviceHour = $("#selectime").val();
+            const dayinnum = new Date(serviceDate).getDay();
+            console.log(dayinnum);
+            var days = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
+            var serviceDay = days[dayinnum];
+            console.log(serviceDay);
 
 
-                console.log(walk);
-                let api = "../api/Services?UserId=" + UserId;
-                ajaxCall("POST", api, JSON.stringify(walk), postSCB, postECB);
-                return false;
+            var servicetype = "";
+            var amo = document.getElementsByName('amount');
+            for (i = 0; i < amo.length; i++) {
+                if (amo[i].checked)
+                    servicetype = amo[i].value
+            }
+            let note = $("#note").val();
+            let serviceName = "walk";
+            var familyId = parseInt(localStorage.getItem('familyId'));
+            var UserId = parseInt(localStorage.getItem('UserId'));
+            localStorage["serviceDay"] = JSON.stringify(serviceDay);
+            localStorage["serviceHour"] = JSON.stringify(serviceHour);
+
+
+            var diffDays = new Date(serviceDate) - Date.now();
+            var Difference_In_Days = diffDays / (1000 * 3600 * 24);
+            console.log(Difference_In_Days);
+
+            walk = {
+                ServiceName: serviceName,
+                ServiceDate: serviceDate,
+                ServiceDay: serviceDay,
+                ServiceHour: serviceHour,
+                Note: note,
+                Servicetype: servicetype,
+                UserId: UserId,
+                FamilyId: familyId
+
             }
 
 
-            function postSCB(service) {
-                alert("עכשיו רק נשאר לבחור מי יבצע את השירות");
-                $("#Next").click(function () {
-                    window.location.href = "OpUser.html";
+            console.log(walk);
+            let api = "../api/Services?UserId=" + UserId;
+            ajaxCall("POST", api, JSON.stringify(walk), postSCB, postECB);
+            return false;
+        }
+
+
+        function postSCB(service) {
+            localStorage["ServicesId"] = JSON.stringify(id);
+
+            if (parseInt(localStorage.getItem('Difference_In_Days')) == '1') {
+                Swal.fire({
+                    title: "בחר שלושה נותני שירות!",
+                    icon: "success",
+                    //    timer: 2500,
+                }).then(function () {
+                    window.location.href = 'OpUser.html';
                 });
             }
-
-            function postECB(err) {
-                alert("Error");
+            else {
+                Swal.fire({
+                    title: "בחר נותן שירות אחד!",
+                    icon: "success",
+                    //    timer: 2500,
+                }).then(function () {
+                    window.location.href = 'OpUser.html';
+                });
             }
+        }
+
+        function postECB(err) {
+            alert("Error");
+        }
 
 
 

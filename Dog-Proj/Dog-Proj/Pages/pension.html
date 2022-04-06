@@ -110,6 +110,8 @@
 
 
         function postSCB(service) {
+            localStorage["ServicesId"] = JSON.stringify(id);
+
             alert("עכשיו רק נשאר לבחור מי יבצע את השירות");
             $("#Next").click(function () {
                 window.location.href = "SingInDog.html";// להוסיף דף בחירה

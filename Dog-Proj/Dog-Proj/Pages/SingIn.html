@@ -32,6 +32,8 @@
     <script src="../Scripts/ajaxCall.js"></script>
     <script src="https://cdn.rawgit.com/LeaVerou/awesomplete/gh-pages/awesomplete.min.js"></script>
     <script src="../Scripts/jquery-3.4.1.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
 
         let unisex = "";
@@ -65,23 +67,23 @@
 
 
 
-            function signUp() {
-                signUpfamily()
-                return false;
-            }
+        function signUp() {
+            signUpfamily()
+            return false;
+        }
 
 
         function signUpfamily() {
-                var getvalue = document.getElementsByName('mylist')[0];
-                let familyname = $("#familyname").val();
-                let cityName = getvalue.value;
-                let street = $("#street").val();
-                let homeNum = $("#homeNum").val();
-                let moreAnimals = $("#moreAnimals").is(':checked');
-                let yardSize = $("#yardSize").val();
-                let houseType = $("#houseType").val();
-                let email = $("#email").val();
-                let passwords = $("#passwords").val();
+            var getvalue = document.getElementsByName('mylist')[0];
+            let familyname = $("#familyname").val();
+            let cityName = getvalue.value;
+            let street = $("#street").val();
+            let homeNum = $("#homeNum").val();
+            let moreAnimals = $("#moreAnimals").is(':checked');
+            let yardSize = $("#yardSize").val();
+            let houseType = $("#houseType").val();
+            let email = $("#email").val();
+            let passwords = $("#passwords").val();
 
             account = {
 
@@ -93,33 +95,41 @@
                 YardSize: yardSize,
                 HouseType: houseType,
                 Passwords: passwords,
-                CityName:cityName,
+                CityName: cityName,
 
             }
             console.log(account)
             console.log(JSON.stringify(account))
-                ajaxCall("POST", "../api/Accounts", JSON.stringify(account), postSCB, postECB);
+            ajaxCall("POST", "../api/Accounts", JSON.stringify(account), postSCB, postECB);
 
-            }
+        }
 
 
         function postSCB(success) {
             console.log(success)
             if (success == 0) {
-                    alert("The email is alredy exists");
-                }
-                else {
-                    console.log(success);
-                    alert("Please add a family member");
-                    localStorage["familyId"] = JSON.stringify(success);
-                    window.location.href = "SingInUser.html";
-                }
-                
+                alert("The email is alredy exists");
+            }
+            else {
+                localStorage["familyId"] = JSON.stringify(success);
+
+                Swal.fire({
+                    title: "הוסף בן משפחה !",
+                    icon: "success",
+                    timer: 2500,
+                }).then(function () {
+                    window.location.href = 'SingInUser.html';
+                });
+
+
+
             }
 
-            function postECB(err) {
-                console.log(err);
-            }
+        }
+
+        function postECB(err) {
+            console.log(err);
+        }
 
 
     </script>

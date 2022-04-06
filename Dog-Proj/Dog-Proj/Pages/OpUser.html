@@ -28,6 +28,8 @@
     <!-- owl stylesheets -->
     <link rel="stylesheet" href="../css/owl.carousel.min.css">
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
     <script src="../Scripts/ajaxCall.js"></script>
     <script src="../Scripts/jquery-3.4.1.js"></script>
@@ -36,9 +38,9 @@
     <script>
         $(document).ready(function () {
             username = JSON.parse(localStorage["username"]);
+            $("#end").click(checkchoice);
             welcome(username);
             getAllmakers();
-
             $("#LogOut").click(LogOut);
 
 
@@ -59,6 +61,46 @@
             localStorage.clear();
             window.location.href = "index.html";
         }
+        function checkchoice() {
+
+            var selcDiv = $('#MakerList').find(".BTF").filter(function () {
+                return $(this).css('background-color') == 'rgb(255, 255, 102)';
+            });
+            console.log(selcDiv)
+            if (selcDiv.length <= 3 && JSON.parse(localStorage.getItem("Difference_In_Days") == "1")) {
+                selcDiv.map(el => {
+                    req = {
+                        idService: parseInt(JSON.parse(localStorage.getItem("ServicesId"))),
+                        idUser: parseInt($(el).attr('id')),
+                    }
+                    let api = "../api/Services/req";
+                    ajaxCall("POST", api, JSON.stringify(req), SuccessSlectoin, error);
+                })
+            }
+            if (selcDiv.length == 1 && JSON.parse(localStorage.getItem("Difference_In_Days") == "0")) {
+                req = {
+                    idService: parseInt(JSON.parse(localStorage.getItem("ServicesId"))),
+                    idUser: parseInt($(selcDiv).attr('id')),
+                }
+                let api = "../api/Services/req";
+                ajaxCall("POST", api, JSON.stringify(req), SuccessSlectoin, error);
+            }
+            if (selcDiv.length == 0) {
+                Swal.fire({
+                    title: "אנא בחר נותן שירות!",
+                    icon: "error",
+                    //    timer: 2500,
+                }).then(function () {
+                    window.location.href = 'OpUser.html';
+                });
+            }
+
+        }
+
+        function SuccessSlectoin(secc) {
+            console.log(secc)
+
+        }
 
         //מפת גוגל
         var map;
@@ -73,32 +115,90 @@
             infowindow = new google.maps.InfoWindow();
         }
 
-        var marker, i;
-        function postaddress(addresses, data) {
-            console.log(addresses);
-            console.log(data);
-            for (i = 0; i < addresses.length; i++) {
 
+        userAv = {
+            day: JSON.parse(localStorage.getItem("serviceDay")),
+            hour: JSON.parse(localStorage.getItem("serviceHour")),
+        }
+
+        function getAllmakers() {
+
+            console.log(userAv);
+            let api = "../api/Users/userAv";
+            ajaxCall("POST", api, JSON.stringify(userAv), getSuccessAll, error);
+        }
+        function getSuccessAll(data) {
+            let location = renderList(data);
+            getlocation(location);
+            console.log(data);
+        }
+
+        function error(err) {
+            alert("error!");
+        }
+
+        function renderList(d) {
+            addresses = [];
+            $("#MakerList").html("");
+            let str = "";
+            makersArr = d;
+            console.log(d)
+            for (var i = 0; i < d.length; i++) {
+                console.log(d.length)
+                for (var j = 0; j < d[i].length; j = j + d[i].length) {
+                    console.log(d[i].length)
+                    console.log(d[i][j])
+                    str += "<div class='BTF' id='" + d[i][j + 4] + "'>";
+                    str += "<table class='table'>";
+                    str += "<tr class='row'>";
+                    str += "<td class='col-12'><h1>" + d[i][j] + "</h1></td>";
+                    str += "</tr>";
+                    str += "<tr class='row'>";
+                    str += "<td class='col-12'><h1>" + d[i][j + 1] + "</h1></td>";
+                    str += "</tr>";
+                    str += "<tr class='row'>";
+                    str += "<td class='col-12'><h6><b>טלפון:</b>" + d[i][j + 2] + "</h6></td>";
+                    str += "</tr>";
+                    str += "<tr class='row'>";
+                    str += "<td class='col-12'><h6>" + d[i][j + 3] + " <b>דירוג</b></h6></td>";
+                    str += "</tr>";
+                    str += "<tr class='row'>";
+                    str += "<td class='col-12'><h6>" + d[i][j + 5] + " " + d[i][j + 6] + " " + d[i][j + 7] + " <b>כתובת</b></h6></td>";
+                    str += "</tr>";
+                    str += "<tr class='row'>";
+                    str += "<td class='col-12'><button type='button' class='btn btn-info btn-lg' onclick = 'selectUser(" + d[i][j + 4] + ")' id ='B" + d[i][j + 4] + "' data - toggle='modal' > בחירת משתמש </button > </td>";
+                    str += "</tr>";
+                    str += "</table>";
+                    str += "</div><br/>";
+                    let address = d[i][j + 5] + " " + d[i][j + 6] + " " + d[i][j + 7];
+                    addresses.push({ address: address, name: d[i][j], phone: d[i][j + 2], id: d[i][j + 4] });
+                }
+            }
+            $("#MakerList").append(str);
+            return addresses;
+        }
+
+
+        function getlocation(data) {
+            console.log(data);
+            for (i = 0; i < data.length; i++) {
                 let contentString =
                     '<div id="content">' +
                     '<div id="siteNotice">' +
                     "</div>" +
-                    '<h1 id="firstHeading" class="firstHeading">' + data[i].MakerspaceName + '</h1>' +
+                    '<h1 id="firstHeading" class="firstHeading">' + data[i].name + '</h1>' +
                     '<div id="bodyContent">' +
-                    "<p>טלפון להתקשרות: <b>" + data[i].PhoneNumber + "</b></p>" +
-                    "<button type='button' class='btn btn-info btn-lg' onclick='openmodal(" + i + ")' id='BTNRes' data-toggle='modal'>ליצירת הזמנה</button>";
-                if (login) {
-                    contentString += "<button type='button' class='btn btn-info btn-lg' onclick='addToFavorite(" + data[i].MakerspaceId + ")' id='BTNLike' >הוספה לFavorites</button>";
-                }
+                    "<p>טלפון להתקשרות: <b>" + data[i].phone + "</b></p>" +
+                    "<button type='button' class='btn btn-info btn-lg' onclick='selectUser(" + data[i].id + ")' id='BTNRes' data-toggle='modal'>בחירת משתמש </button>";
                 "</div>" +
                     "</div>";
-                let id = data[i].MakerspaceId;
+                let id = data[i].phone;
                 $.ajax({
                     url: "https://maps.googleapis.com/maps/api/geocode/json",
                     type: "GET",
                     data: {
-                        address: addresses[i],
-                        key: "AIzaSyAXHTRIwUGpCgzoDJmDFXQcEK38dbUuFSk"
+                        address: data[i].address,
+                        key: "AIzaSyD_b7WIuckZ56JNQMXK8AlbSuf6K88dsIU"
                     },
                     success: function (response) {
                         var coordi = {};
@@ -127,67 +227,35 @@
             }
         }
 
-         UserAv = {
-            day: (localStorage.getItem("serviceDay")),
-            hour: (localStorage.getItem("serviceHour")),
-        }
+        selectedU = [];
+        function selectUser(id) {
+            console.log(id);
+            var colors = $("#" + id).css("background-color");
+            console.log(colors);
 
-        function getAllmakers() {
-        
+            if ($("#" + id).css("background-color") == "rgb(255, 165, 0)") {
+                $("#" + id).css("background-color", "rgb(255, 255, 102)");
+                $("#" + id).find(".btn").html("ביטול הבקשה");
+                console.log($("#" + id).find(".btn"));
+                add(id);
+            }
+            else {
 
-            console.log(UserAv);
+                $("#" + id).css("background-color", "rgb(255, 165, 0)")
+                selectedU = selectedU.filter(l => l != id);
+                $("#" + id).find(".btn").html("בחירת משתמש");
 
-            let api = "../api/Users/?day ="+ UserAv.day + "& hour=" + UserAv.hour;
-            ajaxCall("GET", api,"", getSuccessAllmakers, error);
-        }
-        function getSuccessAllmakers(data) {
-            console.log(data);
-            renderMakers(data);
-        }
-        function error(err) {
-            alert("error!");
-        }
-
-        function renderMakers(d) { //רנדור מקיירספייסים
-            $("#MakerList").html("");
-            let str = "";
-            makersArr = d;
-            for (var i = 0; i < d.length; i++) {
-                for (var j = 0; j < d[i].length; j = j + 5)
-                    str += "<div id='" + i + "'>";
-                str += "<table class='table'>";
-                str += "<tr class='row'>";
-                str += "<td class='col-12'><h1><a href='#'></a>" + d[i][j] + "</h1></td>";
-                str += "</tr>";
-                str += "<tr class='row'>";
-                str += "<td class='col-12'><h1><a href='#'></a>" + d[i][j] + "</h1></td>";
-                str += "</tr>";
-                str += "<tr class='row'>";
-                str += "<td class='col-12'><h6><b>טלפון:</b>" + d[i][j] + "</h6 ></td>";
-                str += "</tr>";
-                str += "<tr class='row'>";
-                str += "<td class='col-12'><h6>" + d[i][j] + " <b>דירוג: </b></h6></td>";
-                str += "</tr>";
-                str += "</table>";
-                str += "</div><br/>";
+                console.log(selectedU);
 
             }
-            $("#MakerList").append(str);
+
+            function add(id) {
+                selectedU.push(id);
+                console.log(selectedU);
+                console.log(this);
+            }
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </script>
 
@@ -229,17 +297,21 @@
         </div>
     </div>
     <!-- section about start -->
-  
-        <div class="container">
-            <div id="divSearch" class="container-fluid">
-                <div class="row" id="divSearchRow">
-                    <div class="col-3" id="MakerList"></div>
-                    <div class="col-9" id="map"></div>
-                </div>
-            </div>
 
+    <div class="container">
+        <div id="divSearch" class="container-fluid">
+            <div class="row" id="divSearchRow">
+                <div class="col-3" id="MakerList"></div>
+                <div class="col-9" id="map"></div>
+            </div>
         </div>
- 
+        <div>
+            <button id="end" value="סיום " />
+            <a href="SingInUser.html"></a>
+        </div>
+    </div>
+    
+
     <!-- section about end -->
     <!-- section footer start -->
     <div class="section_footer">
