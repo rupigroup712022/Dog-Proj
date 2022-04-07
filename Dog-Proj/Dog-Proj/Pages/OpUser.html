@@ -87,7 +87,7 @@
             }
             if (selcDiv.length == 0 || (JSON.parse(localStorage.getItem("Difference_In_Days") == "0" && selcDiv.length > 1))) {
                 Swal.fire({
-                    title: "אנא בחר נותן שירות!",
+                    title: " אנא בחרמספר מתאים של נותני שירות!",
                     icon: "error",
                     //    timer: 2500,
                 }).then(function () {
@@ -169,7 +169,7 @@
                     str += "<td class='col-12'><h6>" + d[i][j + 3] + " <b>דירוג</b></h6></td>";
                     str += "</tr>";
                     str += "<tr class='row'>";
-                    str += "<td class='col-12'><h6>" + d[i][j + 5] + " " + d[i][j + 6] + " " + d[i][j + 7] + " <b>כתובת</b></h6></td>";
+                    str += "<td class='col-12'><h6><b>כתובת  </b>" + d[i][j + 5] + " " + d[i][j + 6] + " " + d[i][j + 7] + " </h6></td>";
                     str += "</tr>";
                     str += "<tr class='row'>";
                     str += "<td class='col-12'><button type='button' class='btn btn-info btn-lg' onclick = 'selectUser(" + d[i][j + 4] + ")' id ='B" + d[i][j + 4] + "' data - toggle='modal' > בחירת משתמש </button > </td>";

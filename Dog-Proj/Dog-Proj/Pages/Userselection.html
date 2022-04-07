@@ -32,21 +32,30 @@
     <script src="../Scripts/ajaxCall.js"></script>
     <script src="../Scripts/jquery-3.4.1.js"></script>
     <link href="../css/style.css" rel="stylesheet" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(document).ready(function () {
             logUser();
             userid = JSON.parse(localStorage["UserId"]);
-            $(document).on("click", ".NameUser", name);
-
+            $(document).on("click", ".NameUser", name)
+            
 
         });
 
 
         function name() {
-            let username = $(".NameUser").val();
-            console.log(username);
-            localStorage["username"] = JSON.stringify(username);
-            window.location.href = "mainScreen.html";
+                let username = $(this).val();
+                console.log(username);
+                localStorage["username"] = JSON.stringify(username);
+                Swal.fire({
+                    title: "התחברת בהצלחה !",
+                    icon: "success",
+                    timer: 2500,
+                }).then(function () {
+                    window.location.href = 'mainScreen.html';
+                });
+           
         }
 
         function logUser() {
@@ -74,7 +83,7 @@
                 else {
                     imgStr += "<div  class='userclass'><img class='imguser' src='../images/user-g768722fb2_640.png'/></div>";
                 }
-                
+
                 document.getElementById("ph").innerHTML += imgStr;
             }
 
@@ -212,17 +221,17 @@
             </div>
 
             <!-- Javascript files-->
-            <script src="../Scripts/jquery.min.js"></script>
+            <!--<script src="../Scripts/jquery.min.js"></script>
             <script src="../Scripts/popper.min.js"></script>
             <script src="../Scripts/bootstrap.bundle.min.js"></script>
             <script src="../Scripts/jquery-3.0.0.min.js"></script>
-            <script src="../Scripts/plugin.js"></script>
+            <script src="../Scripts/plugin.js"></script>-->
             <!-- sidebar -->
-            <script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
-            <script src="../Scripts/custom.js"></script>
+            <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+            <script src="../Scripts/custom.js"></script>-->
             <!-- javascript -->
-            <script src="../Scripts/owl.carousel.js"></script>
-            <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+            <!--<script src="../Scripts/owl.carousel.js"></script>
+            <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>-->
             <!--<script>
                 $(document).ready(function () {
                     $(".fancybox").fancybox({

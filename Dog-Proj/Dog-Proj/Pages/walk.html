@@ -52,20 +52,20 @@
 
         function nextlevel() {
 
-            let serviceByDate = $('#meeting-time_walk').val();
-            console.log(serviceByDate);
-
-            let serviceDate = serviceByDate.split("T")[0];
-            console.log(serviceByDate);
+            let serviceDate = $('#meeting-time-walk').val();
+            //let serviceByDate = serviceDate.split("T")[0];
+            console.log(serviceDate);
+            let serviceHour = $("#selectime").val();
             //const serviceHour = new Date(serviceDate).toLocaleTimeString('en',
             //    { timeStyle: 'short', hour12: false });
             //console.log(serviceHour);
-            let serviceHour = $("#selectime").val();
             const dayinnum = new Date(serviceDate).getDay();
             console.log(dayinnum);
             var days = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
             var serviceDay = days[dayinnum];
             console.log(serviceDay);
+            localStorage["serviceDay"] = JSON.stringify(serviceDay);
+            localStorage["serviceHour"] = JSON.stringify(serviceHour);
 
 
             var servicetype = "";
@@ -82,9 +82,21 @@
             localStorage["serviceHour"] = JSON.stringify(serviceHour);
 
 
+
             var diffDays = new Date(serviceDate) - Date.now();
             var Difference_In_Days = diffDays / (1000 * 3600 * 24);
             console.log(Difference_In_Days);
+
+            console.log(Difference_In_Days);
+            if (Difference_In_Days <= 1) {
+                console.log('1 day');
+                localStorage["Difference_In_Days"] = JSON.stringify(1);
+            }
+            else {
+                localStorage["Difference_In_Days"] = JSON.stringify(0);
+
+            }
+
 
             walk = {
                 ServiceName: serviceName,
@@ -106,7 +118,7 @@
         }
 
 
-        function postSCB(service) {
+        function postSCB(id) {
             localStorage["ServicesId"] = JSON.stringify(id);
 
             if (parseInt(localStorage.getItem('Difference_In_Days')) == '1') {

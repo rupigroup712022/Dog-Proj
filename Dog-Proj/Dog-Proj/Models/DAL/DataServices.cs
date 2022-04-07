@@ -574,7 +574,7 @@ namespace Dog_Proj.Models.DAL
                     SqlCommand insertCommand = CreateInsertCommandservicewalk(UserId, service, con);
                     numEffected = insertCommand.ExecuteNonQuery();
                 }
-                SqlCommand getSerIdCommsnd = getSerIdCom(con, service.ServiceName, service.ServiceDate, service.UserId1, service.ServiceHour);
+                SqlCommand getSerIdCommsnd = getSerIdCom(con, service.ServiceName, service.ServiceDate, UserId, service.ServiceHour);
                 SqlDataReader dataReader = getSerIdCommsnd.ExecuteReader(CommandBehavior.CloseConnection);
                 int i = 0;
                 while (dataReader.Read())

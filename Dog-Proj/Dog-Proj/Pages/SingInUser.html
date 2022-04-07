@@ -31,12 +31,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
     <script src="../Scripts/ajaxCall.js"></script>
     <script src="../Scripts/jquery-3.4.1.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <script>
         $(document).ready(function () {
             $("#Day").change(selectday);
             $("#singUser").submit(signUp);
             $("#time").find(".BTF").click(changeColor);
+            $("#nextdog").click(function () {
+                Swal.fire({
+                    title: "הוסף כלב !",
+                    icon: "success",
+                    timer: 2500,
+                }).then(function () {
+                    window.location.href = 'SingInDog.html';
+                });
+            });
+            $("#nextuser").click(function () {
+                Swal.fire({
+                    title: "הוסף בן משפחה !",
+                    icon: "success",
+                    timer: 2500,
+                }).then(function () {
+                    window.location.href = 'SingInUser.html';
+                });
+            });
 
         });
         var DayDic = {};
@@ -123,16 +143,31 @@
             }
             else {
                 localStorage["UserId"] = JSON.stringify(success);
-                $("#nextdog").click(function () {
-                    window.location.href = "SingInDog.html";
-                });
-                $("#nextuser").click(function () {
-                    window.location.href = "SingInUser.html";
-                });
+                //$("#nextdog").click(function () {
+                //    Swal.fire({
+                //        title: "הוסף כלב !",
+                //        icon: "success",
+                //        timer: 2500,
+                //    }).then(function () {
+                //        window.location.href = 'SingInDog.html';
+                //    });
+                //});
+                //$("#nextuser").click(function () {
+                //    Swal.fire({
+                //        title: "הוסף בן משפחה !",
+                //        icon: "success",
+                //        timer: 2500,
+                //    }).then(function () {
+                //        window.location.href = 'SingInUser.html';
+                //    });
+                //});
                
             }
             console.log(success);
         }
+
+
+
         function postECB(err) {
             console.log(err);
         }
@@ -260,11 +295,11 @@
                                    
                                     <tr>
                                         <td>
-                                            <input type="submit" id="nextdog" value="אני רוצה להמשיך להרשמת כלב  " />
+                                            <input type="submit" id="nextdog" class="nextpage" value="אני רוצה להמשיך להרשמת כלב  " />
                                             <a href="SingInDog.html"></a>
                                         </td>
                                         <td>
-                                            <input type="submit" id="nextuser" value="הוסף בן משפחה " />
+                                            <input type="submit" id="nextuser" class="nextpage" value="הוסף בן משפחה " />
                                             <a href="SingInUser.html"></a>
                                         </td>
 

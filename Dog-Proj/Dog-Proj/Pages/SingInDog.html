@@ -124,8 +124,13 @@
                 alert("The user is exists");
             }
             else {
-                alert("You signed up successfully");
-                window.location.href = "Userselection.html";
+                Swal.fire({
+                    title: "התחברת בהצלחה אנא בחר כלב !",
+                    icon: "success",
+                    timer: 2500,
+                }).then(function () {
+                    window.location.href = 'Userselection.html';
+                });
             }
             console.log(success);
         }
