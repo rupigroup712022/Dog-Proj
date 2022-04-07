@@ -32,6 +32,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../Scripts/ajaxCall.js"></script>
     <script src="../Scripts/jquery-3.4.1.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <script>
 
@@ -42,7 +44,7 @@
                 var data = new FormData();
                 var files = $("#files").get(0).files;
 
-                // Add the uploaded file to the form data collection  
+                // Add the uploaded file to the form data collection
                 if (files.length > 0) {
                     for (f = 0; f < files.length; f++) {
                         data.append("UploadedImage", files[f]);
@@ -50,7 +52,7 @@
                     data.append("name", "yuval"); // append what ever data you want to send along with the files. See how you extract it in the controller.
                 }
 
-                // Ajax upload  
+                // Ajax upload
                 $.ajax({
                     type: "POST",
                     url: "../Api/FileUpload",
@@ -68,7 +70,7 @@
 
         function getImages(data) {
             console.log(data);
-            img= data[0];
+            img = data[0];
         }
 
         function error(data) {
@@ -93,7 +95,7 @@
             var size = $("#size").val();
             var neutering = $("#neutering").is(':checked');
             var familyNum = parseInt(localStorage.getItem('familyId'));
-            
+
 
             Dog = {
                 Dogname: dogname,
@@ -107,7 +109,7 @@
                 Picture: img
 
             }
-          
+
 
 
             console.log(Dog);
@@ -118,7 +120,7 @@
 
 
 
-   
+
         function postSCB(success) {
             if (success == 0) {
                 alert("The user is exists");
@@ -159,7 +161,7 @@
             }
             else {
                 $(this).css("background-color", "rgb(255, 165, 0)")
-                character=character.filter(l => l != $(this).val())
+                character = character.filter(l => l != $(this).val())
                 console.log(character);
 
             }
