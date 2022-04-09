@@ -156,22 +156,22 @@
                     console.log(d[i][j])
                     str += "<div class='BTF' id='" + d[i][j + 4] + "'>";
                     str += "<table class='table'>";
-                    str += "<tr class='row'>";
-                    str += "<td class='col-12'><h1>" + d[i][j] + "</h1></td>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h1>" + d[i][j] + "</h1></td>";
                     str += "</tr>";
-                    str += "<tr class='row'>";
-                    str += "<td class='col-12'><h1>" + d[i][j + 1] + "</h1></td>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h1>" + d[i][j + 1] + "</h1></td>";
                     str += "</tr>";
-                    str += "<tr class='row'>";
-                    str += "<td class='col-12'><h6><b>טלפון:</b>" + d[i][j + 2] + "</h6></td>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h6><b>טלפון:</b>" + d[i][j + 2] + "</h6></td>";
                     str += "</tr>";
-                    str += "<tr class='row'>";
-                    str += "<td class='col-12'><h6>" + d[i][j + 3] + " <b>דירוג</b></h6></td>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h6>" + d[i][j + 3] + " <b>דירוג</b></h6></td>";
                     str += "</tr>";
-                    str += "<tr class='row'>";
-                    str += "<td class='col-12'><h6><b>כתובת  </b>" + d[i][j + 5] + " " + d[i][j + 6] + " " + d[i][j + 7] + " </h6></td>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h6><b>כתובת  </b>" + d[i][j + 5] + " " + d[i][j + 6] + " " + d[i][j + 7] + " </h6></td>";
                     str += "</tr>";
-                    str += "<tr class='row'>";
+                    str += "<tr class='row1'>";
                     str += "<td class='col-12'><button type='button' class='btn btn-info btn-lg' onclick = 'selectUser(" + d[i][j + 4] + ")' id ='B" + d[i][j + 4] + "' data - toggle='modal' > בחירת משתמש </button > </td>";
                     str += "</tr>";
                     str += "</table>";
@@ -263,6 +263,14 @@
 
         }
 
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
+
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+
     </script>
 
 
@@ -273,17 +281,16 @@
     <div class="header-main">
         <div class="container-fluid">
             <div class="row">
-                <div class="col col">
-                    <button id="LogOut">Log Out</button>
+                <div class="col-md-4">
+                    <div><a href="index.html"><img src="../images/LOGO1S.png" /></a></div>
                 </div>
-                <div class="col col">
-                    <div><a href="index.html"> <img src="../images/LOGO1.png" /></a></div>
-                </div>
-
-                <div class="col-5">
-                    <div class="menu_text">
+                <div class="col-md-8">
+                    <div class="menu_text-log">
                         <ul>
-
+                            <li class="LogeIn">
+                                <a href="LogeIn.html">Login /</a>
+                                <a href="SingIn.html"> Sign Up</a>
+                            </li>
                             <li class="active">
                                 <div id="myNav" class="overlay">
                                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -304,128 +311,136 @@
     </div>
     <!-- section about start -->
 
-    <div class="container">
-        <div id="divSearch" class="container-fluid">
-            <div class="row" id="divSearchRow">
-                <div class="col-3" id="MakerList"></div>
-                <div class="col-9" id="map"></div>
-            </div>
-        </div>
-        <div>
-            <button id="end" value="סיום " />
-            <a href="SingInUser.html"></a>
-        </div>
-    </div>
-    
-
-    <!-- section about end -->
-    <!-- section footer start -->
-    <div class="section_footer">
+    <div class="touch_section">
         <div class="container">
-            <div class="mail_section">
-                <ul>
-
-                    <li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
-                    <!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
-                    <li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
-                    <li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
-                </ul>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="get_taital"><strong><span style="color: #ffffff;">אנשים פוטנציאלים</span></strong></h1>
+                </div>
+           
+                <div id="divSearch" class="container-fluid">
+                    <div class="row" id="divSearchRow">
+                        <div class="col-3" id="MakerList"></div>
+                        <div class="col-9" id="map" style="width: 80vw; height: 90vh" > ></div>
+                    </div>
+                </div>
+                <div>
+                    <button class="button" id="end" value="סיום ">שליחת בקשה</button>
+                    <a href="SingInUser.html"></a>
+                </div>
             </div>
-            <div class="footer_section_2">
-                <div class="row">
-                    <div class="col-sm-6 col-md-6 col-lg-3">
-                        <h2 class="shop_text">About Petcom</h2>
-                        <p class="dummy_text">קהילה חברתית יזמית המושתת על עזרה הדדית, שיוויוניות ועזרה לקהילה </p>
+            </div>
+        </div>
+
+
+            <!-- section about end -->
+            <!-- section footer start -->
+            <div class="section_footer">
+                <div class="container">
+                    <div class="mail_section">
+                        <ul>
+
+                            <li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
+                            <!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
+                            <li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
+                            <li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
+                        </ul>
                     </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3">
-                        <h2 class="shop_text">Useful Links</h2>
-                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
-                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
-                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
-                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
-                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3">
-                        <h2 class="shop_text">Overview</h2>
-                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
-                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
-                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3">
-                        <h2 class="adderess_text">Instagram</h2>
-                        <div class="footer-img">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="footer-img"><img src="../images/footer-img1.png" style="width: 100%;"></div>
-                                    <div class="footer-img"><img src="../images/footer-img2.png" style="width: 100%;"></div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="footer-img"><img src="../images/footer-img3.png" style="width: 100%;"></div>
-                                    <div class="footer-img"><img src="../images/footer-img4.png" style="width: 100%;"></div>
+                    <div class="footer_section_2">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                <h2 class="shop_text">About Petcom</h2>
+                                <p class="dummy_text">קהילה חברתית יזמית המושתת על עזרה הדדית, שיוויוניות ועזרה לקהילה </p>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                <h2 class="shop_text">Useful Links</h2>
+                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
+                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
+                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
+                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                <h2 class="shop_text">Overview</h2>
+                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
+                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                <h2 class="adderess_text">Instagram</h2>
+                                <div class="footer-img">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="footer-img"><img src="../images/footer-img1.png" style="width: 100%;"></div>
+                                            <div class="footer-img"><img src="../images/footer-img2.png" style="width: 100%;"></div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="footer-img"><img src="../images/footer-img3.png" style="width: 100%;"></div>
+                                            <div class="footer-img"><img src="../images/footer-img4.png" style="width: 100%;"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="social-icon">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="icons">
-                        <ul>
-                            <li><a href="#"><img src="../images/fb-icon.png"></a></li>
-                            <li><a href="#"><img src="../images/twitter-icon.png"></a></li>
-                            <li><a href="#"><img src="../images/google-icon.png"></a></li>
-                            <li><a href="#"><img src="../images/linkedin-icon.png"></a></li>
-                        </ul>
+                <div class="social-icon">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="icons">
+                                <ul>
+                                    <li><a href="#"><img src="../images/fb-icon.png"></a></li>
+                                    <li><a href="#"><img src="../images/twitter-icon.png"></a></li>
+                                    <li><a href="#"><img src="../images/google-icon.png"></a></li>
+                                    <li><a href="#"><img src="../images/linkedin-icon.png"></a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- section footer end -->
-    <!-- Javascript files-->
-    <!--<script src="../Scripts/jquery.min.js"></script>
-    <script src="../Scripts/popper.min.js"></script>
-    <script src="../Scripts/bootstrap.bundle.min.js"></script>
-    <script src="../Scripts/jquery-3.0.0.min.js"></script>
-    <script src="../Scripts/plugin.js"></script>-->
-    <!-- sidebar -->
-    <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="../Scripts/custom.js"></script>-->
-    <!-- javascript -->
-    <!--<script src="../Scripts/owl.carousel.js"></script>
-    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $(".fancybox").fancybox({
-                openEffect: "none",
-                closeEffect: "none"
-            });
+            <!-- section footer end -->
+            <!-- Javascript files-->
+            <!--<script src="../Scripts/jquery.min.js"></script>
+            <script src="../Scripts/popper.min.js"></script>
+            <script src="../Scripts/bootstrap.bundle.min.js"></script>
+            <script src="../Scripts/jquery-3.0.0.min.js"></script>
+            <script src="../Scripts/plugin.js"></script>-->
+            <!-- sidebar -->
+            <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+            <script src="../Scripts/custom.js"></script>-->
+            <!-- javascript -->
+            <!--<script src="../Scripts/owl.carousel.js"></script>
+            <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $(".fancybox").fancybox({
+                        openEffect: "none",
+                        closeEffect: "none"
+                    });
 
-            $(".zoom").hover(function () {
+                    $(".zoom").hover(function () {
 
-                $(this).addClass('transition');
-            }, function () {
+                        $(this).addClass('transition');
+                    }, function () {
 
-                $(this).removeClass('transition');
-            });
-        });
-    </script>
+                        $(this).removeClass('transition');
+                    });
+                });
+            </script>
 
 
-    <script>
-        function openNav() {
-            document.getElementById("myNav").style.width = "100%";
-        }
+            <script>
+                function openNav() {
+                    document.getElementById("myNav").style.width = "100%";
+                }
 
-        function closeNav() {
-            document.getElementById("myNav").style.width = "0%";
-        }
-    </script>-->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_b7WIuckZ56JNQMXK8AlbSuf6K88dsIU&callback=initMap&libraries=&v=weekly"></script>
+                function closeNav() {
+                    document.getElementById("myNav").style.width = "0%";
+                }
+            </script>-->
+            <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_b7WIuckZ56JNQMXK8AlbSuf6K88dsIU&callback=initMap&libraries=&v=weekly"></script>
 
 </body>
 </html>

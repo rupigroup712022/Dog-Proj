@@ -158,6 +158,8 @@ a {
     background-repeat: no-repeat;
 }
 
+
+
 .header_section_food {
     width: 100%;
     float: left;
@@ -944,7 +946,7 @@ button.btn.btn-primary, button.btn.btn-primary:hover, button.btn.btn-primary:foc
 	width: 100%;
 	float: left;
 	background-color: #1d1b1c;
-	height:100px;
+	height:auto;
     margin:0px;
 	padding-top: 10px;
 	padding-bottom: 30px;
@@ -989,6 +991,12 @@ button.btn.btn-primary, button.btn.btn-primary:hover, button.btn.btn-primary:foc
 tr,td {
     float: initial;
     text-align: right;
+    padding: 0px;
+}
+
+.user {
+    float: initial;
+    text-align:center;
     padding: 0px;
 }
 td > h3 {
@@ -1405,4 +1413,60 @@ input#regervation {
 .homepic{
     width:40%;
 
+}
+
+#divSearch {
+    padding-top: 10px;
+    margin-top: 90px;
+}
+
+#map {
+    width: 8000px;
+    height: 6000px
+}
+
+
+.button {
+    background-color: #e7e7e7;
+    color: black;
+    border:solid 2px black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-color: black;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.gm-style .gm-style-iw-c {
+    position: absolute;
+    box-sizing: border-box;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    transform: translate3d(-50%,-100%,0);
+    background-color: white;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 2px 7px 1px rgb(0 0 0 / 30%);
+    text-align:center;
+}
+
+.table td, .table th {
+    padding: 0.6rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.btn-info {
+    color: black;
+    background-color: #e7e7e7;
+    border-color:black;
+}
+
+.btn-lg {
+    display:block;
+    margin: 0 auto;
 }
