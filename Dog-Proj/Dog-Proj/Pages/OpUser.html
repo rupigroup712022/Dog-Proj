@@ -44,9 +44,6 @@
             $("#LogOut").click(LogOut);
 
 
-
-
-
         });
 
 
@@ -61,13 +58,14 @@
             localStorage.clear();
             window.location.href = "index.html";
         }
+
         function checkchoice() {
 
-            var selcDiv = $('#MakerList').find(".BTF").filter(function () {
+            var selcDiv = $('#MakerList').find(".BTF").filter(function () {// שומר את כל הדיבים שנבחרו
                 return $(this).css('background-color') == 'rgb(255, 255, 102)';
             });
             console.log(selcDiv)
-            if (selcDiv.length <= 3 && JSON.parse(localStorage.getItem("Difference_In_Days") == "1")) {
+            if (selcDiv.length <= 3 && JSON.parse(localStorage.getItem("Difference_In_Days") == "1")) { // אם נבחר  שלושה דיבים או פחות ואפשר 
                 selcDiv.map(el => {
                     req = {
                         idService: parseInt(JSON.parse(localStorage.getItem("ServicesId"))),
@@ -77,7 +75,7 @@
                     ajaxCall("POST", api, JSON.stringify(req), SuccessSlectoin, error);
                 })
             }
-            if (selcDiv.length == 1 && JSON.parse(localStorage.getItem("Difference_In_Days") == "0")) {
+            if (selcDiv.length == 1 && JSON.parse(localStorage.getItem("Difference_In_Days") == "0")) {// אם נבחר דיב אחד וצריך רק אחד 
                 req = {
                     idService: parseInt(JSON.parse(localStorage.getItem("ServicesId"))),
                     idUser: parseInt($(selcDiv).attr('id')),
@@ -85,9 +83,9 @@
                 let api = "../api/Services/req";
                 ajaxCall("POST", api, JSON.stringify(req), SuccessSlectoin, error);
             }
-            if (selcDiv.length == 0 || (JSON.parse(localStorage.getItem("Difference_In_Days") == "0" && selcDiv.length > 1))) {
+            if (selcDiv.length == 0 || (JSON.parse(localStorage.getItem("Difference_In_Days") == "0" && selcDiv.length > 1))) {// אם לא נבחר דיב או נבחר יותר מדיב אחד ואי אפשר לבחור יותר מאחד
                 Swal.fire({
-                    title: " אנא בחרמספר מתאים של נותני שירות!",
+                    title: " אנא בחר מספר מתאים של נותני שירות!",
                     icon: "error",
                     //    timer: 2500,
                 }).then(function () {
@@ -122,7 +120,7 @@
         }
 
 
-        userAv = {
+        userAv = {// אוביקט גלובלי  שמחזיק את היום והשעה של השירות שרצוי ששמרנו בלוקלסטורז
             day: JSON.parse(localStorage.getItem("serviceDay")),
             hour: JSON.parse(localStorage.getItem("serviceHour")),
         }
@@ -133,9 +131,9 @@
             let api = "../api/Users/userAv";
             ajaxCall("POST", api, JSON.stringify(userAv), getSuccessAll, error);
         }
-        function getSuccessAll(data) {
-            let location = renderList(data);
-            getlocation(location);
+        function getSuccessAll(data) {// מקבל רשימה  של אנשים פונצניאלים שפנוים
+            let location = renderList(data);// רנדור למסך של הדיבים של האנשים הפונצנאלים הפנויים
+            getlocation(location);// -הלוקשין זה המילון של הפרטים של האנשים,
             console.log(data);
         }
 
@@ -143,7 +141,7 @@
             alert("error!");
         }
 
-        function renderList(d) {
+        function renderList(d) {// מקבל את כל האנשים הפוצנציאלים 
             addresses = [];
             $("#MakerList").html("");
             let str = "";
@@ -154,7 +152,7 @@
                 for (var j = 0; j < d[i].length; j = j + d[i].length) {
                     console.log(d[i].length)
                     console.log(d[i][j])
-                    str += "<div class='BTF' id='" + d[i][j + 4] + "'>";
+                    str += "<div class='BTF' id='" + d[i][j + 4] + "'>";// האידי של הדיב הוא האידי של נותן השירות בשבלי ההתאמה 
                     str += "<table class='table'>";
                     str += "<tr class='row1'>";
                     str += "<td class='user col-12'><h1>" + d[i][j] + "</h1></td>";
@@ -177,7 +175,7 @@
                     str += "</table>";
                     str += "</div><br/>";
                     let address = d[i][j + 5] + " " + d[i][j + 6] + " " + d[i][j + 7];
-                    addresses.push({ address: address, name: d[i][j], phone: d[i][j + 2], id: d[i][j + 4] });
+                    addresses.push({ address: address, name: d[i][j], phone: d[i][j + 2], id: d[i][j + 4] });// שמירה של הנתונים של אותו אדם והכנסה למילון 
                 }
             }
             $("#MakerList").append(str);
@@ -188,22 +186,23 @@
         function getlocation(data) {
             console.log(data);
             for (i = 0; i < data.length; i++) {
-                let contentString =
+                let contentString =// הבועה שנפתחת במפה 
                     '<div id="content">' +
                     '<div id="siteNotice">' +
                     "</div>" +
                     '<h1 id="firstHeading" class="firstHeading">' + data[i].name + '</h1>' +
                     '<div id="bodyContent">' +
                     "<p>טלפון להתקשרות: <b>" + data[i].phone + "</b></p>" +
-                    "<button type='button' class='btn btn-info btn-lg' onclick='selectUser(" + data[i].id + ")' id='BTNRes' data-toggle='modal'>בחירת משתמש </button>";
+                    "<button type='button' class='btn btn-info btn-lg' onclick='selectUser(" + data[i].id + ")' id='BTNRes' data-toggle='modal'>בחירת משתמש </button>";// הכפתור שמסמן בחירת משתמש
                 "</div>" +
                     "</div>";
                 let id = data[i].phone;
+                //מרקרים במפה 
                 $.ajax({
                     url: "https://maps.googleapis.com/maps/api/geocode/json",
                     type: "GET",
                     data: {
-                        address: data[i].address,
+                        address: data[i].address,// המיקום של אותו בן אדם במפה
                         key: "AIzaSyD_b7WIuckZ56JNQMXK8AlbSuf6K88dsIU"
                     },
                     success: function (response) {
@@ -236,26 +235,26 @@
         selectedU = [];
         function selectUser(id) {
             console.log(id);
-            var colors = $("#" + id).css("background-color");
+            var colors = $("#" + id).css("background-color");//תופס את הצבע של הדיב  
             console.log(colors);
 
-            if ($("#" + id).css("background-color") == "rgb(255, 165, 0)") {
-                $("#" + id).css("background-color", "rgb(255, 255, 102)");
-                $("#" + id).find(".btn").html("ביטול הבקשה");
+            if ($("#" + id).css("background-color") == "rgb(255, 165, 0)") { // אם זה כתום
+                $("#" + id).css("background-color", "rgb(255, 255, 102)");//תהפוך לצהוב
+                $("#" + id).find(".btn").html("ביטול הבקשה");// ותשנה את הכתב לביטול בקשה 
                 console.log($("#" + id).find(".btn"));
                 add(id);
             }
             else {
-
-                $("#" + id).css("background-color", "rgb(255, 165, 0)")
-                selectedU = selectedU.filter(l => l != id);
+                // אם הוא שונה מצבע כתום - רוצה להוריד בחירה
+                $("#" + id).css("background-color", "rgb(255, 165, 0)")// תחליף לכתום
+                selectedU = selectedU.filter(l => l != id);// תוריד מהשמירה במערך
                 $("#" + id).find(".btn").html("בחירת משתמש");
 
                 console.log(selectedU);
 
             }
 
-            function add(id) {
+            function add(id) {// מכניס לתוך מערך את האידי הנבחר 
                 selectedU.push(id);
                 console.log(selectedU);
                 console.log(this);

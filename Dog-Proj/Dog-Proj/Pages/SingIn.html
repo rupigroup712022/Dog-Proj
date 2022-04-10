@@ -39,10 +39,9 @@
         let unisex = "";
         Users = [];
         str = "";
-        $(document).ready(function () {
+        $(document).ready(function () { //דאטה של הערים
             var data = {
-                resource_id: '5c78e9fa-c2e2-4771-93ff-7f400a12f7ba', // the resource id
-
+                resource_id: '5c78e9fa-c2e2-4771-93ff-7f400a12f7ba', 
 
             };
             $.ajax({
@@ -106,13 +105,12 @@
 
 
         function postSCB(success) {
-            console.log(success)
+            console.log(success);// נכנס ID משפחה 
             if (success == 0) {
                 alert("The email is alredy exists");
             }
             else {
                 localStorage["familyId"] = JSON.stringify(success);
-
                 Swal.fire({
                     title: "הוסף בן משפחה !",
                     icon: "success",

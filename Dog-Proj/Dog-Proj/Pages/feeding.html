@@ -58,31 +58,31 @@
             //const serviceHour = new Date(serviceDate).toLocaleTimeString('en',
             //    { timeStyle: 'short', hour12: false });
             //console.log(serviceHour);
-            const dayinnum = new Date(serviceDate).getDay();
+            const dayinnum = new Date(serviceDate).getDay();//מחזיר מספר יום בשבוע
             console.log(dayinnum);
             var days = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
-            var serviceDay = days[dayinnum];
+            var serviceDay = days[dayinnum];//המרה של המספר ליום בשבוע 
             console.log(serviceDay);
             localStorage["serviceDay"] = JSON.stringify(serviceDay);
             localStorage["serviceHour"] = JSON.stringify(serviceHour);
 
             
-            var diffDays = new Date(serviceDate) - Date.now();
-            var Difference_In_Days = diffDays / (1000 * 3600 * 24);
+            var diffDays = new Date(serviceDate) - Date.now();// הפרש בין יום השירות להיום
+            var Difference_In_Days = diffDays / (1000 * 3600 * 24);// המרה  ממיליסקנד לימים 
             console.log(Difference_In_Days);
 
             console.log(Difference_In_Days);
             if (Difference_In_Days <= 1) {
                 console.log('1 day');
-                localStorage["Difference_In_Days"] = JSON.stringify(1);
+                localStorage["Difference_In_Days"] = JSON.stringify(1);// יש פחות מיום אחד לשירות
             }
             else {
-                localStorage["Difference_In_Days"] = JSON.stringify(0);
+                localStorage["Difference_In_Days"] = JSON.stringify(0);//יש יותר מיום אחד לשירות 
 
             }
 
             var servicetype = "";
-            var amo = document.getElementsByName('amount');
+            var amo = document.getElementsByName('amount');// צק בוקס של סוג שירות
             for (i = 0; i < amo.length; i++) {
                 if (amo[i].checked)
                     servicetype = amo[i].value
@@ -90,7 +90,7 @@
             let quantity = $("#foodSize").val();
             let note = $("#note").val();
             let serviceName = "feeding";
-            var familyId = parseInt(localStorage.getItem('familyId'));
+            var familyId = parseInt(localStorage.getItem('familyId'));// שליפה מהלוקלסטורג
             var UserId = parseInt(localStorage.getItem('UserId'));
 
 
@@ -116,13 +116,13 @@
 
 
         function postSCB(id) {
-            localStorage["ServicesId"] = JSON.stringify(id);
+            localStorage["ServicesId"] = JSON.stringify(id);// שמירה בלוקלסטורג את האידי של השירות
 
             if (parseInt(localStorage.getItem('Difference_In_Days')) == '1') {
                 Swal.fire({
                     title: "בחר שלושה נותני שירות!",
                     icon: "success",
-                //    timer: 2500,
+                    timer: 2500,
                 }).then(function () {
                     window.location.href = 'OpUser.html';
                 });
@@ -131,7 +131,7 @@
                 Swal.fire({
                     title: "בחר נותן שירות אחד!",
                     icon: "success",
-                //    timer: 2500,
+                    timer: 2500,
                 }).then(function () {
                     window.location.href = 'OpUser.html';
                 });

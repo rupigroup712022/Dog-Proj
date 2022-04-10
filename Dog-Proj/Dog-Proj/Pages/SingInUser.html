@@ -59,12 +59,12 @@
             });
 
         });
-        var DayDic = {};
+        var DayDic = {};//מילון ימים ושעות- זמינות 
         var sex;
 
         function signUp() {
 
-            var ele = document.getElementsByName('gender');
+            var ele = document.getElementsByName('gender');// תפיסה של זכר/נקבה-צקבוקס
             for (i = 0; i < ele.length; i++) {
                 if (ele[i].checked)
                     sex = ele[i].value
@@ -93,23 +93,23 @@
             return false;
         }
         function selectday() {
-            DayDic[$(this).val()];
-            $("#time").removeClass("hidden");
+            DayDic[$(this).val()];// הכנסת היום שנבחר למילון
+            $("#time").removeClass("hidden");// שינוי צבע
             console.log(this);
-            $("#time").find(".BTF").each(checkColor);
+            $("#time").find(".BTF").each(checkColor);//שינוי צבע 
         }
 
         function checkColor() {
-            if (!DayDic[$('#Day').val()]) {
+            if (!DayDic[$('#Day').val()]) {//אם לא סומן יום
                 DayDic[$('#Day').val()] = [];
             }
             console.log(DayDic);
             console.log(this);
-            if (DayDic[$('#Day').val()].includes($(this).val())) {
-                $(this).css("background-color", "rgb(255, 255, 102)");
+            if (DayDic[$('#Day').val()].includes($(this).val())) {// השעה שסומנה
+                $(this).css("background-color", "rgb(255, 255, 102)");//שינוי לצהוב
             }
             else {
-                $(this).css("background-color", "rgb(255, 165, 0)")
+                $(this).css("background-color", "rgb(255, 165, 0)")//תשאיר כתום 
             }
 
         }
@@ -123,13 +123,13 @@
                 $(this).css("background-color", "rgb(255, 255, 102)");
                 addtime($(this).val());
             }
-            else {
-                $(this).css("background-color", "rgb(255, 165, 0)")
-                DayDic[$('#Day').val()] = DayDic[$('#Day').val()].filter(l => l != $(this).val())
+            else {// אם זה כן לחוץ(צהוב)-לחצתי בטעות
+                $(this).css("background-color", "rgb(255, 165, 0)") // תחזיר לכתום
+                DayDic[$('#Day').val()] = DayDic[$('#Day').val()].filter(l => l != $(this).val())//תוציא מהמילון את השעה הלא רלוונטית 
                 console.log(DayDic);
             }
         }
-        function addtime(hours) {
+        function addtime(hours) {// דחיפת השעות למילון
             DayDic[$('#Day').val()].push(hours);
             console.log(DayDic);
             console.log(this);
@@ -142,25 +142,7 @@
                 alert("The user is exists");
             }
             else {
-                localStorage["UserId"] = JSON.stringify(success);
-                //$("#nextdog").click(function () {
-                //    Swal.fire({
-                //        title: "הוסף כלב !",
-                //        icon: "success",
-                //        timer: 2500,
-                //    }).then(function () {
-                //        window.location.href = 'SingInDog.html';
-                //    });
-                //});
-                //$("#nextuser").click(function () {
-                //    Swal.fire({
-                //        title: "הוסף בן משפחה !",
-                //        icon: "success",
-                //        timer: 2500,
-                //    }).then(function () {
-                //        window.location.href = 'SingInUser.html';
-                //    });
-                //});
+                localStorage["UserId"] = JSON.stringify(success);// הכנסה ללוקאל סטורג
                
             }
             console.log(success);

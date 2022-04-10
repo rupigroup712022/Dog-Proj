@@ -40,7 +40,7 @@
         $(document).ready(function () {
             $("#signDog").submit(signUp);
             $("#dog_character").find(".BTF").click(changeColor);
-            $('#buttonUpload').on('click', function () {
+            $('#buttonUpload').on('click', function () {// העלאה של תמונה 
                 var data = new FormData();
                 var files = $("#files").get(0).files;
 
@@ -83,7 +83,7 @@
 
 
         function signUp(e) {
-            e.preventDefault();
+            //e.preventDefault();
             var ele = document.getElementsByName('gender');
             for (i = 0; i < ele.length; i++) {
                 if (ele[i].checked)
@@ -127,7 +127,7 @@
             }
             else {
                 Swal.fire({
-                    title: "התחברת בהצלחה אנא בחר כלב !",
+                    title: "התחברת בהצלחה אנא בחר משתמש !",
                     icon: "success",
                     timer: 2500,
                 }).then(function () {
@@ -155,19 +155,19 @@
             var colors = $(this).css("background-color");
             console.log(colors);
 
-            if ($(this).css("background-color") == "rgb(255, 165, 0)") {
-                $(this).css("background-color", "rgb(255, 255, 102)");
+            if ($(this).css("background-color") == "rgb(255, 165, 0)") { //לחוץ על כתום 
+                $(this).css("background-color", "rgb(255, 255, 102)");//תשנה לצהוב
                 add($(this).val());
             }
             else {
-                $(this).css("background-color", "rgb(255, 165, 0)")
-                character = character.filter(l => l != $(this).val())
+                $(this).css("background-color", "rgb(255, 165, 0)") // אם מחק אופי מסוים יחזיר את הצבע לכתום
+                character = character.filter(l => l != $(this).val())// וימחק מהמחרוזת 
                 console.log(character);
 
             }
         }
 
-        function add(characters) {
+        function add(characters) {// שירשור למחרוזת 
             character.push(characters);
             console.log(character);
             console.log(this);

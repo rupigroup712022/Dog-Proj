@@ -31,11 +31,11 @@ namespace Dog_Proj.Models.DAL
                     //E Execute
                       var numeffected = insertCommand.ExecuteNonQuery();
                      id = checking(user.Username, user.FamilyId);
-                    foreach (var day in user.Availablity)
+                    foreach (var day in user.Availablity)//הכנסה למילון
                     {
                         foreach (var hour in day.Value)
                         {
-                            SqlCommand insertCommandHours = CreateInsertCommand(con, id, day.Key, hour);
+                            SqlCommand insertCommandHours = CreateInsertCommand(con, id, day.Key, hour);//הכנסה טבלת זמינות
                             numeffected += insertCommandHours.ExecuteNonQuery();
                         }
 
@@ -579,7 +579,7 @@ namespace Dog_Proj.Models.DAL
                 int i = 0;
                 while (dataReader.Read())
                 {
-                    i = Convert.ToInt32(dataReader["id"].ToString());
+                    i = Convert.ToInt32(dataReader["id"].ToString());// ID של השירות 
                 }
 
                 dataReader.Close();
@@ -698,7 +698,7 @@ namespace Dog_Proj.Models.DAL
                 List<List<string>>user = new List<List<string>>();
                 while (dataReader.Read())
                 {
-                    user.Add(new List<string>());
+                    user.Add(new List<string>());// המרה לסטרינגים הכנסה לרשימת של סטרינגים
                     user[i].Add((string)dataReader["username"]);
                     user[i].Add(Convert.ToInt32(dataReader["age"]).ToString());
                     user[i].Add((string)dataReader["phone"]);
@@ -731,7 +731,7 @@ namespace Dog_Proj.Models.DAL
 
 
 
-        private SqlCommand AvDayHourCheck(SqlConnection con, string day, string hour)
+        private SqlCommand AvDayHourCheck(SqlConnection con, string day, string hour)// שאילתה שבודקת מי זמין ביום ובשעה הספציפית שהוכנסו
         {
             string str = "SELECT username,age,phone,avgPoint,UserId,city,street,homeNum FROM TimesAvailablity T JOIN  UsersFamliy U ON T.UserId=U.id JOIN Accounts A on U.familyId=A.id WHERE T.availableDays LIKE @availableDays and T.availableHours LIKE @availableHours";
             SqlCommand cmd = createCommand(con, str);
