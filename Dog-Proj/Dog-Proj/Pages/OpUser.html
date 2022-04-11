@@ -61,12 +61,12 @@
 
         function checkchoice() {
 
-            var selcDiv = $('#MakerList').find(".BTF").filter(function () {// שומר את כל הדיבים שנבחרו
+            var selcDiv = $('#MakerList').find(".BTF").filter(function () {// יוצר מערך חדש של כל הדיבים שעומדים בתנאי
                 return $(this).css('background-color') == 'rgb(255, 255, 102)';
             });
             console.log(selcDiv)
             if (selcDiv.length <= 3 && JSON.parse(localStorage.getItem("Difference_In_Days") == "1")) { // אם נבחר  שלושה דיבים או פחות ואפשר 
-                selcDiv.map(el => {
+                selcDiv.map(el => {// לכל הדיבים שנשמרו הוא שומר את האוביקט
                     req = {
                         idService: parseInt(JSON.parse(localStorage.getItem("ServicesId"))),
                         idUser: parseInt($(el).attr('id')),
@@ -125,7 +125,7 @@
             hour: JSON.parse(localStorage.getItem("serviceHour")),
         }
 
-        function getAllmakers() {
+        function getAllmakers() {// בודק מי האנשים הפנויים
 
             console.log(userAv);
             let api = "../api/Users/userAv";
@@ -147,9 +147,9 @@
             let str = "";
             makersArr = d;
             console.log(d)
-            for (var i = 0; i < d.length; i++) {
+            for (var i = 0; i < d.length; i++) {// הליסט של כל המשתמשים
                 console.log(d.length)
-                for (var j = 0; j < d[i].length; j = j + d[i].length) {
+                for (var j = 0; j < d[i].length; j = j + d[i].length) {// הליסט של משתמש ספציפי וריצה על כל הפרטים שלו
                     console.log(d[i].length)
                     console.log(d[i][j])
                     str += "<div class='BTF' id='" + d[i][j + 4] + "'>";// האידי של הדיב הוא האידי של נותן השירות בשבלי ההתאמה 
