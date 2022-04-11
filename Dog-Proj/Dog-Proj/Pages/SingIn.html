@@ -50,7 +50,7 @@
                 dataType: 'json',
                 success: function (data) {
                     var citieslist = [];
-                    var value = " <option value='בחירת עיר'></option>";
+                    var value = " <option value='בחירת עיר'></option>";//רנדור של הערים לרשימה נגללת
                     for (var i = 1; i < data.length; i++) {
                         citieslist.push(data[i].name);
                         value += " <option data-id='" + data[i].name + "' value = '" + data[i].name + "' > " + data[i].name + "</option > ";

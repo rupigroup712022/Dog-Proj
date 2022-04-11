@@ -67,7 +67,7 @@
             var ele = document.getElementsByName('gender');// תפיסה של זכר/נקבה-צקבוקס
             for (i = 0; i < ele.length; i++) {
                 if (ele[i].checked)
-                    sex = ele[i].value
+                    sex = ele[i].value//נכנס 0\1
             }
 
             var username = $(this).find(".username").val();
@@ -96,7 +96,7 @@
             DayDic[$(this).val()];// הכנסת היום שנבחר למילון
             $("#time").removeClass("hidden");// שינוי צבע
             console.log(this);
-            $("#time").find(".BTF").each(checkColor);//שינוי צבע 
+            $("#time").find(".BTF").each(checkColor);//בדיקת צבע 
         }
 
         function checkColor() {
@@ -120,10 +120,10 @@
             console.log(colors);
 
             if ($(this).css("background-color") == "rgb(255, 165, 0)") {
-                $(this).css("background-color", "rgb(255, 255, 102)");
+                $(this).css("background-color", "rgb(255, 255, 102)");//שינוי הצבע לצהוב והכנסה למילון
                 addtime($(this).val());
             }
-            else {// אם זה כן לחוץ(צהוב)-לחצתי בטעות
+            else {// אם זה כבר לחוץ(צהוב)-לחצתי בטעות ואני רוצה להסיר
                 $(this).css("background-color", "rgb(255, 165, 0)") // תחזיר לכתום
                 DayDic[$('#Day').val()] = DayDic[$('#Day').val()].filter(l => l != $(this).val())//תוציא מהמילון את השעה הלא רלוונטית 
                 console.log(DayDic);
