@@ -75,7 +75,7 @@
                     ajaxCall("POST", api, JSON.stringify(req), SuccessSlectoin, error);
                 })
             }
-            if (selcDiv.length == 1 && JSON.parse(localStorage.getItem("Difference_In_Days") == "0")) {// אם נבחר דיב אחד וצריך רק אחד 
+            if (selcDiv.length == 1 && JSON.parse(localStorage.getItem("Difference_In_Days") == "0")) { // אם נבחר דיב אחד וצריך רק אחד 
                 req = {
                     idService: parseInt(JSON.parse(localStorage.getItem("ServicesId"))),
                     idUser: parseInt($(selcDiv).attr('id')),
@@ -118,7 +118,7 @@
 
             infowindow = new google.maps.InfoWindow();
         }
-
+       
 
         userAv = {// אוביקט גלובלי  שמחזיק את היום והשעה של השירות שרצוי ששמרנו בלוקלסטורז
             day: JSON.parse(localStorage.getItem("serviceDay")),
