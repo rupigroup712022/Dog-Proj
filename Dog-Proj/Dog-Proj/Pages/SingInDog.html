@@ -141,13 +141,7 @@
             console.log(err);
         }
 
-        //function selectcharacter() {
-        //    character[$(this).val()];
-        //    $("#dog_character").removeClass("hidden");
-        //    console.log(this);
-        //    $("#dog_character").find(".BTF").each(checkColor);
-        //}
-
+     
 
 
         function changeColor() {
@@ -161,7 +155,7 @@
             }
             else {
                 $(this).css("background-color", "rgb(255, 165, 0)") // אם מחק אופי מסוים יחזיר את הצבע לכתום
-                character = character.filter(l => l != $(this).val())// וימחק מהמחרוזת 
+                character = character.filter(l => l != $(this).val())//  פונקצית פילטר על מנת להחזיר מערך ללא הערך שתפסנו- אנחנו מורידים אותו מהמערך
                 console.log(character);
 
             }
