@@ -17,7 +17,7 @@ namespace Dog_Proj.Controllers
         public List<List<string>> Post([FromBody]Dictionary<string, string> userAv)
         {
             User user = new User();
-            return user.GetAvUser(userAv["day"], userAv["hour"]);
+            return user.GetAvUser(userAv["day"], userAv["hour"],Convert.ToInt32(userAv["userid"]));
         }
 
         // POST api/<controller>
@@ -27,6 +27,30 @@ namespace Dog_Proj.Controllers
             return user.InsertUser();
         }
 
+        [HttpPost]
+        [Route("api/Users/incomePendingReq")]
+
+        public List<List<string>> getIncomePendingRequests([FromBody] Dictionary<string, string> u)//בקשות נכנסות
+        {
+            User user = new User();
+            return user.getIncomePendingRequests(Convert.ToInt32(u["userId"]));
+        }
+
+
+        [HttpPost]
+        [Route("api/Users/incomeApprovedReq")]
+        public List<List<string>> getIncomeApprovedRequests([FromBody] Dictionary<string, string> userId)//בקשות נכנסות
+        {
+            User user = new User();
+            return user.getIncomeApprovedRequests(Convert.ToInt32(userId["userId"]));
+        }
+
+        [HttpGet]
+        [Route("api/Users/outcomeReq")]
+        public int GetOutcome([FromBody] User user)//בקשות יוצאות
+        {
+            return user.InsertUser();
+        }
 
     }
 }

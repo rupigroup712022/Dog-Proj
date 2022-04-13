@@ -1,0 +1,343 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- mobile metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- site metas -->
+    <title>D-pot</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <!-- Responsive-->
+    <link rel="stylesheet" href="../css/responsive.css">
+    <!-- fevicon -->
+    <link rel="icon" href="images/fevicon.png" type="../image/gif" />
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="../css/jquery.mCustomScrollbar.min.css">
+    <!-- Tweaks for older IEs-->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <!-- owl stylesheets -->
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <link href="../css/Login.css" rel="stylesheet" />
+    <script src="../Scripts/ajaxCall.js"></script>
+    <script src="../Scripts/jquery-3.4.1.js"></script>
+    <link href="../css/style.css" rel="stylesheet" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+        
+        const u =
+        {
+            userId: JSON.parse(localStorage.getItem('UserId'))
+        }
+        $(document).ready(function () {
+            //to check that user is connect
+            //logUser();
+            $(document).on("click", "#getApprovedReq", getIncomeApprovedRequests)
+            $(document).on("click", "#getPendingReq", getIncomePendingRequests)
+
+        });
+        function getIncomePendingRequests() {
+
+                    let apiCall = "../api/Users/incomePendingReq";
+                    ajaxCall("POST", apiCall,JSON.stringify(u), getRequestsSCB, getRequestsECB)
+                    
+        }
+        function getIncomeApprovedRequests() {
+   
+            let apiCall = "../api/Users/incomeApprovedReq";
+            ajaxCall("POST", apiCall, JSON.stringify(u), getRequestsSCB, getRequestsECB)
+
+        }
+
+
+
+        function getRequestsSCB(d) {
+            const results = d.map(l => {
+                let address = d[13] + " " + l[14] + " " + l[15];
+                let fullDate = d[1] + " " + l[2] + " " + l[3];
+                    request = { address: address, name: l[11], phone: l[12], serviceId: l[16] };
+                    //await getlocation(addresses); בהמשך נציג לפי מרחקים 
+                    //addresses["distance"] = dist;
+                    let str = "";
+                    str += "<div class='BTF' id='" + l[16] + "'>";
+                    str += "<table class='table'>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h1>" + l[0] + "</h1></td>";
+                    str += "</tr>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h1>" + l[5] +" "+ l[6] + "שם וגזע הכלב </h1></td>";
+                    str += "</tr>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h1>" + fullDate + "</h1></td>";
+                    str += "</tr>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h6><b>טלפון ושם:</b>" + l[12]+" " +l[11] + "</h6></td>";
+                    str += "</tr>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h6>" + l[4] + " <b>נקודות זכות</b></h6></td>";
+                    str += "</tr>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h6><b>כתובת  </b>" + address + " </h6></td>";
+                    str += "</tr>";
+                    //str += "<tr class='row1'>";
+                    //str += "<td class='user col-12'><h6 ><b class='distance'> " + "מרחק : " + dist.toFixed(2) + " ק''מ" + "</b></h6></td>";
+                    //str += "</tr>";
+                    //str += "<tr class='row1'>";
+                    //str += "<td class='col-12'><button type='button' class='btn btn-info btn-lg' onclick = 'selectUser(" + l[j + 4] + ")' id ='B" + l[j + 4] + "' data - toggle='modal' > בחירת משתמש </button > </td>";
+                    //str += "</tr>";
+                    str += "</table>";
+                    str += "</div><br/>";
+                    //addresses["str"] = str;
+                    //console.log(addresses);
+                    //const k = BestLocation.findIndex(a => (a.distance && a.distance > addresses.distance) ? true : false);
+
+                    //if (k == -1) {
+                    //    BestLocation.push(addresses)
+
+                    //}
+                    //else {
+                    //    BestLocation.splice(k, 0, addresses);
+                    //}
+                    //console.log(k)
+                request["str"] = str;
+                return request;
+            }
+            )
+            results.map(l => { $('#results').append( l['str'] )});
+        }
+
+        function getRequestsECB(error) {
+            console.log('error occured');
+        }
+
+        //function name() {
+        //    let username = $(this).val();
+        //    let userId = event.srcElement.id;
+        //    console.log(username);
+        //    console.log(userId);
+        //    localStorage["UserId"] = JSON.stringify(userId);
+        //     localStorage["username"] = JSON.stringify(username);
+        //        Swal.fire({
+        //            title: "התחברת בהצלחה !",
+        //            icon: "success",
+        //            timer: 2500,
+        //        }).then(function () {
+        //            window.location.href = 'mainScreen.html';
+        //        });
+
+        //}
+
+        //function logUser() {
+        //    var familyId = localStorage.getItem('familyId');
+        //    let apiCall = "../api/Accounts?Id=" + familyId;
+        //    ajaxCall("GET", apiCall, "", getUserSCB, getUserECB)
+
+        //}
+
+
+        //function getUserSCB(success) {
+        //    console.log(success)
+        //    console.log(success.length)
+
+        //    var imgStr = "";
+
+        //    for (var i = 0; i < success.length; i = i + 3) {
+
+        //        console.log(success[1])
+
+        //        imgStr = "<div><input type = 'button' class='NameUser'  id ='"+success[i+2]+"'value ='" + success[i] + "'></div>";
+        //        if (success[i + 1] == 'F') {
+        //            imgStr += "<div class='userclass'><img class='imguser' src='../images/user-gfaaf954f6_640.png' /></div>";
+        //        }
+        //        else {
+        //            imgStr += "<div  class='userclass'><img class='imguser' src='../images/user-g768722fb2_640.png'/></div>";
+        //        }
+
+        //        document.getElementById("ph").innerHTML += imgStr;
+        //    }
+
+        //}
+
+        //function getUserECB(err) {
+        //    console.log(err);
+        //}
+
+
+
+
+
+    </script>
+
+
+
+</head>
+<body>
+    <!-- section banner start -->
+    <div class="header-main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div><a href="index.html"><img src="../images/LOGO1S.png" /></a></div>
+                </div>
+                <div class="col-md-8">
+                    <div class="menu_text">
+                        <ul>
+
+                            <li class="active">
+                                <div id="myNav" class="overlay">
+                                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                                    <div class="overlay-content">
+                                        <a href="index.html">Home</a>
+                                        <a href="about.html">About</a>
+                                        <a href="gallery.html">Gallery</a>
+                                        <a href="contact.html">Contact</a>
+                                    </div>
+                                </div>
+                                <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- section gallery start -->
+    <div class="gallery_main layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <button id="getPendingReq">הצג בקשות ממתינות</button>
+                    <button id="getApprovedReq">הצג בקשות שאושרו</button>
+                </div>
+            </div>
+            <div class="input_main">
+                <div id="results">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- section gallery end -->
+    <!-- section footer start -->
+    <div class="section_footer">
+        <div class="container">
+            <div class="mail_section">
+                <ul>
+
+                    <li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
+                    <!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
+                    <li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
+                    <li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
+                </ul>
+            </div>
+            <div class="footer_section_2">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">About Petcom</h2>
+                        <p class="dummy_text">קהילה חברתית יזמית המושתת על עזרה הדדית, שיוויוניות ועזרה לקהילה </p>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">Useful Links</h2>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">Overview</h2>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="adderess_text">Instagram</h2>
+                        <div class="footer-img">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="footer-img"><img src="../images/footer-img1.png" style="width: 100%;"></div>
+                                    <div class="footer-img"><img src="../images/footer-img2.png" style="width: 100%;"></div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="footer-img"><img src="../images/footer-img3.png" style="width: 100%;"></div>
+                                    <div class="footer-img"><img src="../images/footer-img4.png" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="social-icon">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="icons">
+                            <ul>
+                                <li><a href="#"><img src="../images/fb-icon.png"></a></li>
+                                <li><a href="#"><img src="../images/twitter-icon.png"></a></li>
+                                <li><a href="#"><img src="../images/google-icon.png"></a></li>
+                                <li><a href="#"><img src="../images/linkedin-icon.png"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascript files-->
+    <!--<script src="../Scripts/jquery.min.js"></script>
+    <script src="../Scripts/popper.min.js"></script>
+    <script src="../Scripts/bootstrap.bundle.min.js"></script>
+    <script src="../Scripts/jquery-3.0.0.min.js"></script>
+    <script src="../Scripts/plugin.js"></script>-->
+    <!-- sidebar -->
+    <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../Scripts/custom.js"></script>-->
+    <!-- javascript -->
+    <!--<script src="../Scripts/owl.carousel.js"></script>
+    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>-->
+    <!--<script>
+        $(document).ready(function () {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function () {
+
+                $(this).addClass('transition');
+            }, function () {
+
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
+
+
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
+
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>-->
+
+</body>
+</html>
+

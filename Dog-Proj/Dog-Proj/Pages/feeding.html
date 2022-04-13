@@ -91,7 +91,7 @@
             let note = $("#note").val();
             let serviceName = "feeding";
             var familyId = parseInt(localStorage.getItem('familyId'));// שליפה מהלוקלסטורג
-            var UserId = parseInt(localStorage.getItem('UserId'));
+            var UserId = parseInt(JSON.parse(localStorage.getItem('UserId')));
             console.log(UserId);
 
 

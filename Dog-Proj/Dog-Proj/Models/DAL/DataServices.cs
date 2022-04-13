@@ -735,13 +735,13 @@ namespace Dog_Proj.Models.DAL
             return cmd;
         }
 
-        public List<List<string>> GetAvUser(string day, string hour)
+        public List<List<string>> GetAvUser(string day, string hour,int userid)
         {
             SqlConnection con = null;
             try
             {
                 con = Connect("DogsProjDB");
-                SqlCommand selectCommand = AvDayHourCheck(con, day, hour);
+                SqlCommand selectCommand = AvDayHourCheck(con, day, hour,userid);
                 SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
                 int i=0;
                 List<List<string>>user = new List<List<string>>();
@@ -780,14 +780,16 @@ namespace Dog_Proj.Models.DAL
 
 
 
-        private SqlCommand AvDayHourCheck(SqlConnection con, string day, string hour)// שאילתה שבודקת מי זמין ביום ובשעה הספציפית שהוכנסו
+        private SqlCommand AvDayHourCheck(SqlConnection con, string day, string hour, int familyId)// שאילתה שבודקת מי זמין ביום ובשעה הספציפית שהוכנסו
         {
-            string str = "SELECT username,age,phone,avgPoint,UserId,city,street,homeNum FROM TimesAvailablity T JOIN  UsersFamliy U ON T.UserId=U.id JOIN Accounts A on U.familyId=A.id WHERE T.availableDays LIKE @availableDays and T.availableHours LIKE @availableHours";
+            string str = "SELECT username,age,phone,avgPoint,UserId,city,street,homeNum FROM TimesAvailablity T JOIN  UsersFamliy U ON T.UserId=U.id JOIN Accounts A on U.familyId=A.id WHERE T.availableDays LIKE @availableDays and T.availableHours LIKE @availableHours and U.familyId!=@familyId";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@availableDays", SqlDbType.Char);
             cmd.Parameters["@availableDays"].Value = day;
             cmd.Parameters.Add("@availableHours", SqlDbType.Char);
             cmd.Parameters["@availableHours"].Value = hour;
+            cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
+            cmd.Parameters["@familyId"].Value =(short)familyId;
             return cmd;
         }
 
@@ -802,7 +804,6 @@ namespace Dog_Proj.Models.DAL
         }
         SqlCommand createCommand(SqlConnection con, string commandStr)
         {
-
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandText = commandStr;
@@ -810,6 +811,138 @@ namespace Dog_Proj.Models.DAL
             cmd.CommandTimeout = 5;
             return cmd;
         }
+
+        public List<List<string>> getIncomePendingRequests(int userid)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = Connect("DogsProjDB");
+                SqlCommand selectCommand = incomePendingRequest(con,userid);
+                SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                int i = 0;
+                List<List<string>> pendingRequestList = new List<List<string>>();
+                while (dataReader.Read())
+                {
+                    pendingRequestList.Add(new List<string>());// המרה לסטרינגים הכנסה לרשימת של סטרינגים
+                    pendingRequestList[i].Add((dataReader["serviceName"]).ToString());
+                    pendingRequestList[i].Add((dataReader["serviceDate"]).ToString());
+                    pendingRequestList[i].Add((dataReader["serviceDay"]).ToString());
+                    pendingRequestList[i].Add((dataReader["serviceHour"]).ToString());
+                    pendingRequestList[i].Add((dataReader["servicetype"]).ToString());
+                    pendingRequestList[i].Add((dataReader["dogname"]).ToString());
+                    pendingRequestList[i].Add((dataReader["dogBreed"]).ToString());
+                    pendingRequestList[i].Add((dataReader["age"]).ToString());
+                    pendingRequestList[i].Add((dataReader["size"]).ToString());
+                    pendingRequestList[i].Add((dataReader["sex"]).ToString());
+                    pendingRequestList[i].Add((dataReader["neutering"]).ToString());
+                    pendingRequestList[i].Add((dataReader["username"]).ToString());
+                    pendingRequestList[i].Add((dataReader["phone"]).ToString());
+                    pendingRequestList[i].Add((dataReader["city"]).ToString());
+                    pendingRequestList[i].Add((dataReader["street"]).ToString());
+                    pendingRequestList[i].Add((dataReader["homeNum"]).ToString());
+                    pendingRequestList[i].Add((dataReader["id"]).ToString());
+                    i++;
+                }
+
+
+                dataReader.Close();
+
+                return pendingRequestList;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to insert pending list", ex);
+            }
+            finally
+            {
+
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+
+
+
+        private SqlCommand incomePendingRequest(SqlConnection con, int userid)
+        {
+            string str = "SELECT S.serviceName, S.serviceDate, S.serviceDay,S.serviceHour,S.servicetype,D.dogname,D.dogBreed,D.age,D.size,D.sex,D.neutering," +
+                " U.username,U.phone,A.city,A.street,A.homeNum,S.id FROM PendingReq P JOIN ServicesDog S ON" +
+                " P.idService=S.id JOIN Dogs4 D on D.familyNum=S.familyId JOIN UsersFamliy U ON U.id=S.UserId JOIN Accounts A ON A.id=S.familyId" +
+                " WHERE P.idUser LIKE @userid AND P.approvedreq is NULL";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@userid", SqlDbType.SmallInt);
+            cmd.Parameters["@userid"].Value = (short)userid;
+            return cmd;
+        }
+
+        public List<List<string>> getIncomeApprovedRequests(int userid)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = Connect("DogsProjDB");
+                SqlCommand selectCommand = incomeApprovedRequests(con, userid);
+                SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                int i = 0;
+                List<List<string>> approvedRequestList = new List<List<string>>();
+                while (dataReader.Read())
+                {
+                    approvedRequestList.Add(new List<string>());// המרה לסטרינגים הכנסה לרשימת של סטרינגים
+                    approvedRequestList[i].Add((dataReader["serviceName"]).ToString());
+                    approvedRequestList[i].Add((dataReader["serviceDate"]).ToString());
+                    approvedRequestList[i].Add((dataReader["serviceDay"]).ToString());
+                    approvedRequestList[i].Add((dataReader["serviceHour"]).ToString());
+                    approvedRequestList[i].Add((dataReader["servicetype"]).ToString());
+                    approvedRequestList[i].Add((dataReader["dogname"]).ToString());
+                    approvedRequestList[i].Add((dataReader["dogBreed"]).ToString());
+                    approvedRequestList[i].Add((dataReader["age"]).ToString());
+                    approvedRequestList[i].Add((dataReader["size"]).ToString());
+                    approvedRequestList[i].Add((dataReader["sex"]).ToString());
+                    approvedRequestList[i].Add((dataReader["neutering"]).ToString());
+                    approvedRequestList[i].Add((dataReader["username"]).ToString());
+                    approvedRequestList[i].Add((dataReader["phone"]).ToString());
+                    approvedRequestList[i].Add((dataReader["city"]).ToString());
+                    approvedRequestList[i].Add((dataReader["street"]).ToString());
+                    approvedRequestList[i].Add((dataReader["homeNum"]).ToString());
+                    i++;
+                }
+
+
+                dataReader.Close();
+
+                return approvedRequestList;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to insert approved list", ex);
+            }
+            finally
+            {
+
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+
+
+
+        private SqlCommand incomeApprovedRequests(SqlConnection con, int userid)
+        {
+            string str = "SELECT S.serviceName, S.serviceDate, S.serviceDay,S.serviceHour,S.servicetype,D.dogname,D.dogBreed,D.age,D.size,D.sex,D.neutering," +
+                " U.username,U.phone,A.city,A.street,A.homeNum,S.id FROM PendingReq P JOIN ServicesDog S ON" +
+                " P.idService=S.id JOIN Dogs4 D on D.familyNum=S.familyId JOIN UsersFamliy U ON U.id=S.UserId JOIN Accounts A ON A.id=S.familyId" +
+                " WHERE P.idUser LIKE @userid AND P.approvedreq is 1";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@userid", SqlDbType.SmallInt);
+            cmd.Parameters["@userid"].Value = (short)userid;
+            return cmd;
+        }
+
 
     }
 }
