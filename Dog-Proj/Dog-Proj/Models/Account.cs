@@ -64,10 +64,10 @@ namespace Dog_Proj.Models
             return ds.Insert(this);
         }
 
-        public Account ReadAccount(string Email, string Password)
+        public Account ReadAccount(string email, string password)
         {
             DataServices dbs = new DataServices();
-            return dbs.ReadAccount(Email, Password);
+            return dbs.ReadAccount(email, password);
         }
 
         public List<string> GetUserSelction(int Id)
@@ -75,7 +75,11 @@ namespace Dog_Proj.Models
             DataServices dbs = new DataServices();
             return dbs.GetUserSelction(Id);
         }
-
+        public List<string> GetAddress(int familyId)
+        {
+            DataServices dbs = new DataServices();
+            return dbs.GetAddress(familyId);
+        }
 
 
     }

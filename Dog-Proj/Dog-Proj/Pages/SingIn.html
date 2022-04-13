@@ -41,22 +41,55 @@
         str = "";
         $(document).ready(function () { //דאטה של הערים
             var data = {
-                resource_id: '5c78e9fa-c2e2-4771-93ff-7f400a12f7ba', 
-
+                resource_id: '5c78e9fa-c2e2-4771-93ff-7f400a12f7ba', // the resource id
             };
             $.ajax({
                 url: 'https://raw.githubusercontent.com/royts/israel-cities/master/israel-cities.json',
                 data: data,
                 dataType: 'json',
                 success: function (data) {
+
                     var citieslist = [];
-                    var value = " <option value='בחירת עיר'></option>";//רנדור של הערים לרשימה נגללת
+                    var value = "";
                     for (var i = 1; i < data.length; i++) {
                         citieslist.push(data[i].name);
                         value += " <option data-id='" + data[i].name + "' value = '" + data[i].name + "' > " + data[i].name + "</option > ";
                     }
                     $("#mylist").append(value);
                 }
+            });
+
+            //שרשור רחוב לפי עיר
+            $(".mylist").change(function () {
+                console.log(this.value);
+                c = this.value;
+                var data = {
+                    resource_id: '9ad3862c-8391-4b2f-84a4-2d4c68625f4b', // the resource id
+                    limit: 60000, // get 5 results
+
+                };
+                $.ajax({
+                    url: 'https://data.gov.il/api/3/action/datastore_search',
+                    data: data,
+                    dataType: 'json',
+                    success: function (data) {
+                        streetslist = [];
+                        $(".mycitylist").val('');
+                        var value = "";
+                        for (var i = 0; i < data.result.records.length; i++) {
+                            var d = data.result.records[i];
+
+                            if (c + " " == d.שם_ישוב) {
+                                streetslist.push(d.שם_רחוב);
+                                let s = "'" + d.שם_רחוב + "'";
+                                value += " <option data-id='" + d.שם_רחוב + "' value = '" + d.שם_רחוב + "' > " + d.שם_רחוב + "</option > ";
+
+                            }
+                        }
+                        console.log(streetslist);
+                        $("#mycitylist").html(value);
+                    }
+                });
             });
 
             $("#sign").submit(signUp);
@@ -73,10 +106,11 @@
 
 
         function signUpfamily() {
+            var getvaluestreet = document.getElementsByName('mycitylist')[0];
             var getvalue = document.getElementsByName('mylist')[0];
             let familyname = $("#familyname").val();
             let cityName = getvalue.value;
-            let street = $("#street").val();
+            let street = getvaluestreet.value;
             let homeNum = $("#homeNum").val();
             let moreAnimals = $("#moreAnimals").is(':checked');
             let yardSize = $("#yardSize").val();
@@ -195,19 +229,18 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div class="form-group">
-                                                <div>
-                                                    <input class="dropdown-input" list="mylist" name="mylist" />
-                                                    <datalist id="mylist">
-                                                    </datalist>
-
-                                                </div>
-                                            </div>
+                                            <input class="mylist form-control" list="mylist" name="mylist" placeholder="עיר" required>
+                                            <datalist id="mylist">
+                                            </datalist>
                                         </td>
                                         <td><h3>עיר</h3></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" id="street" required /></td>
+                                        <td>
+                                            <input class="mycitylist form-control" list="mycitylist" name="mycitylist" placeholder="רחוב" required>
+                                            <datalist id="mycitylist">
+                                            </datalist>
+                                        </td>
                                         <td><h3>רחוב</h3></td>
                                     </tr>
                                     <tr>

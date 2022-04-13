@@ -92,6 +92,7 @@
             let serviceName = "feeding";
             var familyId = parseInt(localStorage.getItem('familyId'));// שליפה מהלוקלסטורג
             var UserId = parseInt(localStorage.getItem('UserId'));
+            console.log(UserId);
 
 
             feeding = {
@@ -250,16 +251,16 @@
             
             <div class="about_text">
                 <div class="container">
-                    <h1 class="about_taital_food"><strong><span style="color:orange;">בחר את סוג השירות המבוקש  </span> להאכלה</strong></h1>
+                    <h1 class="about_taital_food"><strong><span style="color:orange;">בחר את  השירות המבוקש  </span> להאכלה</strong></h1>
                     <ul class="donate-now">
                         <li>
-                            <input type="radio" id="10" name="amount" value="10" />
+                            <input type="checkbox" id="10" name="amount" value="10" />
                             <label for="10">האכלה אחת ביום <br />עלות: 10 <br /> נקודות זכות</label>
                         </li>
-                        <li>
+                        <!--<li>
                             <input type="radio" id="20" name="amount" value="20" />
                             <label for="20">שתי האכלות ביום <br />עלות: 20 <br /> נקודות זכות</label>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
 
