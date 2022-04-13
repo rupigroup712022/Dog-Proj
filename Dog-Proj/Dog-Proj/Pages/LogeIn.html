@@ -36,8 +36,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
-    <script src="../Scripts/ajaxCalls.js"></script>
-
+    <script src="../Scripts/ajaxCall.js"></script>
+    <script src="../Scripts/jquery-3.4.1.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function () {
             $("#login_form").submit(Login);
@@ -46,7 +47,7 @@
         function Login() {
             let email = $("#email").val();
             let passwords = $("#password").val();
-            let apiCall = "../api/Accounts?Email=" + email + "&Password=" + passwords;
+            let apiCall = "../api/Accounts?email=" + email + "&password=" + passwords;
             ajaxCall("GET", apiCall, "", getUserSCB, getUserECB);
             return false;
         }
@@ -57,7 +58,9 @@
                 alert("The system can not find that user!")
             }
             else if (userlog.Password != "The password is wrong!") {
-                localStorage["userlog"] = JSON.stringify(userlog);
+                localStorage["Acoountlog"] = JSON.stringify(userlog);
+                localStorage["familyId"] = JSON.stringify(userlog.Id);
+
                 window.location.href = "Userselection.html";
             }
             else {
@@ -122,9 +125,9 @@
                         <form id="login_form" class="form_class" action="login/login-access.php" method="post">
                             <div class="form_div">
                                 <label>Family Email:</label>
-                                <input class="field_class" name="login_txt" type="email" placeholder="Please enter your email" autofocus>
+                                <input class="field_class" name="login_txt" id="email" placeholder="Please enter your email" autofocus>
                                 <label>Password:</label>
-                                <input id="pass" class="field_class" name="password_txt" type="password" placeholder="Please enter a password">
+                                <input id="password" class="field_class" name="password_txt" type="password" placeholder="Please enter a password">
                                 <button class="submit_class" type="submit" form="login_form" onclick="return validarLogin()">Enter</button>
                             </div>
 

@@ -37,17 +37,18 @@
     <script>
         $(document).ready(function () {
             logUser();
-            userid = JSON.parse(localStorage["UserId"]);
             $(document).on("click", ".NameUser", name)
             
 
         });
 
-
         function name() {
-                let username = $(this).val();
-                console.log(username);
-                localStorage["username"] = JSON.stringify(username);
+            let username = $(this).val();
+            let userId = event.srcElement.id;
+            console.log(username);
+            console.log(userId);
+            localStorage["UserId"] = JSON.stringify(userId);
+             localStorage["username"] = JSON.stringify(username);
                 Swal.fire({
                     title: "התחברת בהצלחה !",
                     icon: "success",
@@ -72,11 +73,11 @@
 
             var imgStr = "";
 
-            for (var i = 0; i < success.length; i = i + 2) {
+            for (var i = 0; i < success.length; i = i + 3) {
 
                 console.log(success[1])
 
-                imgStr = "<div><input type = 'button' class='NameUser' value = " + success[i] + "></div>";
+                imgStr = "<div><input type = 'button' class='NameUser'  id ='"+success[i+2]+"'value ='" + success[i] + "'></div>";
                 if (success[i + 1] == 'F') {
                     imgStr += "<div class='userclass'><img class='imguser' src='../images/user-gfaaf954f6_640.png' /></div>";
                 }

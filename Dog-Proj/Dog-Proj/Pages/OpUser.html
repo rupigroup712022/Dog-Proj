@@ -41,6 +41,7 @@
             $("#end").click(checkchoice);
             welcome(username);
             getAllmakers();
+            getAddressUser();
             $("#LogOut").click(LogOut);
 
 
@@ -51,7 +52,7 @@
         function welcome(username) {
             console.log(username);
 
-            let str = "<h1 class='welcome'> Welcome " + username + "</h1>";
+            let str = "<h1 class='welcome'>  היי " + username + "</h1>";
             $("#ph_head").html(str);
         }
         function LogOut() {
@@ -133,25 +134,31 @@
         }
         function getSuccessAll(data) {// מקבל רשימה  של אנשים פונצניאלים שפנוים
             let location = renderList(data);// רנדור למסך של הדיבים של האנשים הפונצנאלים הפנויים
-            getlocation(location);// -הלוקשין זה המילון של הפרטים של האנשים,
             console.log(data);
         }
+
+
 
         function error(err) {
             alert("error!");
         }
-
-        function renderList(d) {// מקבל את כל האנשים הפוצנציאלים 
+        var DivUsers = [];
+        var BestLocation = [];
+        async function renderList(d) {// מקבל את כל האנשים הפוצנציאלים
             addresses = [];
             $("#MakerList").html("");
-            let str = "";
             makersArr = d;
-            console.log(d)
+            console.log(d);
             for (var i = 0; i < d.length; i++) {// הליסט של כל המשתמשים
                 console.log(d.length)
                 for (var j = 0; j < d[i].length; j = j + d[i].length) {// הליסט של משתמש ספציפי וריצה על כל הפרטים שלו
+                    let address = d[i][j + 5] + " " + d[i][j + 6] + " " + d[i][j + 7];
+                    addresses = { address: address, name: d[i][j], phone: d[i][j + 2], id: d[i][j + 4] };// שמירה של הנתונים של אותו אדם והכנסה למילון 
+                    await getlocation(addresses);
+                    addresses["distance"] = dist;
                     console.log(d[i].length)
                     console.log(d[i][j])
+                    let str = "";
                     str += "<div class='BTF' id='" + d[i][j + 4] + "'>";// האידי של הדיב הוא האידי של נותן השירות בשבלי ההתאמה 
                     str += "<table class='table'>";
                     str += "<tr class='row1'>";
@@ -170,67 +177,142 @@
                     str += "<td class='user col-12'><h6><b>כתובת  </b>" + d[i][j + 5] + " " + d[i][j + 6] + " " + d[i][j + 7] + " </h6></td>";
                     str += "</tr>";
                     str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h6 ><b class='distance'> " + "מרחק : " + dist.toFixed(2) + " ק''מ"  +"</b></h6></td>";
+                    str += "</tr>";
+                    str += "<tr class='row1'>";
                     str += "<td class='col-12'><button type='button' class='btn btn-info btn-lg' onclick = 'selectUser(" + d[i][j + 4] + ")' id ='B" + d[i][j + 4] + "' data - toggle='modal' > בחירת משתמש </button > </td>";
                     str += "</tr>";
                     str += "</table>";
                     str += "</div><br/>";
-                    let address = d[i][j + 5] + " " + d[i][j + 6] + " " + d[i][j + 7];
-                    addresses.push({ address: address, name: d[i][j], phone: d[i][j + 2], id: d[i][j + 4] });// שמירה של הנתונים של אותו אדם והכנסה למילון 
+                    addresses["str"] = str;
+                    console.log(addresses);
+                    const k = BestLocation.findIndex(a => (a.distance && a.distance > addresses.distance) ? true : false);
+                    BestLocation.splice(k, 0, addresses);
+
                 }
+
             }
-            $("#MakerList").append(str);
-            return addresses;
+            for (var i = 0; i < BestLocation.length; i++) {
+                $("#MakerList").append(BestLocation[i].str);
+            }
+        }
+
+        function getAddressUser() {// בודק מה הכתובת של היוזר 
+            var familyId = JSON.stringify({ familyId: JSON.parse(localStorage.getItem('familyId'))});
+            let apiCall = "../api/Accounts/address" ;
+            ajaxCall("POST", apiCall, familyId, getUserAddSCB, getUserAddECB)
         }
 
 
-        function getlocation(data) {
+        const userGeo = JSON.parse(localStorage.getItem('coordi'));
+        var dist = 0;
+
+        async function getlocation(data) {
             console.log(data);
-            for (i = 0; i < data.length; i++) {
-                let contentString =// הבועה שנפתחת במפה 
-                    '<div id="content">' +
-                    '<div id="siteNotice">' +
-                    "</div>" +
-                    '<h1 id="firstHeading" class="firstHeading">' + data[i].name + '</h1>' +
-                    '<div id="bodyContent">' +
-                    "<p>טלפון להתקשרות: <b>" + data[i].phone + "</b></p>" +
-                    "<button type='button' class='btn btn-info btn-lg' onclick='selectUser(" + data[i].id + ")' id='BTNRes' data-toggle='modal'>בחירת משתמש </button>";// הכפתור שמסמן בחירת משתמש
+            let contentString =// הבועה שנפתחת במפה 
+                '<div id="content">' +
+                '<div id="siteNotice">' +
                 "</div>" +
-                    "</div>";
-                let id = data[i].phone;
-                //מרקרים במפה 
-                $.ajax({
-                    url: "https://maps.googleapis.com/maps/api/geocode/json",
-                    type: "GET",
-                    data: {
-                        address: data[i].address,// המיקום של אותו בן אדם במפה
-                        key: "AIzaSyD_b7WIuckZ56JNQMXK8AlbSuf6K88dsIU"
-                    },
-                    success: function (response) {
-                        var coordi = {};
-                        coordi.lat = response.results[0].geometry.location.lat;
-                        coordi.lng = response.results[0].geometry.location.lng;
+                '<h1 id="firstHeading" class="firstHeading">' + data.name + '</h1>' +
+                '<div id="bodyContent">' +
+                "<p>טלפון להתקשרות: <b>" + data.phone + "</b></p>" +
+                "<button type='button' class='btn btn-info btn-lg' onclick='selectUser(" + data.id + ")' id='BTNRes' data-toggle='modal'>בחירת משתמש </button>";// הכפתור שמסמן בחירת משתמש
+            "</div>" +
+                "</div>";
+            const id = data.phone;
+            const idDivuser = data.id;
+            //מרקרים במפה 
+            const response = await $.ajax({
 
-                        const marker = new google.maps.Marker({
-                            position: coordi,
-                            map: map,
-                            animation: google.maps.Animation.DROP,
-                        });
+                url: "https://maps.googleapis.com/maps/api/geocode/json",
+                type: "GET",
+                data: {
+                    address: data.address,
+                    key: "AIzaSyD_b7WIuckZ56JNQMXK8AlbSuf6K88dsIU"
+                },
+                /* success:*/
+                //function (response) {
+                //var coordi = {};
+                //coordi.lat = response.results[0].geometry.location.lat;
+                //coordi.lng = response.results[0].geometry.location.lng;
+                //const marker = new google.maps.Marker({
+                //    position: coordi,
+                //    map: map,
+                //    animation: google.maps.Animation.DROP,
+                //});
+                //dist = haversine_distance(coordi, userGeo);
+                //console.log(idDivuser);
+                //marker.set("id", id);
+                //markers.push(marker);
 
-                        marker.set("id", id);
-                        markers.push(marker);
+                //marker.addListener("click", () => {
+                //    map.setZoom(17);
+                //    map.setCenter(marker.getPosition());
 
-                        marker.addListener("click", () => {
-                            map.setZoom(17);
-                            map.setCenter(marker.getPosition());
+                //    infowindow.close();
+                //    infowindow.setContent(contentString);
+                //    infowindow.open(map, marker);
+                /*});*/
+                //  }
+            });
+            var coordi = {};
+            coordi.lat = response.results[0].geometry.location.lat;
+            coordi.lng = response.results[0].geometry.location.lng;
+            const marker = new google.maps.Marker({
+                position: coordi,
+                map: map,
+                animation: google.maps.Animation.DROP,
+            });
+            dist = haversine_distance(coordi, userGeo);
+            console.log(idDivuser);
+            marker.set("id", id);
+            markers.push(marker);
 
-                            infowindow.close();
-                            infowindow.setContent(contentString);
-                            infowindow.open(map, marker);
-                        });
-                    }
-                });
-            }
+            marker.addListener("click", () => {
+                map.setZoom(17);
+                map.setCenter(marker.getPosition());
+
+                infowindow.close();
+                infowindow.setContent(contentString);
+                infowindow.open(map, marker);
+
+            } )  
+}
+
+
+
+
+
+        function getUserAddSCB(Addrres) {
+            const str = Addrres[0] + " " + Addrres[1] + " " + Addrres[2];
+
+            $.ajax({
+                url: "https://maps.googleapis.com/maps/api/geocode/json",
+                type: "GET",
+                data: {
+                    address: str,
+                    key: "AIzaSyD_b7WIuckZ56JNQMXK8AlbSuf6K88dsIU"
+                },
+                success: function (response) {
+                    var coordi = {};
+                    coordi.lat = response.results[0].geometry.location.lat;
+                    coordi.lng = response.results[0].geometry.location.lng;
+                    localStorage["coordi"] = JSON.stringify(coordi);
+
+                }
+            })
+
         }
+
+        function getUserAddECB() {
+            alert("error");
+        }
+
+
+
+        function haversine_distance(mk1, mk2) {            var R = 6371.0710; // Radius of the Earth in km            var rlat1 = mk1.lat * (Math.PI / 180); // Convert degrees to radians            var rlat2 = mk2.lat * (Math.PI / 180); // Convert degrees to radians            var difflat = rlat2 - rlat1; // Radian difference (latitudes)            var difflon = (mk2.lng - mk1.lng) * (Math.PI / 180); // Radian difference (longitudes)            var d = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat / 2) * Math.sin(difflat / 2) + Math.cos(rlat1) * Math.cos(rlat2) * Math.sin(difflon / 2) * Math.sin(difflon / 2)));            return d;        }
+
+
 
         selectedU = [];
         function selectUser(id) {
@@ -280,15 +362,18 @@
     <div class="header-main">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <div><a href="index.html"><img src="../images/LOGO1S.png" /></a></div>
+                </div>
+                <div class="col-md-2">
+                    <div id="ph_head"></div>
                 </div>
                 <div class="col-md-8">
                     <div class="menu_text-log">
                         <ul>
                             <li class="LogeIn">
-                                <a href="LogeIn.html">Login /</a>
-                                <a href="SingIn.html"> Sign Up</a>
+
+                                <button id="LogOut">Log Out</button>
                             </li>
                             <li class="active">
                                 <div id="myNav" class="overlay">
@@ -306,7 +391,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
     </div>
     <!-- section about start -->
 
@@ -316,11 +401,11 @@
                 <div class="col-sm-12">
                     <h1 class="get_taital"><strong><span style="color: #ffffff;">אנשים פוטנציאלים</span></strong></h1>
                 </div>
-           
+
                 <div id="divSearch" class="container-fluid">
                     <div class="row" id="divSearchRow">
                         <div class="col-3" id="MakerList"></div>
-                        <div class="col-9" id="map" style="width: 80vw; height: 90vh" > ></div>
+                        <div class="col-9" id="map" style="width: 80vw; height: 90vh"> ></div>
                     </div>
                 </div>
                 <div>
@@ -328,7 +413,7 @@
                     <a href="SingInUser.html"></a>
                 </div>
             </div>
-            </div>
+        </div>
         </div>
 
 

@@ -11,7 +11,6 @@ namespace Dog_Proj.Controllers
     public class UsersController : ApiController
     {
 
-        //GET api/<controller>/5
         [HttpPost]
         [Route("api/Users/userAv")]
 
@@ -29,6 +28,5 @@ namespace Dog_Proj.Controllers
         }
 
 
-        
     }
 }

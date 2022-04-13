@@ -59,6 +59,7 @@ namespace Dog_Proj.Models.DAL
                 // num effected
                 return id;
             }
+
             return 0;
         }
 
@@ -291,6 +292,52 @@ namespace Dog_Proj.Models.DAL
             return cmd;
         }
 
+        public List<string> GetAddress(int familyId)
+        {
+            SqlConnection con = null;
+            try
+            {
+                // Connect
+                con = Connect("DogsProjDB");
+                // Create the insert command
+                SqlCommand selectCommand = AddressCheck(con, familyId);
+                // Execute the command
+                SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                List<string> str = new List<string>();
+                while (dataReader.Read())
+                {
+                    str.Add((string)dataReader["city"]);
+                    str.Add((string)dataReader["street"]);
+                    str.Add(dataReader["homeNum"].ToString());
+                }
+                dataReader.Close();
+                if (str.Count == 0)
+                {
+                    return str;
+                }
+                return str;
+            }
+            catch (Exception ex)
+            {
+                // write the error to log
+                throw new Exception("failed in reading Address", ex);
+            }
+            finally
+            {
+                // Close the connection
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand AddressCheck(SqlConnection con, int id)
+        {
+            string str = "SELECT city,street,homeNum FROM Accounts WHERE id = @id";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@id", SqlDbType.SmallInt);
+            cmd.Parameters["@id"].Value = (short)id;
+            return cmd;
+        }
 
         private SqlCommand CreateInsertCommand(SqlConnection con, Account account)
         {
@@ -426,6 +473,7 @@ namespace Dog_Proj.Models.DAL
                 {
                     str.Add((string)dataReader["username"]);
                     str.Add((string)dataReader["sex"]);
+                    str.Add(dataReader["id"].ToString());
                 }
                 dataReader.Close();
 
@@ -446,7 +494,7 @@ namespace Dog_Proj.Models.DAL
 
         private SqlCommand UserSelction(SqlConnection con, int familyId)
         {
-            string str = "SELECT username,sex FROM UsersFamliy WHERE familyId LIKE @familyId";
+            string str = "SELECT id,username,sex FROM UsersFamliy WHERE familyId LIKE @familyId";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
             cmd.Parameters["@familyId"].Value =(short)(familyId);
@@ -484,6 +532,7 @@ namespace Dog_Proj.Models.DAL
 
         public Account ReadAccount(string email, string passwords)
         {
+
             SqlConnection con = null;
             try
             {
@@ -494,7 +543,7 @@ namespace Dog_Proj.Models.DAL
                 Account account = new Account();
                 while (dataReader.Read())
                 {
-                 
+                    account.Id = Convert.ToInt32(dataReader["id"]);
                     account.Familyname = (string)dataReader["familyname"];
                     account.MoreAnimals = Convert.ToBoolean(dataReader["moreAnimals"]);
                     account.Street = (string)dataReader["street"];
@@ -534,14 +583,14 @@ namespace Dog_Proj.Models.DAL
         }
 
 
-        private SqlCommand emailandpasswordCheck(SqlConnection con, string Email, string Passwords)
+        private SqlCommand emailandpasswordCheck(SqlConnection con, string email, string passwords)
         {
             string str = "SELECT * FROM Accounts WHERE email LIKE @email and [passwords] LIKE @passwords";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@email", SqlDbType.Char);
-            cmd.Parameters["@email"].Value = Email;
+            cmd.Parameters["@email"].Value = email;
             cmd.Parameters.Add("@passwords", SqlDbType.Char);
-            cmd.Parameters["@passwords"].Value = Passwords;
+            cmd.Parameters["@passwords"].Value = passwords;
             return cmd;
         }
 

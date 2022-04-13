@@ -12,10 +12,10 @@ namespace Dog_Proj.Controllers
     {
      
         // GET api/<controller>
-        public Account Get(string Email, string Password)
+        public Account Get(string email, string password)
         {
             Account accounts = new Account();
-            return accounts.ReadAccount(Email, Password);
+            return accounts.ReadAccount(email, password);
         }
         //[HttpGet]
         //[Route("api/Accounts/User")]
@@ -26,17 +26,21 @@ namespace Dog_Proj.Controllers
         }
 
 
-        // GET api/<controller>/5
-        //public string Get(int id)
-        //{\
-        //    return "value";
-        //}
-
         // POST api/<controller>
         public int Post([FromBody]Account account)
         {
             return account.Insert();
         }
+
+        [HttpPost]
+        [Route("api/Accounts/address")]
+        public List<string> GetAddress([FromBody] Dictionary<string, int> familyId)
+        {
+            Account account = new Account();
+            return account.GetAddress(familyId["familyId"]);
+        }
+
+
 
         //public int Put(int id)
         //{

@@ -61,9 +61,8 @@ namespace Dog_Proj.Models {
             DataServices dbs = new DataServices();
             return dbs.GetAvUser(day, hour);
         }
-
-
-
+        
+   
 
 
     }
