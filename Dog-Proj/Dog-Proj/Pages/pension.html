@@ -36,6 +36,8 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script src="../Scripts/ajaxCall.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
 
 
@@ -76,8 +78,9 @@
 
             let serviceDate = $('#regervation').val();
             console.log(serviceDate);
+            let serviceHour = $("#selectime").val();
 
-           
+
             var servicetype = "";
             var amo = document.getElementsByName('amount');
             for (i = 0; i < amo.length; i++) {
@@ -86,13 +89,14 @@
             }
             let note = $("#note").val();
             let serviceName = "pension";
-            var familyId = parseInt(localStorage.getItem('familyId'));
-            var UserId = parseInt(localStorage.getItem('UserId'));
+            var familyId = parseInt(localStorage.getItem('familyId'));// שליפה מהלוקלסטורג
+            var UserId = parseInt(JSON.parse(localStorage.getItem('UserId')));
 
 
             pension = {
                 ServiceName: serviceName,
                 ServiceDate: serviceDate,
+                ServiceHour: serviceHour,
                 Note: note,
                 Servicetype: servicetype,
                 UserId: UserId,
@@ -105,16 +109,21 @@
             console.log(pension);
             let api = "../api/Services?UserId=" + UserId;
             ajaxCall("POST", api, JSON.stringify(pension), postSCB, postECB);
-           return false;
+            return false;
+
+
+
         }
 
 
-        function postSCB(service) {
+        function postSCB(id) {
             localStorage["ServicesId"] = JSON.stringify(id);
-
-            alert("עכשיו רק נשאר לבחור מי יבצע את השירות");
-            $("#Next").click(function () {
-                window.location.href = "OpUser.html";
+            Swal.fire({
+                title: "בחר נותן שירות עפי המיקום והדירוג- לאחר מכן שלח לו הודעה ובדוק האם הוא פנוי ",
+                icon: "success",
+                timer: 25000000,
+            }).then(function () {
+                window.location.href = 'OpUser.html';
             });
         }
 
@@ -163,9 +172,23 @@
                                 <h1 dir="rtl" class="about_taital"><strong><span style="color:orange;">מי שומר עלי </span>? </strong></h1>
                                 <h3 dir="rtl" class="about_taital"><span style="color: black;">אנא בחר טווח תאריכים</span> </h3>
 
-                              
+
                                 <input type="text" name="regervation" id="regervation" placeholder="Please select regervation date!" />
                                 <div id="displayRegervation"></div>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <select id="selectime">
+                                                <option>בחר טווח שעות לאיסוף הכלב</option>
+                                                <option>07:00-08:00</option>
+                                                <option>08:00-12:00</option>
+                                                <option>12:00-14:00</option>
+                                                <option>14:00-16:00</option>
+                                                <option>16:00-20:00</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>

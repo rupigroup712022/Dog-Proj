@@ -373,7 +373,7 @@ namespace Dog_Proj.Models.DAL
 
         public int InsertDog(Dog dog)
         {
-            int existName = checkingDogname(dog.Dogname);
+            int existName = checkingDogname(dog.Dogname, dog.FamilyNum);
             if (existName == 0)
             {
                 SqlConnection con = null;
@@ -412,7 +412,7 @@ namespace Dog_Proj.Models.DAL
         }
 
 
-        public int checkingDogname(string dogname)
+        public int checkingDogname(string dogname, int familyNum)
         {
             SqlConnection con = null;
             try
@@ -420,7 +420,7 @@ namespace Dog_Proj.Models.DAL
                 // Connect
                 con = Connect("DogsProjDB");
                 // Create the insert command
-                SqlCommand selectCommand = NameDogCheck(con, dogname);
+                SqlCommand selectCommand = NameDogCheck(con, dogname, familyNum);
                 // Execute the command
                 SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
                 string str = "";
@@ -448,12 +448,14 @@ namespace Dog_Proj.Models.DAL
                     con.Close();
             }
         }
-        private SqlCommand NameDogCheck(SqlConnection con, string dogname)
+        private SqlCommand NameDogCheck(SqlConnection con, string dogname, int familyNum)
         {
-            string str = "SELECT * FROM Dogs4 WHERE dogname LIKE @dogname";
+            string str = "SELECT * FROM Dogs4 WHERE dogname LIKE @dogname and familyNum LIKE @familyNum";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@dogname", SqlDbType.Char);
             cmd.Parameters["@dogname"].Value = dogname;
+            cmd.Parameters.Add("@familyNum", SqlDbType.SmallInt);
+            cmd.Parameters["@familyNum"].Value = (short)familyNum;
             return cmd;
         }
 
@@ -718,12 +720,14 @@ namespace Dog_Proj.Models.DAL
         }
         private SqlCommand CreateInsertCommandservicepension(int UserId, Service service, SqlConnection con)
         {
-            string commandStr = "INSERT INTO ServicesDog (serviceName,serviceDate,note,servicetype,UserId,familyId) VALUES (@serviceName,@serviceDate,@note,@servicetype,@UserId,@familyId)";
+            string commandStr = "INSERT INTO ServicesDog (serviceName,serviceDate,serviceHour,note,servicetype,UserId,familyId) VALUES (@serviceName,@serviceDate,@serviceHour,@note,@servicetype,@UserId,@familyId)";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@serviceName", SqlDbType.NChar);
             cmd.Parameters["@serviceName"].Value = service.ServiceName;
             cmd.Parameters.Add("@serviceDate", SqlDbType.NChar);
             cmd.Parameters["@serviceDate"].Value = service.ServiceDate;
+            cmd.Parameters.Add("@serviceHour", SqlDbType.NChar);
+            cmd.Parameters["@serviceHour"].Value = service.ServiceHour;
             cmd.Parameters.Add("@note", SqlDbType.NChar);
             cmd.Parameters["@note"].Value = service.Note;
             cmd.Parameters.Add("@servicetype", SqlDbType.NChar);

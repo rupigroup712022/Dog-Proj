@@ -76,11 +76,11 @@
             }
             let note = $("#note").val();
             let serviceName = "walk";
-            var familyId = parseInt(localStorage.getItem('familyId'));
-            var UserId = parseInt(localStorage.getItem('UserId'));
+            var familyId = parseInt(localStorage.getItem('familyId'));// שליפה מהלוקלסטורג
+            var UserId = parseInt(JSON.parse(localStorage.getItem('UserId')));
             localStorage["serviceDay"] = JSON.stringify(serviceDay);
             localStorage["serviceHour"] = JSON.stringify(serviceHour);
-
+            console.log(UserId);
 
 
             var diffDays = new Date(serviceDate) - Date.now();
