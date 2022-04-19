@@ -39,10 +39,10 @@ namespace Dog_Proj.Controllers
 
         [HttpPost]
         [Route("api/Users/incomeApprovedReq")]
-        public List<List<string>> getIncomeApprovedRequests([FromBody] Dictionary<string, string> userId)//בקשות נכנסות
+        public List<List<string>> getIncomeApprovedRequests([FromBody] Dictionary<string, string> u)//בקשות נכנסות
         {
             User user = new User();
-            return user.getIncomeApprovedRequests(Convert.ToInt32(userId["userId"]));
+            return user.getIncomeApprovedRequests(Convert.ToInt32(u["userId"]));
         }
 
         [HttpGet]

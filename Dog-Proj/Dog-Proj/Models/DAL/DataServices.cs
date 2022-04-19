@@ -895,22 +895,22 @@ namespace Dog_Proj.Models.DAL
                 while (dataReader.Read())
                 {
                     approvedRequestList.Add(new List<string>());// המרה לסטרינגים הכנסה לרשימת של סטרינגים
-                    approvedRequestList[i].Add((dataReader["serviceName"]).ToString());
-                    approvedRequestList[i].Add((dataReader["serviceDate"]).ToString());
-                    approvedRequestList[i].Add((dataReader["serviceDay"]).ToString());
-                    approvedRequestList[i].Add((dataReader["serviceHour"]).ToString());
-                    approvedRequestList[i].Add((dataReader["servicetype"]).ToString());
-                    approvedRequestList[i].Add((dataReader["dogname"]).ToString());
-                    approvedRequestList[i].Add((dataReader["dogBreed"]).ToString());
-                    approvedRequestList[i].Add((dataReader["age"]).ToString());
-                    approvedRequestList[i].Add((dataReader["size"]).ToString());
-                    approvedRequestList[i].Add((dataReader["sex"]).ToString());
-                    approvedRequestList[i].Add((dataReader["neutering"]).ToString());
-                    approvedRequestList[i].Add((dataReader["username"]).ToString());
-                    approvedRequestList[i].Add((dataReader["phone"]).ToString());
-                    approvedRequestList[i].Add((dataReader["city"]).ToString());
-                    approvedRequestList[i].Add((dataReader["street"]).ToString());
-                    approvedRequestList[i].Add((dataReader["homeNum"]).ToString());
+                    approvedRequestList[i].Add((dataReader["serviceName"]).ToString());//0
+                    approvedRequestList[i].Add((dataReader["serviceDate"]).ToString());//1
+                    approvedRequestList[i].Add((dataReader["serviceDay"]).ToString());//2
+                    approvedRequestList[i].Add((dataReader["serviceHour"]).ToString());//3
+                    approvedRequestList[i].Add((dataReader["servicetype"]).ToString());//4
+                    approvedRequestList[i].Add((dataReader["dogname"]).ToString());//5
+                    approvedRequestList[i].Add((dataReader["dogBreed"]).ToString());//6
+                    approvedRequestList[i].Add((dataReader["age"]).ToString());//7
+                    approvedRequestList[i].Add((dataReader["size"]).ToString());//8
+                    approvedRequestList[i].Add((dataReader["sex"]).ToString());//9
+                    approvedRequestList[i].Add((dataReader["neutering"]).ToString());//10
+                    approvedRequestList[i].Add((dataReader["username"]).ToString());//11
+                    approvedRequestList[i].Add((dataReader["phone"]).ToString());//12
+                    approvedRequestList[i].Add((dataReader["city"]).ToString());//13
+                    approvedRequestList[i].Add((dataReader["street"]).ToString());//14
+                    approvedRequestList[i].Add((dataReader["homeNum"]).ToString());//15
                     i++;
                 }
 

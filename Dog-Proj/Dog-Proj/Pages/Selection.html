@@ -58,15 +58,14 @@
    
             let apiCall = "../api/Users/incomeApprovedReq";
             ajaxCall("POST", apiCall, JSON.stringify(u), getRequestsSCB, getRequestsECB)
-
         }
 
 
 
         function getRequestsSCB(d) {
             const results = d.map(l => {
-                let address = d[13] + " " + l[14] + " " + l[15];
-                let fullDate = d[1] + " " + l[2] + " " + l[3];
+                let address = l[13] + " " + l[14] + " " + l[15];
+                let fullDate = l[1] + " " + l[2] + " " + l[3];
                     request = { address: address, name: l[11], phone: l[12], serviceId: l[16] };
                     //await getlocation(addresses); בהמשך נציג לפי מרחקים 
                     //addresses["distance"] = dist;
@@ -77,7 +76,7 @@
                     str += "<td class='user col-12'><h1>" + l[0] + "</h1></td>";
                     str += "</tr>";
                     str += "<tr class='row1'>";
-                    str += "<td class='user col-12'><h1>" + l[5] +" "+ l[6] + "שם וגזע הכלב </h1></td>";
+                    str += "<td class='user col-12'><h1> שם וגזע הכלב -" + l[5] +" , "+ l[6] + "</h1></td>";
                     str += "</tr>";
                     str += "<tr class='row1'>";
                     str += "<td class='user col-12'><h1>" + fullDate + "</h1></td>";
@@ -86,10 +85,10 @@
                     str += "<td class='user col-12'><h6><b>טלפון ושם:</b>" + l[12]+" " +l[11] + "</h6></td>";
                     str += "</tr>";
                     str += "<tr class='row1'>";
-                    str += "<td class='user col-12'><h6>" + l[4] + " <b>נקודות זכות</b></h6></td>";
+                str += "<td class='user col-12'><h6><b>נקודות זכות:</b>" + l[4] + "</h6></td>";
                     str += "</tr>";
                     str += "<tr class='row1'>";
-                    str += "<td class='user col-12'><h6><b>כתובת  </b>" + address + " </h6></td>";
+                    str += "<td class='user col-12'><h6><b>כתובת:</b>" + address + " </h6></td>";
                     str += "</tr>";
                     //str += "<tr class='row1'>";
                     //str += "<td class='user col-12'><h6 ><b class='distance'> " + "מרחק : " + dist.toFixed(2) + " ק''מ" + "</b></h6></td>";
