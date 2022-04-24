@@ -53,7 +53,7 @@
         function nextlevel() {
 
             let serviceDate = $('#meeting-time-walk').val();
-            //let serviceByDate = serviceDate.split("T")[0];
+            serviceDate = serviceDate.split("T")[0];
             console.log(serviceDate);
             let serviceHour = $("#selectime").val();
             //const serviceHour = new Date(serviceDate).toLocaleTimeString('en',

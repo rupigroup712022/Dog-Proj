@@ -52,5 +52,24 @@ namespace Dog_Proj.Controllers
             return user.InsertUser();
         }
 
+        [HttpPost]
+        [Route("api/Users/answeredRequest")]
+        public string answeredRequest([FromBody] Dictionary<string, string> u)
+        {
+            bool b;
+            User user = new User();
+            if (u["val"]=="true")
+            {
+                b = true; 
+            }
+            else
+            {
+                b = false;
+            }
+             user.setRequests(Convert.ToInt32(u["userId"]),u["serviceId"],b);
+            return u["serviceId"];
+        }
+
+
     }
 }

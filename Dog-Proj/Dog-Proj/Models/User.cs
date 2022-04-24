@@ -76,7 +76,12 @@ namespace Dog_Proj.Models {
 
         }
 
+        public void setRequests(int userid,string serviceId,bool val)
+        {
+            DataServices dbs = new DataServices();
+             dbs.setRequestsDb(userid,serviceId,val);
 
+        }
 
     }
 }

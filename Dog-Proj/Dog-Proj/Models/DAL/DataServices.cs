@@ -657,7 +657,8 @@ namespace Dog_Proj.Models.DAL
 
         private SqlCommand getSerIdCom(SqlConnection con, string serviceName, string serviceDate, int UserId, string serviceHour)
         {
-            string str = "SELECT id FROM ServicesDog WHERE serviceName LIKE @serviceName and serviceDate LIKE @serviceDate and UserId LIKE @UserId and serviceHour LIKE @serviceHour ";
+            string str = "SELECT id FROM ServicesDog WHERE serviceName LIKE @serviceName and serviceDate" +
+                " LIKE @serviceDate and UserId LIKE @UserId and serviceHour LIKE @serviceHour ";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@serviceName", SqlDbType.NChar);
             cmd.Parameters["@serviceName"].Value = serviceName;
@@ -673,7 +674,8 @@ namespace Dog_Proj.Models.DAL
             private SqlCommand CreateInsertCommandservicewalk(int UserId, Service service,SqlConnection con)
         {
 
-            string commandStr = "INSERT INTO ServicesDog (serviceName,serviceDate,serviceDay,serviceHour,note,servicetype,UserId,familyId) VALUES (@serviceName,@serviceDate,@serviceDay,@serviceHour,@note,@servicetype,@UserId,@familyId)";
+            string commandStr = "INSERT INTO ServicesDog (serviceName,serviceDate,serviceDay,serviceHour,note,servicetype,UserId,familyId)" +
+                " VALUES (@serviceName,@serviceDate,@serviceDay,@serviceHour,@note,@servicetype,@UserId,@familyId)";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@serviceName", SqlDbType.NChar);
             cmd.Parameters["@serviceName"].Value = service.ServiceName;
@@ -696,7 +698,8 @@ namespace Dog_Proj.Models.DAL
         private SqlCommand CreateInsertCommandservice(int UserId, Service service, SqlConnection con)
         {
 
-            string commandStr = "INSERT INTO ServicesDog (serviceName,serviceDate,serviceDay,serviceHour,note,servicetype,quantity,UserId,familyId) VALUES (@serviceName,@serviceDate,@serviceDay,@serviceHour,@note,@servicetype,@quantity,@UserId,@familyId)";
+            string commandStr = "INSERT INTO ServicesDog (serviceName,serviceDate,serviceDay,serviceHour,note,servicetype,quantity,UserId,familyId) VALUES" +
+                " (@serviceName,@serviceDate,@serviceDay,@serviceHour,@note,@servicetype,@quantity,@UserId,@familyId)";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@serviceName", SqlDbType.NChar);
             cmd.Parameters["@serviceName"].Value = service.ServiceName;
@@ -720,7 +723,8 @@ namespace Dog_Proj.Models.DAL
         }
         private SqlCommand CreateInsertCommandservicepension(int UserId, Service service, SqlConnection con)
         {
-            string commandStr = "INSERT INTO ServicesDog (serviceName,serviceDate,serviceHour,note,servicetype,UserId,familyId) VALUES (@serviceName,@serviceDate,@serviceHour,@note,@servicetype,@UserId,@familyId)";
+            string commandStr = "INSERT INTO ServicesDog (serviceName,serviceDate,serviceHour,note,servicetype,UserId,familyId) " +
+                "VALUES (@serviceName,@serviceDate,@serviceHour,@note,@servicetype,@UserId,@familyId)";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@serviceName", SqlDbType.NChar);
             cmd.Parameters["@serviceName"].Value = service.ServiceName;
@@ -786,7 +790,10 @@ namespace Dog_Proj.Models.DAL
 
         private SqlCommand AvDayHourCheck(SqlConnection con, string day, string hour, int familyId)// שאילתה שבודקת מי זמין ביום ובשעה הספציפית שהוכנסו
         {
-            string str = "SELECT username,age,phone,avgPoint,UserId,city,street,homeNum FROM TimesAvailablity T JOIN  UsersFamliy U ON T.UserId=U.id JOIN Accounts A on U.familyId=A.id WHERE T.availableDays LIKE @availableDays and T.availableHours LIKE @availableHours and U.familyId!=@familyId";
+            string str = "SELECT username,age,phone,avgPoint,UserId,city,street,homeNum" +
+                " FROM TimesAvailablity T JOIN  UsersFamliy U ON T.UserId=U.id JOIN Accounts A on" +
+                " U.familyId=A.id WHERE T.availableDays LIKE @availableDays and T.availableHours" +
+                " LIKE @availableHours and U.familyId!=@familyId";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@availableDays", SqlDbType.Char);
             cmd.Parameters["@availableDays"].Value = day;
@@ -875,7 +882,10 @@ namespace Dog_Proj.Models.DAL
             string str = "SELECT S.serviceName, S.serviceDate, S.serviceDay,S.serviceHour,S.servicetype,D.dogname,D.dogBreed,D.age,D.size,D.sex,D.neutering," +
                 " U.username,U.phone,A.city,A.street,A.homeNum,S.id FROM PendingReq P JOIN ServicesDog S ON" +
                 " P.idService=S.id JOIN Dogs4 D on D.familyNum=S.familyId JOIN UsersFamliy U ON U.id=S.UserId JOIN Accounts A ON A.id=S.familyId" +
-                " WHERE P.idUser LIKE @userid AND P.approvedreq is NULL";
+                " WHERE P.idUser LIKE @userid AND P.approvedreq is NULL AND DATEDIFF(day, DATE(S.serviceDate), DATE(GETDATE()))>= 0" +
+                " AND TIMEDIFF(hour,TIME(S.serviceHour),CONVERT(TIME,GETDATE()))" +
+                " AND S.idService NOT IN(SELECT DISTINCT idService FROM ServicesDog JOIN PendingReq" +
+                " WHERE serviceName='pension' OR approvedreq = 1 )"; 
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@userid", SqlDbType.SmallInt);
             cmd.Parameters["@userid"].Value = (short)userid;
@@ -939,13 +949,75 @@ namespace Dog_Proj.Models.DAL
         {
             string str = "SELECT S.serviceName, S.serviceDate, S.serviceDay,S.serviceHour,S.servicetype,D.dogname,D.dogBreed,D.age,D.size,D.sex,D.neutering," +
                 " U.username,U.phone,A.city,A.street,A.homeNum,S.id FROM PendingReq P JOIN ServicesDog S ON" +
-                " P.idService=S.id JOIN Dogs4 D on D.familyNum=S.familyId JOIN UsersFamliy U ON U.id=S.UserId JOIN Accounts A ON A.id=S.familyId" +
-                " WHERE P.idUser LIKE @userid AND P.approvedreq is 1";
+                " P.idService=S.id JOIN Dogs4 D on D.familyNum=S.familyId JOIN UsersFamliy U" +
+                " ON U.id=S.UserId JOIN Accounts A ON A.id=S.familyId" +
+                " WHERE P.idUser LIKE @userid AND S.serviceName!='pension' AND P.approvedreq=1";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@userid", SqlDbType.SmallInt);
             cmd.Parameters["@userid"].Value = (short)userid;
             return cmd;
         }
+
+
+        public void setRequestsDb(int userid, string serviceId, bool val)
+        {
+
+            SqlConnection con = null;
+            int numEffected = 0;
+            try
+            {
+                //C - Connect to the Database
+                con = Connect("DogsProjDB");
+
+                //C Create the Insert SqlCommand
+                SqlCommand insertCommand = createSetAnswerCommand(userid, serviceId, val, con);
+                    numEffected = insertCommand.ExecuteNonQuery();
+                //E Execute
+            }
+
+            catch (Exception exep)
+            {
+                // this code needs to write the error to a log file
+                throw new Exception("Error", exep);
+            }
+
+            finally
+            {
+                //C Close Connction
+                con.Close();
+            }
+
+
+        }
+
+        private SqlCommand createSetAnswerCommand( int userid, string serviceId, bool val, SqlConnection con)
+        {
+            string str = "UPDATE PendingReq set approvedreq=@val WHERE idService=@serviceId AND idUser=@userid";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@serviceId", SqlDbType.SmallInt);
+            cmd.Parameters["@serviceId"].Value = (short)int.Parse(serviceId);
+            cmd.Parameters.Add("@userid", SqlDbType.SmallInt);
+            cmd.Parameters["@userid"].Value = (short)userid;
+            cmd.Parameters.Add("@val", SqlDbType.Bit);
+            if (val)
+            {
+                cmd.Parameters["@val"].Value = 1;
+            }
+            else
+            {
+                cmd.Parameters["@val"].Value = 0;
+            }
+            return cmd;
+        }
+
+        //public short validateRequest(userId)
+        //{
+        //    string str = "SELECT S.idService FROM ServicesDog S" +
+        //        " JOIN PendingReq P ON P.idService=S.id" +
+              
+        //    SqlCommand cmd = createCommand(con, str);
+        //    cmd.Parameters.Add("@serviceId", SqlDbType.SmallInt);
+        //}
 
 
     }

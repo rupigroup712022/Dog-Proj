@@ -46,6 +46,8 @@
             //logUser();
             $(document).on("click", "#getApprovedReq", getIncomeApprovedRequests)
             $(document).on("click", "#getPendingReq", getIncomePendingRequests)
+            $(document).on("click", ".aprroveRequest", approvedRequest)
+            $(document).on("click", ".denyRequest", denyRequest)
 
         });
         function getIncomePendingRequests() {
@@ -57,10 +59,25 @@
         function getIncomeApprovedRequests() {
    
             let apiCall = "../api/Users/incomeApprovedReq";
-            ajaxCall("POST", apiCall, JSON.stringify(u), getRequestsSCB, getRequestsECB)
+            ajaxCall("POST", apiCall, JSON.stringify(u), getRequestV2SCB, getRequestsECB)
         }
 
+        function approvedRequest() {
+            let serviceId = $(this).parent().attr('id');
+            let apiCall = "../api/Users/answeredRequest";
+            console.log(JSON.stringify({ ...u, serviceId: serviceId, val: true }));
+            ajaxCall("POST", apiCall, JSON.stringify({ ...u, serviceId: serviceId, val: true }), RequestSCB, getRequestsECB);
+        }
 
+        function denyRequest() {
+            let serviceId = $(this).parent().attr('id');
+            let apiCall = "../api/Users/answeredRequest";
+            ajaxCall("POST", apiCall, JSON.stringify({ ...u, serviceId: serviceId,val:false }),RequestSCB, getRequestsECB)
+        }
+
+        function RequestSCB(serviceId) {
+            $('#' + serviceId).html('');
+        }
 
         function getRequestsSCB(d) {
             const results = d.map(l => {
@@ -69,9 +86,11 @@
                     request = { address: address, name: l[11], phone: l[12], serviceId: l[16] };
                     //await getlocation(addresses); בהמשך נציג לפי מרחקים 
                     //addresses["distance"] = dist;
-                    let str = "";
-                    str += "<div class='BTF' id='" + l[16] + "'>";
-                    str += "<table class='table'>";
+                let str = "";
+                str += "<div class='BTF' id='" + l[16] + "'>";
+                str += "<button class='denyRequest'> ביטול בקשה</button>";
+                str += "<button class='aprroveRequest'> לאישור בקשה</button>";
+                str += "<table class='table'>";
                     str += "<tr class='row1'>";
                     str += "<td class='user col-12'><h1>" + l[0] + "</h1></td>";
                     str += "</tr>";
@@ -120,6 +139,63 @@
         function getRequestsECB(error) {
             console.log('error occured');
         }
+
+        function getRequestV2SCB(d) {
+            const results = d.map(l => {
+                let address = l[13] + " " + l[14] + " " + l[15];
+                let fullDate = l[1] + " " + l[2] + " " + l[3];
+                request = { address: address, name: l[11], phone: l[12], serviceId: l[16] };
+                //await getlocation(addresses); בהמשך נציג לפי מרחקים 
+                //addresses["distance"] = dist;
+                let str = "";
+                str += "<div class='BTF' id='" + l[16] + "'>";
+                str += "<button class='denyRequest'> ביטול בקשה</button>";
+                str += "<table class='table'>";
+                str += "<tr class='row1'>";
+                str += "<td class='user col-12'><h1>" + l[0] + "</h1></td>";
+                str += "</tr>";
+                str += "<tr class='row1'>";
+                str += "<td class='user col-12'><h1> שם וגזע הכלב -" + l[5] + " , " + l[6] + "</h1></td>";
+                str += "</tr>";
+                str += "<tr class='row1'>";
+                str += "<td class='user col-12'><h1>" + fullDate + "</h1></td>";
+                str += "</tr>";
+                str += "<tr class='row1'>";
+                str += "<td class='user col-12'><h6><b>טלפון ושם:</b>" + l[12] + " " + l[11] + "</h6></td>";
+                str += "</tr>";
+                str += "<tr class='row1'>";
+                str += "<td class='user col-12'><h6><b>נקודות זכות:</b>" + l[4] + "</h6></td>";
+                str += "</tr>";
+                str += "<tr class='row1'>";
+                str += "<td class='user col-12'><h6><b>כתובת:</b>" + address + " </h6></td>";
+                str += "</tr>";
+                //str += "<tr class='row1'>";
+                //str += "<td class='user col-12'><h6 ><b class='distance'> " + "מרחק : " + dist.toFixed(2) + " ק''מ" + "</b></h6></td>";
+                //str += "</tr>";
+                //str += "<tr class='row1'>";
+                //str += "<td class='col-12'><button type='button' class='btn btn-info btn-lg' onclick = 'selectUser(" + l[j + 4] + ")' id ='B" + l[j + 4] + "' data - toggle='modal' > בחירת משתמש </button > </td>";
+                //str += "</tr>";
+                str += "</table>";
+                str += "</div><br/>";
+                //addresses["str"] = str;
+                //console.log(addresses);
+                //const k = BestLocation.findIndex(a => (a.distance && a.distance > addresses.distance) ? true : false);
+
+                //if (k == -1) {
+                //    BestLocation.push(addresses)
+
+                //}
+                //else {
+                //    BestLocation.splice(k, 0, addresses);
+                //}
+                //console.log(k)
+                request["str"] = str;
+                return request;
+            }
+            )
+            results.map(l => { $('#results').append(l['str']) });
+        }
+
 
         //function name() {
         //    let username = $(this).val();
