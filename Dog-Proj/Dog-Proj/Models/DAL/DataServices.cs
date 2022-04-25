@@ -504,7 +504,7 @@ namespace Dog_Proj.Models.DAL
         }
         private SqlCommand CreateInsertCommandDog(SqlConnection con, Dog dog)
         {
-                      string commandStr = "INSERT INTO Dogs4 (dogname,familyNum,dogBreed,age,size,sex,neutering,dog_character,picture) VALUES (@dogname,@familyNum,@dogBreed,@age,@size,@sex,@neutering,@dog_character,@picture)";
+            string commandStr = "INSERT INTO Dogs4 (dogname,familyNum,dogBreed,age,size,sex,neutering,dog_character,picture) VALUES (@dogname,@familyNum,@dogBreed,@age,@size,@sex,@neutering,@dog_character,@picture)";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@picture", SqlDbType.NChar);
             cmd.Parameters["@picture"].Value = dog.Picture;
@@ -528,20 +528,14 @@ namespace Dog_Proj.Models.DAL
         }
 
 
-
-
-
-
         public Account ReadAccount(string email, string passwords)
         {
-
             SqlConnection con = null;
             try
             {
                 con = Connect("DogsProjDB");
                 SqlCommand selectCommand = emailandpasswordCheck(con, email, passwords);
                 SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
-
                 Account account = new Account();
                 while (dataReader.Read())
                 {
@@ -554,7 +548,6 @@ namespace Dog_Proj.Models.DAL
                     account.YardSize = (string)dataReader["yardSize"];
                     account.HouseType = (string)dataReader["HouseType"];
                     account.Passwords = (string)dataReader["passwords"];
-
                 }
 
                 dataReader.Close();
@@ -599,7 +592,6 @@ namespace Dog_Proj.Models.DAL
 
         public int InsertServices(int UserId, Service service)
         {
-
                 SqlConnection con = null;
                  int numEffected = 0;
                 try
@@ -879,13 +871,15 @@ namespace Dog_Proj.Models.DAL
 
         private SqlCommand incomePendingRequest(SqlConnection con, int userid)
         {
-            string str = "SELECT S.serviceName, S.serviceDate, S.serviceDay,S.serviceHour,S.servicetype,D.dogname,D.dogBreed,D.age,D.size,D.sex,D.neutering," +
-                " U.username,U.phone,A.city,A.street,A.homeNum,S.id FROM PendingReq P JOIN ServicesDog S ON" +
-                " P.idService=S.id JOIN Dogs4 D on D.familyNum=S.familyId JOIN UsersFamliy U ON U.id=S.UserId JOIN Accounts A ON A.id=S.familyId" +
-                " WHERE P.idUser LIKE @userid AND P.approvedreq is NULL AND DATEDIFF(day, DATE(S.serviceDate), DATE(GETDATE()))>= 0" +
-                " AND TIMEDIFF(hour,TIME(S.serviceHour),CONVERT(TIME,GETDATE()))" +
-                " AND S.idService NOT IN(SELECT DISTINCT idService FROM ServicesDog JOIN PendingReq" +
-                " WHERE serviceName='pension' OR approvedreq = 1 )"; 
+            
+            string str = " SELECT S.serviceName, S.serviceDate, S.serviceDay,S.serviceHour,S.servicetype,D.dogname,D.dogBreed,D.age,D.size,D.sex,D.neutering," +
+            " U.username,U.phone,A.city,A.street,A.homeNum,S.id " +
+            " FROM PendingReq P JOIN ServicesDog S ON " +
+            " P.idService = S.id JOIN Dogs4 D on D.familyNum = S.familyId JOIN UsersFamliy U ON U.id = S.UserId JOIN Accounts A ON A.id = S.familyId " +
+            " JOIN ( SELECT DISTINCT PD.idService AS TmpID FROM ServicesDog  SD JOIN PendingReq PD ON PD.idService = SD.id " +
+            " WHERE SD.serviceName != 'pension' or PD.approvedreq != 1) as t on t.TmpID = S.id " +
+            " WHERE P.idUser LIKE @userid AND P.approvedreq is NULL " +
+            " and DATEDIFF(MINUTE, CONVERT(varchar(10), (S.serviceDate), 126)+' ' + substring(S.serviceHour, 1, 5),GETDATE()) <= 0 ";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@userid", SqlDbType.SmallInt);
             cmd.Parameters["@userid"].Value = (short)userid;
