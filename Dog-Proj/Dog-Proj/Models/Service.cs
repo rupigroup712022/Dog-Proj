@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Dog_Proj.Models.DAL;
+using System.Net.Mail;
+
 
 namespace Dog_Proj.Models
 {
@@ -63,11 +65,24 @@ namespace Dog_Proj.Models
         }
         
 
-       public int InsertReqServices(int idService, int idUser)
+       public void InsertReqServices(int idService, int idUser)
         {
             DataServices ds = new DataServices();
-            return ds.InsertReqServices(idService, idUser);
+            string str= ds.InsertReqServices(idService, idUser);
 
+            var smtpClient = new SmtpClient();
+
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress("rupigroup71.2022@gmail.com"),
+                    Subject = "התקבלה בקשה חדשה:",
+                    Body = "<h1>Hello</h1> </br><p>היכנס לאתר לצפייה בפרטי הבקשה</p>",
+                    IsBodyHtml = true,
+                };
+                mailMessage.To.Add(str);
+
+                smtpClient.Send(mailMessage);
+            
         }
 
 

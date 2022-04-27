@@ -153,10 +153,11 @@ namespace Dog_Proj.Models.DAL
             return cmd;
         }
 
-        public int InsertReqServices(int idService, int idUser)
+        public string InsertReqServices(int idService, int idUser)
         {
                 SqlConnection con = null;
                  int numeffected;
+
                 try
                 {
                     //C - Connect to the Database
@@ -167,10 +168,28 @@ namespace Dog_Proj.Models.DAL
 
                     //E Execute
                      numeffected = insertCommand.ExecuteNonQuery();
-                    
+                SqlCommand insertCommandEmail = getEmail(idService.ToString(), con);
+                SqlDataReader dataReader = insertCommandEmail.ExecuteReader(CommandBehavior.CloseConnection);
+                
+                string str = "";
+                while (dataReader.Read())
+                {
+
+                    str = dataReader["email"].ToString();
+
+                }
+                dataReader.Close();
+
+                if (str == "")
+                {
+                    throw new Exception("No email was found");
                 }
 
-                catch (Exception exep)
+                return str;
+
+            }
+
+            catch (Exception exep)
                 {
                     // this code needs to write the error to a log file
                     throw new Exception("Exeption", exep);
@@ -184,8 +203,6 @@ namespace Dog_Proj.Models.DAL
                 }
 
 
-                // num effected
-                return numeffected;
             
         }
         private SqlCommand CreateInsertServiceReq(SqlConnection con, int idService, int idUser)
@@ -915,6 +932,7 @@ namespace Dog_Proj.Models.DAL
                     approvedRequestList[i].Add((dataReader["city"]).ToString());//13
                     approvedRequestList[i].Add((dataReader["street"]).ToString());//14
                     approvedRequestList[i].Add((dataReader["homeNum"]).ToString());//15
+                    approvedRequestList[i].Add((dataReader["id"]).ToString());//16
                     i++;
                 }
 
@@ -953,7 +971,7 @@ namespace Dog_Proj.Models.DAL
         }
 
 
-        public void setRequestsDb(int userid, string serviceId, bool val)
+        public string setRequestsDb(int userid, string serviceId, bool val)
         {
 
             SqlConnection con = null;
@@ -965,8 +983,25 @@ namespace Dog_Proj.Models.DAL
 
                 //C Create the Insert SqlCommand
                 SqlCommand insertCommand = createSetAnswerCommand(userid, serviceId, val, con);
-                    numEffected = insertCommand.ExecuteNonQuery();
-                //E Execute
+                numEffected = insertCommand.ExecuteNonQuery();
+                SqlCommand insertCommandEmail = getEmail(serviceId, con);
+                SqlDataReader dataReader = insertCommandEmail.ExecuteReader(CommandBehavior.CloseConnection);
+                string str="";
+                while (dataReader.Read())
+                {
+
+                    str = dataReader["email"].ToString();
+
+                }
+                dataReader.Close();
+
+                if (str == "")
+                {
+                     throw new Exception("No email was found"); 
+                }
+              
+                return str;
+
             }
 
             catch (Exception exep)
@@ -989,7 +1024,7 @@ namespace Dog_Proj.Models.DAL
             string str = "UPDATE PendingReq set approvedreq=@val WHERE idService=@serviceId AND idUser=@userid";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@serviceId", SqlDbType.SmallInt);
-            cmd.Parameters["@serviceId"].Value = (short)int.Parse(serviceId);
+            cmd.Parameters["@serviceId"].Value =  Convert.ToInt16(serviceId);
             cmd.Parameters.Add("@userid", SqlDbType.SmallInt);
             cmd.Parameters["@userid"].Value = (short)userid;
             cmd.Parameters.Add("@val", SqlDbType.Bit);
@@ -1008,10 +1043,19 @@ namespace Dog_Proj.Models.DAL
         //{
         //    string str = "SELECT S.idService FROM ServicesDog S" +
         //        " JOIN PendingReq P ON P.idService=S.id" +
-              
+
         //    SqlCommand cmd = createCommand(con, str);
         //    cmd.Parameters.Add("@serviceId", SqlDbType.SmallInt);
         //}
+
+        private SqlCommand getEmail(string serviceId, SqlConnection con)
+        {
+            string str = "SELECT email FROM ServicesDog S JOIN Accounts A ON S.familyId=A.id WHERE S.id LIKE @serviceId";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@serviceId", SqlDbType.SmallInt);
+            cmd.Parameters["@serviceId"].Value = Convert.ToInt16(serviceId);
+            return cmd;
+        }
 
 
     }

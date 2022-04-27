@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Dog_Proj.Models.DAL;
+using System.Net.Mail;
 
 namespace Dog_Proj.Models {
 
@@ -79,9 +80,44 @@ namespace Dog_Proj.Models {
         public void setRequests(int userid,string serviceId,bool val)
         {
             DataServices dbs = new DataServices();
-             dbs.setRequestsDb(userid,serviceId,val);
+            string str= dbs.setRequestsDb(userid,serviceId,val);
+
+          
+            var smtpClient = new SmtpClient();
+           
+            //smtpClient.Send("email", "recipient", "subject", "body");
+
+            if (val)
+            {
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress("rupigroup71.2022@gmail.com"),
+                    Subject = "פרטי בקשה:",
+                    Body = "<h1>Hello</h1> </br><p>הבקשה אושרה, היכנס לאתר לצפייה בפרטי הבקשה</p>",
+                    IsBodyHtml = true, 
+                };
+                mailMessage.To.Add("str");
+
+                smtpClient.Send(mailMessage);
+            }
+            else
+            {
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress("rupigroup71.2022@gmail.com"),
+                    Subject = "פרטי בקשה:",
+                    Body = "<h1>Hello</h1> </br><p>הבקשה נדחתה, היכנס לאתר לביצוע בקשה חדשה </p>",
+                    IsBodyHtml = true,
+                };
+                mailMessage.To.Add("str");
+
+                smtpClient.Send(mailMessage);
+            }
+
+
 
         }
+
 
     }
 }

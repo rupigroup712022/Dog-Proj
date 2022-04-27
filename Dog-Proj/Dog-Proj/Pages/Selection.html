@@ -80,6 +80,7 @@
         }
 
         function getRequestsSCB(d) {
+            $('#results').html('');
             const results = d.map(l => {
                 let address = l[13] + " " + l[14] + " " + l[15];
                 let fullDate = l[1] + " " + l[2] + " " + l[3];
@@ -141,6 +142,7 @@
         }
 
         function getRequestV2SCB(d) {
+            $('#results').html('');
             const results = d.map(l => {
                 let address = l[13] + " " + l[14] + " " + l[15];
                 let fullDate = l[1] + " " + l[2] + " " + l[3];
