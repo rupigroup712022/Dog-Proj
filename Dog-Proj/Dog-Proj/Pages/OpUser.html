@@ -121,25 +121,98 @@
         }
 
 
-        userAv = {// אוביקט גלובלי  שמחזיק את היום והשעה של השירות שרצוי ששמרנו בלוקלסטורז
-            day: JSON.parse(localStorage.getItem("serviceDay")),
-            hour: JSON.parse(localStorage.getItem("serviceHour")),
-            userid: JSON.parse(localStorage.getItem("familyId")),
-        }
+       
 
         function getAllmakers() {// בודק מי האנשים הפנויים
-
-            console.log(userAv);
-            let api = "../api/Users/userAv";
-            ajaxCall("POST", api, JSON.stringify(userAv), getSuccessAll, error);
+          
+            a = JSON.parse(localStorage.getItem("serviceName"));
+            console.log(a);
+            if (a == 'pension') {
+                
+                userAvPension = {// אוביקט גלובלי  שמחזיק את מה ששמרנו בלוקלסטורז
+                    userid: JSON.parse(localStorage.getItem("familyId")),
+                }
+                console.log(userAvPension)
+                let api = "../api/Users/userAvPension";
+                ajaxCall("POST", api, JSON.stringify(userAvPension), getSuccessPension, error);
+            }
+            else {
+                userAv = {// אוביקט גלובלי  שמחזיק את היום והשעה של השירות שרצוי ששמרנו בלוקלסטורז
+                    day: JSON.parse(localStorage.getItem("serviceDay")),
+                    hour: JSON.parse(localStorage.getItem("serviceHour")),
+                    userid: JSON.parse(localStorage.getItem("familyId")),
+                }
+                console.log(userAv);
+                let api = "../api/Users/userAv";
+                ajaxCall("POST", api, JSON.stringify(userAv), getSuccessAll, error);
+            }
+         
+           
         }
         function getSuccessAll(data) {// מקבל רשימה  של אנשים פונצניאלים שפנוים
             let location = renderList(data);// רנדור למסך של הדיבים של האנשים הפונצנאלים הפנויים
             console.log(data);
         }
 
+        function getSuccessPension(data) {// מקבל רשימה  של אנשים פונצניאלים שפנוים
+            let location = renderListPension(data);// רנדור למסך של הדיבים של האנשים הפונצנאלים הפנויים
+            console.log(data);
+        }
 
+        async function renderListPension(d) {// מקבל את כל האנשים הפוצנציאלים
+            addresses = [];
+            $("#MakerList").html("");
+            makersArr = d;
+            console.log(d);
+            for (var i = 0; i < d.length; i++) {// הליסט של כל המשתמשים
+                console.log(d.length)
+                for (var j = 0; j < d[i].length; j = j + d[i].length) {// הליסט של משתמש ספציפי וריצה על כל הפרטים שלו
+                    let address = d[i][j + 3] + " " + d[i][j + 4] + " " + d[i][j + 5];
+                    addresses = { address: address, name: d[i][j], id: d[i][j + 2] };// שמירה של הנתונים של אותו אדם והכנסה למילון
+                    await getlocation(addresses);
+                    addresses["distance"] = dist;
+                    console.log(d[i].length)
+                    console.log(d[i][j])
+                    let str = "";
+                    str += "<div class='BTF' id='" + d[i][j + 2] + "'>";// האידי של הדיב הוא האידי של נותן השירות בשבלי ההתאמה
+                    str += "<table class='table'>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h1>" + d[i][j] + "</h1></td>";
+                    str += "</tr>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h6>" + d[i][j + 1] + " <b>דירוג</b></h6></td>";
+                    str += "</tr>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h6><b>כתובת  </b>" + d[i][j + 3] + " " + d[i][j + 4] + " " + d[i][j + 5] + " </h6></td>";
+                    str += "</tr>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='user col-12'><h6 ><b class='distance'> " + "מרחק : " + dist.toFixed(2) + " ק''מ" + "</b></h6></td>";
+                    str += "</tr>";
+                    str += "<tr class='row1'>";
+                    str += "<td class='col-12'><button type='button' class='btn btn-info btn-lg' onclick = 'selectUser(" + d[i][j + 2] + ")' id ='B" + d[i][j + 2] + "' data - toggle='modal' > בחירת משתמש </button > </td>";
+                    str += "</tr>";
+                    str += "</table>";
+                    str += "</div><br/>";
+                    addresses["str"] = str;
+                    console.log(addresses);
+                    const k = BestLocation.findIndex(a => (a.distance && a.distance > addresses.distance) ? true : false);
 
+                    if (k == -1) {
+                        BestLocation.push(addresses)
+
+                    }
+                    else {
+                        BestLocation.splice(k, 0, addresses);
+                    }
+                    console.log(k)
+                }
+
+            }
+            for (var i = 0; i < BestLocation.length; i++) {
+
+                $("#MakerList").append(BestLocation[i].str);
+            }
+        }
         function error(err) {
             alert("error!");
         }
@@ -218,17 +291,18 @@
 
         async function getlocation(data) {
             console.log(data);
+            
             let contentString =// הבועה שנפתחת במפה
                 '<div id="content">' +
                 '<div id="siteNotice">' +
                 "</div>" +
                 '<h1 id="firstHeading" class="firstHeading">' + data.name + '</h1>' +
                 '<div id="bodyContent">' +
-                "<p>טלפון להתקשרות: <b>" + data.phone + "</b></p>" +
+                    data.phone == undefined || data.phone ==null?("<p>טלפון להתקשרות: <b>" + data.phone + "</b></p>"):("") + ///הIF לא עובד לסדרררררררררררר
                 "<button type='button' class='btn btn-info btn-lg' onclick='selectUser(" + data.id + ")' id='BTNRes' data-toggle='modal'>בחירת משתמש </button>";// הכפתור שמסמן בחירת משתמש
             "</div>" +
                 "</div>";
-            const id = data.phone;
+            const id = "p" + data.id;
             const idDivuser = data.id;
             //מרקרים במפה
             const response = await $.ajax({

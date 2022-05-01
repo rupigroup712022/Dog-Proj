@@ -117,6 +117,12 @@ namespace Dog_Proj.Models {
 
 
         }
+        public List<List<string>> GetAvUserPension(int userid)
+        {
+            DataServices dbs = new DataServices();
+            return dbs.GetAvUserPension(userid);
+        }
+        
 
 
     }

@@ -90,6 +90,7 @@
             let quantity = $("#foodSize").val();
             let note = $("#note").val();
             let serviceName = "feeding";
+            localStorage["serviceName"] = JSON.stringify(serviceName);
             var familyId = parseInt(localStorage.getItem('familyId'));// שליפה מהלוקלסטורג
             var UserId = parseInt(JSON.parse(localStorage.getItem('UserId')));
             console.log(UserId);

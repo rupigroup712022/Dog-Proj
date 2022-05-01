@@ -70,6 +70,14 @@ namespace Dog_Proj.Controllers
             return u["serviceId"];
         }
 
+        [HttpPost]
+        [Route("api/Users/userAvPension")]
+        public List<List<string>> PostPension([FromBody] Dictionary<string, string> userAv)
+        {
+            User user = new User();
+            return user.GetAvUserPension(Convert.ToInt32(userAv["userid"]));
+        }
 
     }
 }
+

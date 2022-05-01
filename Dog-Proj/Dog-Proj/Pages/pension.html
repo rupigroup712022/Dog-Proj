@@ -81,6 +81,7 @@
             let serviceHour = $("#selectime").val();
 
 
+
             var servicetype = "";
             var amo = document.getElementsByName('amount');
             for (i = 0; i < amo.length; i++) {
@@ -91,6 +92,8 @@
             let serviceName = "pension";
             var familyId = parseInt(localStorage.getItem('familyId'));// שליפה מהלוקלסטורג
             var UserId = parseInt(JSON.parse(localStorage.getItem('UserId')));
+            localStorage["serviceName"] = JSON.stringify(serviceName);
+
 
 
             pension = {

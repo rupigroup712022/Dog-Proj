@@ -794,7 +794,57 @@ namespace Dog_Proj.Models.DAL
             }
         }
 
+        public List<List<string>> GetAvUserPension(int userid)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = Connect("DogsProjDB");
+                SqlCommand selectCommand = PensionCheck(con, userid);
+                SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                int i = 0;
+                List<List<string>> user = new List<List<string>>();
+                while (dataReader.Read())
+                {
+                    user.Add(new List<string>());// המרה לסטרינגים הכנסה לרשימת של סטרינגים
+                    user[i].Add((string)dataReader["familyname"]);
+                    user[i].Add((dataReader["avgPoint"]).ToString());
+                    user[i].Add(Convert.ToInt32(dataReader["id"]).ToString());
+                    user[i].Add((dataReader["city"]).ToString());
+                    user[i].Add((dataReader["street"]).ToString());
+                    user[i].Add((dataReader["homeNum"]).ToString());
 
+                    i++;
+                }
+
+                dataReader.Close();
+
+                return user;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed", ex);
+            }
+            finally
+            {
+
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand PensionCheck(SqlConnection con,int familyId)
+        {
+            string str = "SELECT A.familyname,A.avgPoint,A.id,A.city,A.street,A.homeNum FROM Accounts A " +
+                " WHERE A.id!=@familyId";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
+            cmd.Parameters["@familyId"].Value = (short)familyId;
+            return cmd;
+        }
+
+        
 
 
         private SqlCommand AvDayHourCheck(SqlConnection con, string day, string hour, int familyId)// שאילתה שבודקת מי זמין ביום ובשעה הספציפית שהוכנסו
