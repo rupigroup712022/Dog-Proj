@@ -70,18 +70,34 @@ namespace Dog_Proj.Models
             DataServices ds = new DataServices();
             string str= ds.InsertReqServices(idService, idUser);
 
-            var smtpClient = new SmtpClient();
+            try
+            {
+                var smtpClient = new SmtpClient();
 
                 var mailMessage = new MailMessage
                 {
-                    From = new MailAddress("rupigroup71.2022@gmail.com"),
                     Subject = "התקבלה בקשה חדשה:",
                     Body = "<h1>Hello</h1> </br><p>היכנס לאתר לצפייה בפרטי הבקשה</p>",
-                    IsBodyHtml = true,
+                    IsBodyHtml = true
                 };
                 mailMessage.To.Add(str);
 
                 smtpClient.Send(mailMessage);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine(
+                    "auth error");
+            }
+
+            
+        }
+
+
+        public int setRating(short service_id, short rating,short handlerId)
+        {
+            DataServices dbs = new DataServices();
+            return dbs.setRating(service_id, rating,handlerId);
             
         }
 

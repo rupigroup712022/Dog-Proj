@@ -1107,6 +1107,161 @@ namespace Dog_Proj.Models.DAL
             return cmd;
         }
 
+        public List<List<string>> getRequestHistory(int userid)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = Connect("DogsProjDB");
+                SqlCommand selectCommand = commandGetRequestHistory(con, userid);
+                SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                int i = 0;
+                List<List<string>> historyRequestList = new List<List<string>>();
+                while (dataReader.Read())
 
+                {
+                    historyRequestList.Add(new List<string>());// המרה לסטרינגים הכנסה לרשימת של סטרינגים
+                    historyRequestList[i].Add((dataReader["serviceName"]).ToString());//0
+                    historyRequestList[i].Add((dataReader["serviceDate"]).ToString());
+                    historyRequestList[i].Add((dataReader["serviceHour"]).ToString());
+                    historyRequestList[i].Add((dataReader["servicetype"]).ToString());
+                    historyRequestList[i].Add((dataReader["username"]).ToString());
+                    historyRequestList[i].Add((dataReader["rating"]).ToString());
+                    historyRequestList[i].Add((dataReader["id"]).ToString());//6
+                    i++;
+                }
+
+
+                dataReader.Close();
+
+                return historyRequestList;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to insert pending list", ex);
+            }
+            finally
+            {
+
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand commandGetRequestHistory(SqlConnection con, int userid)
+        {
+
+            string str = " SELECT S.serviceName, S.serviceDate,S.serviceHour,S.servicetype," +
+            " U.username,FT.rating,S.id " +
+            " FROM finished_tasks FT JOIN ServicesDog S ON " +
+            " FT.serviceId = S.id JOIN UsersFamliy U ON U.id = FT.handlerId " +
+            " WHERE S.UserId LIKE @userid ";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@userid", SqlDbType.SmallInt);
+            cmd.Parameters["@userid"].Value = (short)userid;
+            return cmd;
+        }
+
+
+
+
+        public List<List<string>> getWaitResponse(int userid)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = Connect("DogsProjDB");
+                SqlCommand selectCommand = commandgetWaitResponse(con, userid);
+                SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                int i = 0;
+                List<List<string>> waitingReqList = new List<List<string>>();
+                while (dataReader.Read())
+
+                {
+                    waitingReqList.Add(new List<string>());// המרה לסטרינגים הכנסה לרשימת של סטרינגים
+                    waitingReqList[i].Add((dataReader["serviceName"]).ToString());//0
+                    waitingReqList[i].Add((dataReader["serviceDate"]).ToString());
+                    waitingReqList[i].Add((dataReader["serviceHour"]).ToString());
+                    waitingReqList[i].Add((dataReader["servicetype"]).ToString());
+                    waitingReqList[i].Add((dataReader["username"]).ToString());
+                    waitingReqList[i].Add((dataReader["phone"]).ToString());
+                    waitingReqList[i].Add((dataReader["id"]).ToString());//6
+                    waitingReqList[i].Add((dataReader["idUser"]).ToString());//6
+                    i++;
+                }
+
+                dataReader.Close();
+
+                return waitingReqList;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to insert the list", ex);
+            }
+            finally
+            {
+
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand commandgetWaitResponse(SqlConnection con, int userid)
+        {
+            string str = "SELECT S.serviceName, S.serviceDate, S.serviceHour, S.servicetype, U.username,U.phone,S.id,P.idUser" +
+                " FROM PendingReq P JOIN ServicesDog S ON" +
+                " P.idService=S.id JOIN UsersFamliy U ON U.id=P.idUser" +
+                " WHERE S.UserId LIKE @userid AND P.approvedreq=1";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@userid", SqlDbType.SmallInt);
+            cmd.Parameters["@userid"].Value = (short)userid;
+            return cmd;
+        }
+
+        public int setRating(short service_id, short rating,short handlerId)
+        {
+
+            SqlConnection con = null;
+            int numEffected = 0;
+            try
+            {
+                //C - Connect to the Database
+                con = Connect("DogsProjDB");
+
+                //C Create the Insert SqlCommand
+                SqlCommand insertCommand = commandSetRating(service_id, rating,handlerId, con);
+                numEffected = insertCommand.ExecuteNonQuery();
+            }
+
+            catch (Exception exep)
+            {
+                // this code needs to write the error to a log file
+                throw new Exception("Error", exep);
+            }
+
+            finally
+            {
+                //C Close Connction
+                con.Close();
+            }
+
+            return numEffected;
+
+        }
+
+        private SqlCommand commandSetRating(short service_id, short rating,short handlerId, SqlConnection con)
+        {
+            string str = "INSERT INTO finished_tasks(handlerId,serviceId,rating) values (@handlerId,@service_id,@rating)";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@handlerId", SqlDbType.SmallInt);
+            cmd.Parameters["@handlerId"].Value = handlerId;
+            cmd.Parameters.Add("@serviceId", SqlDbType.SmallInt);
+            cmd.Parameters["@serviceId"].Value = service_id;
+            cmd.Parameters.Add("@rating", SqlDbType.SmallInt);
+            cmd.Parameters["@rating"].Value = rating;
+                return cmd;
+        }
     }
 }

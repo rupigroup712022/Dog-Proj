@@ -45,6 +45,22 @@ namespace Dog_Proj.Controllers
             return user.getIncomeApprovedRequests(Convert.ToInt32(u["userId"]));
         }
 
+        [HttpPost]
+        [Route("api/Users/getRequestHistory")]
+        public List<List<string>> getRequestHistory([FromBody] Dictionary<string, string> u)
+        {
+            User user = new User();
+            return user.getRequestHistory(Convert.ToInt32(u["userId"]));
+        }
+
+        [HttpPost]
+        [Route("api/Users/getWaitResponse")]
+        public List<List<string>> getWaitResponse([FromBody] Dictionary<string, string> u)
+        {
+            User user = new User();
+            return user.getWaitResponse(Convert.ToInt32(u["userId"]));
+        }
+
         [HttpGet]
         [Route("api/Users/outcomeReq")]
         public int GetOutcome([FromBody] User user)//בקשות יוצאות

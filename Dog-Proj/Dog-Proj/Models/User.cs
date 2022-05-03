@@ -77,6 +77,20 @@ namespace Dog_Proj.Models {
 
         }
 
+        public List<List<string>> getRequestHistory(int userid)
+        {
+            DataServices dbs = new DataServices();
+            return dbs.getRequestHistory(userid);
+
+        }
+
+        public List<List<string>> getWaitResponse(int userid)
+        {
+            DataServices dbs = new DataServices();
+            return dbs.getWaitResponse(userid);
+
+        }
+
         public void setRequests(int userid,string serviceId,bool val)
         {
             DataServices dbs = new DataServices();
@@ -91,12 +105,11 @@ namespace Dog_Proj.Models {
             {
                 var mailMessage = new MailMessage
                 {
-                    From = new MailAddress("rupigroup71.2022@gmail.com"),
                     Subject = "פרטי בקשה:",
                     Body = "<h1>Hello</h1> </br><p>הבקשה אושרה, היכנס לאתר לצפייה בפרטי הבקשה</p>",
-                    IsBodyHtml = true, 
+                    IsBodyHtml = true
                 };
-                mailMessage.To.Add("str");
+                mailMessage.To.Add(str);
 
                 smtpClient.Send(mailMessage);
             }
@@ -104,12 +117,11 @@ namespace Dog_Proj.Models {
             {
                 var mailMessage = new MailMessage
                 {
-                    From = new MailAddress("rupigroup71.2022@gmail.com"),
                     Subject = "פרטי בקשה:",
                     Body = "<h1>Hello</h1> </br><p>הבקשה נדחתה, היכנס לאתר לביצוע בקשה חדשה </p>",
-                    IsBodyHtml = true,
+                    IsBodyHtml = true
                 };
-                mailMessage.To.Add("str");
+                mailMessage.To.Add(str);
 
                 smtpClient.Send(mailMessage);
             }

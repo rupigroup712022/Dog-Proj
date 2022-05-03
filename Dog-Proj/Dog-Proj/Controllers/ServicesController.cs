@@ -45,5 +45,14 @@ namespace Dog_Proj.Controllers
         public void Delete(int id)
         {
         }
+
+        [HttpPost]
+        [Route("api/Services/setRating")]
+        public string setRating([FromBody] Dictionary<string, string> u)
+        {
+            Service service = new Service();
+            service.setRating(Convert.ToInt16(u["service_id"]), Convert.ToInt16(u["rating"]), Convert.ToInt16(u["handlerId"]));
+            return u["service_id"];
+        }
     }
 }

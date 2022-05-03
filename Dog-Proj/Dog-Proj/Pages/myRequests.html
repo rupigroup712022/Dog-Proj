@@ -36,7 +36,7 @@
 
     <script>
 
-        
+
         const u =
         {
             userId: JSON.parse(localStorage.getItem('UserId'))
@@ -44,234 +44,82 @@
         $(document).ready(function () {
             //to check that user is connect
             //logUser();
-            $(document).on("click", "#getApprovedReq", getIncomeApprovedRequests)
-            $(document).on("click", "#getPendingReq", getIncomePendingRequests)
-            $(document).on("click", ".aprroveRequest", approvedRequest)
-            $(document).on("click", ".denyRequest", denyRequest)
+            $(document).on("click", "#history", getHistory)
+            $(document).on("click", "#waitResponse", getWaitResponse)
+            $(document).on("click", ".setRating", setRating)
 
         });
-        function getIncomePendingRequests() {
+        function getHistory() { 
+            //בקשות בהיסטוריה לא ניתנות לביטול ולכן בעמוד סלקשן עבור מי שבוקש ממנו שירות נצטרך להוריד את הכפתור לביטול בבקשות המאושרות
+                    let apiCall = "../api/Users/getRequestHistory";
+                    ajaxCall("POST", apiCall,JSON.stringify(u), getHistoryRequestsSCB, getRequestsECB)
 
-                    let apiCall = "../api/Users/incomePendingReq";
-                    ajaxCall("POST", apiCall,JSON.stringify(u), getRequestsSCB, getRequestsECB)
-                    
         }
-        function getIncomeApprovedRequests() {
-   
-            let apiCall = "../api/Users/incomeApprovedReq";
-            ajaxCall("POST", apiCall, JSON.stringify(u), getRequestV2SCB, getRequestsECB)
-        }
+        function getWaitResponse() {
 
-        function approvedRequest() {
-            let serviceId = $(this).parent().attr('id');
-            let apiCall = "../api/Users/answeredRequest";
-            console.log(JSON.stringify({ ...u, serviceId: serviceId, val: true }));
-            ajaxCall("POST", apiCall, JSON.stringify({ ...u, serviceId: serviceId, val: true }), RequestSCB, getRequestsECB);
+            let apiCall = "../api/Users/getWaitResponse";
+            ajaxCall("POST", apiCall, JSON.stringify(u), getHistoryRequestsSCB, getRequestsECB)
+
         }
 
-        function denyRequest() {
-            let serviceId = $(this).parent().attr('id');
-            let apiCall = "../api/Users/answeredRequest";
-            ajaxCall("POST", apiCall, JSON.stringify({ ...u, serviceId: serviceId,val:false }),RequestSCB, getRequestsECB)
+        function setRating() {
+            let service_id = $(this).parents().hasClass('BTF').attr('id');
+            let handlerId = $(this).attr('id');
+            let rating = $('.rating').val();
+            let apiCall = "../api/Services/setRating";
+            ajaxCall("POST", apiCall, JSON.stringify({service_id:service_id,rating:rating,handlerId:handlerId}), setRatingSCB, getRequestsECB)
         }
 
-        function RequestSCB(serviceId) {
+
+        function setRatingSCB(serviceId) { 
             $('#' + serviceId).html('');
         }
 
-        function getRequestsSCB(d) {
+        function getHistoryRequestsSCB(d) {
             $('#results').html('');
             const results = d.map(l => {
-                let address = l[13] + " " + l[14] + " " + l[15];
-                let fullDate = l[1] + " " + l[2] + " " + l[3];
-                    request = { address: address, name: l[11], phone: l[12], serviceId: l[16] };
-                    //await getlocation(addresses); בהמשך נציג לפי מרחקים 
-                    //addresses["distance"] = dist;
+                let fullDate = l[1] + " " + l[2] ;
                 let str = "";
-                str += "<div class='BTF' id='" + l[16] + "'>";
-                str += "<button class='denyRequest'> ביטול בקשה</button>";
-                str += "<button class='aprroveRequest'> לאישור בקשה</button>";
+                str += "<div class='BTF' id='" + l[6] + "'>";
                 str += "<table class='table'>";
                     str += "<tr class='row1'>";
                     str += "<td class='user col-12'><h1>" + l[0] + "</h1></td>";
                     str += "</tr>";
                     str += "<tr class='row1'>";
-                    str += "<td class='user col-12'><h1> שם וגזע הכלב -" + l[5] +" , "+ l[6] + "</h1></td>";
-                    str += "</tr>";
-                    str += "<tr class='row1'>";
                     str += "<td class='user col-12'><h1>" + fullDate + "</h1></td>";
                     str += "</tr>";
-                    str += "<tr class='row1'>";
-                    str += "<td class='user col-12'><h6><b>טלפון ושם:</b>" + l[12]+" " +l[11] + "</h6></td>";
+                    str += "<tr class='row1'>"; 
+                    str += "<td class='user col-12'><h6><b> שם:</b>" + l[4] + "</h6></td>";
                     str += "</tr>";
-                    str += "<tr class='row1'>";
-                str += "<td class='user col-12'><h6><b>נקודות זכות:</b>" + l[4] + "</h6></td>";
-                    str += "</tr>";
-                    str += "<tr class='row1'>";
-                    str += "<td class='user col-12'><h6><b>כתובת:</b>" + address + " </h6></td>";
-                    str += "</tr>";
-                    //str += "<tr class='row1'>";
-                    //str += "<td class='user col-12'><h6 ><b class='distance'> " + "מרחק : " + dist.toFixed(2) + " ק''מ" + "</b></h6></td>";
-                    //str += "</tr>";
-                    //str += "<tr class='row1'>";
-                    //str += "<td class='col-12'><button type='button' class='btn btn-info btn-lg' onclick = 'selectUser(" + l[j + 4] + ")' id ='B" + l[j + 4] + "' data - toggle='modal' > בחירת משתמש </button > </td>";
-                    //str += "</tr>";
+                str += "<tr class='row1'>";
+                if (parseInt(l[5])>10) {
+                    str += "<td class='user col-12'><h6><b>טלפון:</b>" + l[5] + "</h6></td></tr>"
+                    str += "<input class=rating type=number min=1 max=5 step=1 required placeholder='דרג 1-5'>" 
+                    str += "<button id='" + l[7] +"' class='setRating'> שלח דרוג</button>";
+                }
+                else {
+                    str += "<td class='user col-12'><h6><b>דירוג:</b>" + l[5] + "</h6></td></tr>";
+                }
                     str += "</table>";
-                    str += "</div><br/>";
-                    //addresses["str"] = str;
-                    //console.log(addresses);
-                    //const k = BestLocation.findIndex(a => (a.distance && a.distance > addresses.distance) ? true : false);
-
-                    //if (k == -1) {
-                    //    BestLocation.push(addresses)
-
-                    //}
-                    //else {
-                    //    BestLocation.splice(k, 0, addresses);
-                    //}
-                    //console.log(k)
-                request["str"] = str;
-                return request;
+                str += "</div><br/>";
+                return str;
             }
             )
             if (results == null || results.length <= 0) {
                 Swal.fire({
-                    title: "לא נמצאו תוצאות",
+                    title: "לא נמצאה היסטוריית בקשות-בדוק בבקשה את הבקשות הממתינות שלך",
                     icon: "error",
                     //    timer: 2500,
                 })
             }
             else {
-                results.map(l => { $('#results').append(l['str']) });
+                results.map(l => { $('#results').append(l) });
             }
         }
 
         function getRequestsECB(error) {
             console.log('error occured');
         }
-
-        function getRequestV2SCB(d) {
-            $('#results').html('');
-            const results = d.map(l => {
-                let address = l[13] + " " + l[14] + " " + l[15];
-                let fullDate = l[1] + " " + l[2] + " " + l[3];
-                request = { address: address, name: l[11], phone: l[12], serviceId: l[16] };
-                //await getlocation(addresses); בהמשך נציג לפי מרחקים 
-                //addresses["distance"] = dist;
-                let str = "";
-                str += "<div class='BTF' id='" + l[16] + "'>";
-                str += "<button class='denyRequest'> ביטול בקשה</button>";
-                str += "<table class='table'>";
-                str += "<tr class='row1'>";
-                str += "<td class='user col-12'><h1>" + l[0] + "</h1></td>";
-                str += "</tr>";
-                str += "<tr class='row1'>";
-                str += "<td class='user col-12'><h1> שם וגזע הכלב -" + l[5] + " , " + l[6] + "</h1></td>";
-                str += "</tr>";
-                str += "<tr class='row1'>";
-                str += "<td class='user col-12'><h1>" + fullDate + "</h1></td>";
-                str += "</tr>";
-                str += "<tr class='row1'>";
-                str += "<td class='user col-12'><h6><b>טלפון ושם:</b>" + l[12] + " " + l[11] + "</h6></td>";
-                str += "</tr>";
-                str += "<tr class='row1'>";
-                str += "<td class='user col-12'><h6><b>נקודות זכות:</b>" + l[4] + "</h6></td>";
-                str += "</tr>";
-                str += "<tr class='row1'>";
-                str += "<td class='user col-12'><h6><b>כתובת:</b>" + address + " </h6></td>";
-                str += "</tr>";
-                //str += "<tr class='row1'>";
-                //str += "<td class='user col-12'><h6 ><b class='distance'> " + "מרחק : " + dist.toFixed(2) + " ק''מ" + "</b></h6></td>";
-                //str += "</tr>";
-                //str += "<tr class='row1'>";
-                //str += "<td class='col-12'><button type='button' class='btn btn-info btn-lg' onclick = 'selectUser(" + l[j + 4] + ")' id ='B" + l[j + 4] + "' data - toggle='modal' > בחירת משתמש </button > </td>";
-                //str += "</tr>";
-                str += "</table>";
-                str += "</div><br/>";
-                //addresses["str"] = str;
-                //console.log(addresses);
-                //const k = BestLocation.findIndex(a => (a.distance && a.distance > addresses.distance) ? true : false);
-
-                //if (k == -1) {
-                //    BestLocation.push(addresses)
-
-                //}
-                //else {
-                //    BestLocation.splice(k, 0, addresses);
-                //}
-                //console.log(k)
-                request["str"] = str;
-                return request;
-            }
-            )
-            if (results == null || results.length <= 0) {
-                Swal.fire({
-                    title: "לא נמצאו תוצאות",
-                    icon: "error",
-                    //    timer: 2500,
-                })
-            }
-            else {
-                results.map(l => { $('#results').append(l['str']) });
-            }
-        }
-
-
-        //function name() {
-        //    let username = $(this).val();
-        //    let userId = event.srcElement.id;
-        //    console.log(username);
-        //    console.log(userId);
-        //    localStorage["UserId"] = JSON.stringify(userId);
-        //     localStorage["username"] = JSON.stringify(username);
-        //        Swal.fire({
-        //            title: "התחברת בהצלחה !",
-        //            icon: "success",
-        //            timer: 2500,
-        //        }).then(function () {
-        //            window.location.href = 'mainScreen.html';
-        //        });
-
-        //}
-
-        //function logUser() {
-        //    var familyId = localStorage.getItem('familyId');
-        //    let apiCall = "../api/Accounts?Id=" + familyId;
-        //    ajaxCall("GET", apiCall, "", getUserSCB, getUserECB)
-
-        //}
-
-
-        //function getUserSCB(success) {
-        //    console.log(success)
-        //    console.log(success.length)
-
-        //    var imgStr = "";
-
-        //    for (var i = 0; i < success.length; i = i + 3) {
-
-        //        console.log(success[1])
-
-        //        imgStr = "<div><input type = 'button' class='NameUser'  id ='"+success[i+2]+"'value ='" + success[i] + "'></div>";
-        //        if (success[i + 1] == 'F') {
-        //            imgStr += "<div class='userclass'><img class='imguser' src='../images/user-gfaaf954f6_640.png' /></div>";
-        //        }
-        //        else {
-        //            imgStr += "<div  class='userclass'><img class='imguser' src='../images/user-g768722fb2_640.png'/></div>";
-        //        }
-
-        //        document.getElementById("ph").innerHTML += imgStr;
-        //    }
-
-        //}
-
-        //function getUserECB(err) {
-        //    console.log(err);
-        //}
-
-
-
-
 
     </script>
 
@@ -314,8 +162,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <button id="getPendingReq">הצג בקשות ממתינות</button>
-                    <button id="getApprovedReq">הצג בקשות שאושרו</button>
+                    <button id="history">הצג היסטוריית בקשות </button>
+                    <button id="waitResponse">הצג בקשות הממתינות לחוות דעת</button>
                 </div>
             </div>
             <div class="input_main">
