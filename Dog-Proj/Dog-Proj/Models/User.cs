@@ -91,6 +91,13 @@ namespace Dog_Proj.Models {
 
         }
 
+        
+           public List<List<string>> getWaitApproval(int userid)
+        {
+            DataServices dbs = new DataServices();
+            return dbs.getWaitApproval(userid);
+
+        }
         public void setRequests(int userid,string serviceId,bool val)
         {
             DataServices dbs = new DataServices();

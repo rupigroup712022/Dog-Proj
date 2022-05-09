@@ -62,10 +62,18 @@
 
         }
 
+        function getWaitApproval() {
+
+            let apiCall = "../api/Users/getWaitApproval";
+            ajaxCall("POST", apiCall, JSON.stringify(u), getHistoryRequestsSCB, getRequestsECB)
+
+        }
+
         function setRating() {
-            let service_id = $(this).parents().hasClass('BTF').attr('id');
+            let service_id = $(this).parents().find('.BTF').attr('id');
             let handlerId = $(this).attr('id');
             let rating = $('.rating').val();
+            console.log({ service_id: service_id, rating: rating, handlerId: handlerId });
             let apiCall = "../api/Services/setRating";
             ajaxCall("POST", apiCall, JSON.stringify({service_id:service_id,rating:rating,handlerId:handlerId}), setRatingSCB, getRequestsECB)
         }
@@ -163,7 +171,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     <button id="history">הצג היסטוריית בקשות </button>
-                    <button id="waitResponse">הצג בקשות הממתינות לחוות דעת</button>
+                    <button id="waitResponse">בקשות שאושרו וממתינות לחוות דעת</button>
+                    <button id="waitApproval">בקשות ממתינות לאישור</button>
                 </div>
             </div>
             <div class="input_main">

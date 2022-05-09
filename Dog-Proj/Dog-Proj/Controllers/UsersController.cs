@@ -61,6 +61,14 @@ namespace Dog_Proj.Controllers
             return user.getWaitResponse(Convert.ToInt32(u["userId"]));
         }
 
+        [HttpPost]
+        [Route("api/Users/getWaitApproval")]
+        public List<List<string>> getWaitApproval([FromBody] Dictionary<string, string> u)
+        {
+            User user = new User();
+            return user.getWaitApproval(Convert.ToInt32(u["userId"]));
+        }
+
         [HttpGet]
         [Route("api/Users/outcomeReq")]
         public int GetOutcome([FromBody] User user)//בקשות יוצאות

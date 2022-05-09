@@ -69,7 +69,7 @@ namespace Dog_Proj.Models
         {
             DataServices ds = new DataServices();
             string str= ds.InsertReqServices(idService, idUser);
-
+            Console.WriteLine(str);
             try
             {
                 var smtpClient = new SmtpClient();

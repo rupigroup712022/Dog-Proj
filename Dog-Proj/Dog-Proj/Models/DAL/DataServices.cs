@@ -1253,7 +1253,7 @@ namespace Dog_Proj.Models.DAL
 
         private SqlCommand commandSetRating(short service_id, short rating,short handlerId, SqlConnection con)
         {
-            string str = "INSERT INTO finished_tasks(handlerId,serviceId,rating) values (@handlerId,@service_id,@rating)";
+            string str = "INSERT INTO finished_tasks (handlerId,serviceId,rating) values (@handlerId,@serviceId,@rating)";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@handlerId", SqlDbType.SmallInt);
             cmd.Parameters["@handlerId"].Value = handlerId;
@@ -1263,5 +1263,60 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters["@rating"].Value = rating;
                 return cmd;
         }
+
+        public List<List<string>> getWaitApproval(int userid)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = Connect("DogsProjDB");
+                SqlCommand selectCommand = commandgetWaitApproval(con, userid);
+                SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                int i = 0;
+                List<List<string>> waitingReqList = new List<List<string>>();
+                while (dataReader.Read())
+
+                {
+                    waitingReqList.Add(new List<string>());// המרה לסטרינגים הכנסה לרשימת של סטרינגים
+                    waitingReqList[i].Add((dataReader["serviceName"]).ToString());//0
+                    waitingReqList[i].Add((dataReader["serviceDate"]).ToString());
+                    waitingReqList[i].Add((dataReader["serviceHour"]).ToString());
+                    waitingReqList[i].Add((dataReader["servicetype"]).ToString());
+                    waitingReqList[i].Add((dataReader["username"]).ToString());
+                    waitingReqList[i].Add((dataReader["phone"]).ToString());
+                    waitingReqList[i].Add((dataReader["id"]).ToString());//6
+                    waitingReqList[i].Add((dataReader["idUser"]).ToString());//6
+                    i++;
+                }
+
+                dataReader.Close();
+
+                return waitingReqList;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to insert the list", ex);
+            }
+            finally
+            {
+
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand commandgetWaitApproval(SqlConnection con, int userid)
+        {
+            string str = "SELECT S.serviceName, S.serviceDate, S.serviceHour, S.servicetype, U.username,U.phone,S.id,P.idUser" +
+                " FROM PendingReq P JOIN ServicesDog S ON" +
+                " P.idService=S.id JOIN UsersFamliy U ON U.id=P.idUser" +
+                " WHERE S.UserId LIKE @userid AND P.approvedreq=NULL AND P.idService not in (select distinct idService from PendingReq where approvedreq=1)";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@userid", SqlDbType.SmallInt);
+            cmd.Parameters["@userid"].Value = (short)userid;
+            return cmd;
+        }
+
     }
 }
