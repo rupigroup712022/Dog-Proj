@@ -1213,14 +1213,14 @@ namespace Dog_Proj.Models.DAL
             string str = "SELECT S.serviceName, S.serviceDate, S.serviceHour, S.servicetype, U.username,U.phone,S.id,P.idUser" +
                 " FROM PendingReq P JOIN ServicesDog S ON" +
                 " P.idService=S.id JOIN UsersFamliy U ON U.id=P.idUser" +
-                " WHERE S.UserId LIKE @userid AND P.approvedreq=1";
+                " WHERE S.UserId LIKE @userid AND P.approvedreq=1 AND S.id not in (select serviceId from finished_tasks)";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@userid", SqlDbType.SmallInt);
             cmd.Parameters["@userid"].Value = (short)userid;
             return cmd;
         }
 
-        public int setRating(short service_id, short rating,short handlerId)
+        public Dictionary<string, string> setRating (short service_id, short rating,short handlerId)
         {
 
             SqlConnection con = null;
@@ -1232,7 +1232,22 @@ namespace Dog_Proj.Models.DAL
 
                 //C Create the Insert SqlCommand
                 SqlCommand insertCommand = commandSetRating(service_id, rating,handlerId, con);
+                SqlCommand familyIdCommand = commandGetFamilyId(handlerId, con);
                 numEffected = insertCommand.ExecuteNonQuery();
+                
+                SqlDataReader dataReader = familyIdCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                int i = 0;
+                Dictionary<string,string> rating_dic = new Dictionary<string, string>();
+                while (dataReader.Read())
+
+                {
+                    rating_dic["avg"]= (dataReader["avgPoint"]).ToString();
+                    rating_dic["rating_number"] = (dataReader["rating_number"]).ToString();
+                    rating_dic["id"] = (dataReader["id"]).ToString();
+                }
+
+                dataReader.Close();
+                return rating_dic;
             }
 
             catch (Exception exep)
@@ -1247,8 +1262,19 @@ namespace Dog_Proj.Models.DAL
                 con.Close();
             }
 
-            return numEffected;
+        
+        }
 
+        
+       private SqlCommand commandGetFamilyId(short handlerId, SqlConnection con)
+        {
+            string str = "SELECT avgPoint, rating_number, A.id" +
+                " FROM UsersFamliy U JOIN Accounts A ON A.id=U.familyId" +
+                " WHERE U.id=@handlerId";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@handlerId", SqlDbType.SmallInt);
+            cmd.Parameters["@handlerId"].Value = (short)handlerId;
+            return cmd;
         }
 
         private SqlCommand commandSetRating(short service_id, short rating,short handlerId, SqlConnection con)
@@ -1262,6 +1288,51 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters.Add("@rating", SqlDbType.SmallInt);
             cmd.Parameters["@rating"].Value = rating;
                 return cmd;
+        }
+
+        public void setAvgRating(double new_avg, int new_rating_number, short familyId)
+        {
+
+            SqlConnection con = null;
+            int numEffected = 0;
+            try
+            {
+                //C - Connect to the Database
+                con = Connect("DogsProjDB");
+
+                //C Create the Insert SqlCommand
+                SqlCommand insertCommand = commandsetNewAvg(new_avg, new_rating_number, familyId, con);
+                numEffected = insertCommand.ExecuteNonQuery();
+
+            }
+
+            catch (Exception exep)
+            {
+                // this code needs to write the error to a log file
+                throw new Exception("Error", exep);
+            }
+
+            finally
+            {
+                //C Close Connction
+                con.Close();
+            }
+
+
+        }
+        private SqlCommand commandsetNewAvg (double new_avg, int new_rating_number, short familyId, SqlConnection con)
+        {
+            string str = "UPDATE Accounts SET avgPoint=@new_avg, rating_number=@new_rating_number"+
+                " where id=@familyId";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@new_avg", SqlDbType.Float);
+            cmd.Parameters["@new_avg"].Value = new_avg;
+            cmd.Parameters.Add("@new_rating_number", SqlDbType.Int);
+            cmd.Parameters["@new_rating_number"].Value = new_rating_number;
+            cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
+            cmd.Parameters["@familyId"].Value = familyId;
+            return cmd;
+
         }
 
         public List<List<string>> getWaitApproval(int userid)
@@ -1285,7 +1356,8 @@ namespace Dog_Proj.Models.DAL
                     waitingReqList[i].Add((dataReader["username"]).ToString());
                     waitingReqList[i].Add((dataReader["phone"]).ToString());
                     waitingReqList[i].Add((dataReader["id"]).ToString());//6
-                    waitingReqList[i].Add((dataReader["idUser"]).ToString());//6
+                    waitingReqList[i].Add((dataReader["idUser"]).ToString());//7
+                    waitingReqList[i].Add((dataReader["age"]).ToString());//8
                     i++;
                 }
 
@@ -1308,15 +1380,15 @@ namespace Dog_Proj.Models.DAL
 
         private SqlCommand commandgetWaitApproval(SqlConnection con, int userid)
         {
-            string str = "SELECT S.serviceName, S.serviceDate, S.serviceHour, S.servicetype, U.username,U.phone,S.id,P.idUser" +
+            string str = "SELECT S.serviceName, S.serviceDate, S.serviceHour, S.servicetype, U.username,U.phone,S.id,P.idUser, U.age" +
                 " FROM PendingReq P JOIN ServicesDog S ON" +
                 " P.idService=S.id JOIN UsersFamliy U ON U.id=P.idUser" +
-                " WHERE S.UserId LIKE @userid AND P.approvedreq=NULL AND P.idService not in (select distinct idService from PendingReq where approvedreq=1)";
+                " WHERE S.UserId LIKE @userid AND P.approvedreq is NULL AND P.idService not in (select distinct idService from PendingReq where approvedreq=1)";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@userid", SqlDbType.SmallInt);
             cmd.Parameters["@userid"].Value = (short)userid;
             return cmd;
         }
-
+        
     }
 }

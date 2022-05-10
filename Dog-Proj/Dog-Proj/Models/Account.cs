@@ -21,7 +21,7 @@ namespace Dog_Proj.Models
         float avgPoint;
         string passwords;
         string cityName;
-
+        int rating_number;
 
         public Account(string familyname, bool moreAnimals, string street, int homeNum,string email, string yardSize, string houseType, string passwords, string cityName)
         {
@@ -53,7 +53,7 @@ namespace Dog_Proj.Models
         public float AvgPoint { get => avgPoint; set => avgPoint = value; }
         public string Passwords { get => passwords; set => passwords = value; }
         public string CityName { get => cityName; set => cityName = value; }
-
+        public int Rating_number { get => rating_number; set => rating_number = value; }
 
 
         public Account() { }

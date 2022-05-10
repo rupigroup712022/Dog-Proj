@@ -47,7 +47,7 @@
             $(document).on("click", "#history", getHistory)
             $(document).on("click", "#waitResponse", getWaitResponse)
             $(document).on("click", ".setRating", setRating)
-
+            $(document).on("click", "#waitApproval", getWaitApproval)
         });
         function getHistory() { 
             //בקשות בהיסטוריה לא ניתנות לביטול ולכן בעמוד סלקשן עבור מי שבוקש ממנו שירות נצטרך להוריד את הכפתור לביטול בבקשות המאושרות
@@ -100,7 +100,12 @@
                     str += "<td class='user col-12'><h6><b> שם:</b>" + l[4] + "</h6></td>";
                     str += "</tr>";
                 str += "<tr class='row1'>";
-                if (parseInt(l[5])>10) {
+                if (l.length > 8) {
+                    str += "<td class='user col-12'><h6><b>טלפון:</b>" + l[5] + "</h6></td></tr>"
+                    str += "<td class='user col-12'><h6><b>גיל:</b>" + l[8] + "</h6></td></tr>"
+                }
+                
+                else if (parseInt(l[5])>10) {
                     str += "<td class='user col-12'><h6><b>טלפון:</b>" + l[5] + "</h6></td></tr>"
                     str += "<input class=rating type=number min=1 max=5 step=1 required placeholder='דרג 1-5'>" 
                     str += "<button id='" + l[7] +"' class='setRating'> שלח דרוג</button>";

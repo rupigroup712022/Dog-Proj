@@ -94,13 +94,21 @@ namespace Dog_Proj.Models
         }
 
 
-        public int setRating(short service_id, short rating,short handlerId)
+        public void setRating(short service_id, short rating,short handlerId)
         {
             DataServices dbs = new DataServices();
-            return dbs.setRating(service_id, rating,handlerId);
-            
+            Dictionary<string, string> dic= dbs.setRating(service_id, rating,handlerId);
+            calculate_average(Convert.ToDouble(dic["avg"]), Convert.ToInt32(dic["rating_number"]),rating ,Convert.ToInt16(dic["id"]));
         }
 
+
+        public void calculate_average (double average, int rating_number, short rating, short familyId)
+        {
+            double new_avg = (average + rating) / (rating_number + 1);
+            DataServices dbs = new DataServices();
+            dbs.setAvgRating(new_avg, rating_number+1, familyId);
+            
+        }
 
     }
 }
