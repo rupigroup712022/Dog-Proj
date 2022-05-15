@@ -51,13 +51,14 @@
             $("#LogOut").click(LogOut);
             numOfPoints = JSON.parse(localStorage["numOfPoints"]);
             welcome(username,numOfPoints);
-
-          
-
-
+            $("#LogOut").click(LogOut);
 
         });
 
+        function LogOut() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
 
 
         function welcome(username,numOfPoints) {
