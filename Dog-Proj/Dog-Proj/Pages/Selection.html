@@ -48,8 +48,15 @@
             $(document).on("click", "#getPendingReq", getIncomePendingRequests)
             $(document).on("click", ".aprroveRequest", approvedRequest)
             $(document).on("click", ".denyRequest", denyRequest)
+            $("#LogOut").click(LogOut);
 
         });
+
+        function LogOut() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+
         function getIncomePendingRequests() {
 
                     let apiCall = "../api/Users/incomePendingReq";
@@ -289,15 +296,20 @@
                 <div class="col-md-8">
                     <div class="menu_text">
                         <ul>
-
+                            <li class="LogeIn">
+                           
+                                <button id="LogOut">Log Out</button>
+                            </li>
                             <li class="active">
                                 <div id="myNav" class="overlay">
                                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                                     <div class="overlay-content">
-                                        <a href="index.html">Home</a>
-                                        <a href="about.html">About</a>
-                                        <a href="gallery.html">Gallery</a>
-                                        <a href="contact.html">Contact</a>
+                                        <a href="Userselection.html">החלפת בן משפחה</a>
+                                        <a href="mainScreen.html">הגשת בקשה לשירות</a>
+                                        <a href="myRequests.html">הבקשות שממתינות לאישורי</a>
+                                        <a href="Selection.html">היסטורית בקשות שביקשתי</a>
+                                        <a href="SingInUser.html">הוספת בן משפחה</a>
+                                        <a href="SingInDog.html">הוספת כלב</a>
                                     </div>
                                 </div>
                                 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
@@ -392,6 +404,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
+
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>
 
     <!-- Javascript files-->
     <!--<script src="../Scripts/jquery.min.js"></script>

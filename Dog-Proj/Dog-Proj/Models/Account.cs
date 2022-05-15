@@ -35,10 +35,13 @@ namespace Dog_Proj.Models
             HouseType = houseType;
             Passwords = passwords;
             CityName = cityName;
-            NumOfPoints = 15;
+            NumOfPoints = 20;
             AvgPoint = 0;
 
         }
+
+
+       
 
         public int Id { get => id; set => id = value; }
         public string Familyname { get => familyname; set => familyname = value; }

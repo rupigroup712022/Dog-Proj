@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- basic -->
@@ -38,9 +38,14 @@
         $(document).ready(function () {
             logUser();
             $(document).on("click", ".NameUser", name)
-            
+            $("#LogOut").click(LogOut);
 
         });
+
+        function LogOut() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
 
         function name() {
             let username = $(this).val();
@@ -107,6 +112,7 @@
     <!-- section banner start -->
     <div class="header-main">
         <div class="container-fluid">
+
             <div class="row">
                 <div class="col-md-4">
                     <div><a href="index.html"><img src="../images/LOGO1S.png" /></a></div>
@@ -114,15 +120,20 @@
                 <div class="col-md-8">
                     <div class="menu_text">
                         <ul>
+                            <li class="LogeIn">
 
+                                <button id="LogOut">Log Out</button>
+                            </li>
                             <li class="active">
                                 <div id="myNav" class="overlay">
                                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                                     <div class="overlay-content">
-                                        <a href="index.html">Home</a>
-                                        <a href="about.html">About</a>
-                                        <a href="gallery.html">Gallery</a>
-                                        <a href="contact.html">Contact</a>
+                                        <a href="Userselection.html">החלפת בן משפחה</a>
+                                        <a href="mainScreen.html">הגשת בקשה לשירות</a>
+                                        <a href="myRequests.html">הבקשות שממתינות לאישורי</a>
+                                        <a href="Selection.html">היסטורית בקשות שביקשתי</a>
+                                        <a href="SingInUser.html">הוספת בן משפחה</a>
+                                        <a href="SingInDog.html">הוספת כלב</a>
                                     </div>
                                 </div>
                                 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
@@ -131,7 +142,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <!-- section gallery start -->
@@ -145,121 +155,131 @@
             <div class="input_main">
                 <div id="ph">
                     <div id="ph2">
-         
+
                     </div>
 
                 </div>
-                </div>
-           </div>
+            </div>
+        </div>
 
-       </div>
+    </div>
 
-            <!-- section gallery end -->
-            <!-- section footer start -->
-            <div class="section_footer">
-                <div class="container">
-                    <div class="mail_section">
-                        <ul>
+    <!-- section gallery end -->
+    <!-- section footer start -->
+    <div class="section_footer">
+        <div class="container">
+            <div class="mail_section">
+                <ul>
 
-                            <li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
-                            <!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
-                            <li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
-                            <li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
-                        </ul>
+                    <li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
+                    <!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
+                    <li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
+                    <li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
+                </ul>
+            </div>
+            <div class="footer_section_2">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">About Petcom</h2>
+                        <p class="dummy_text">קהילה חברתית יזמית המושתת על עזרה הדדית, שיוויוניות ועזרה לקהילה </p>
                     </div>
-                    <div class="footer_section_2">
-                        <div class="row">
-                            <div class="col-sm-6 col-md-6 col-lg-3">
-                                <h2 class="shop_text">About Petcom</h2>
-                                <p class="dummy_text">קהילה חברתית יזמית המושתת על עזרה הדדית, שיוויוניות ועזרה לקהילה </p>
-                            </div>
-                            <div class="col-sm-6 col-md-6 col-lg-3">
-                                <h2 class="shop_text">Useful Links</h2>
-                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
-                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
-                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
-                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
-                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
-                            </div>
-                            <div class="col-sm-6 col-md-6 col-lg-3">
-                                <h2 class="shop_text">Overview</h2>
-                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
-                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
-                                <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>
-                            </div>
-                            <div class="col-sm-6 col-md-6 col-lg-3">
-                                <h2 class="adderess_text">Instagram</h2>
-                                <div class="footer-img">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="footer-img"><img src="../images/footer-img1.png" style="width: 100%;"></div>
-                                            <div class="footer-img"><img src="../images/footer-img2.png" style="width: 100%;"></div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="footer-img"><img src="../images/footer-img3.png" style="width: 100%;"></div>
-                                            <div class="footer-img"><img src="../images/footer-img4.png" style="width: 100%;"></div>
-                                        </div>
-                                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">Useful Links</h2>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">Overview</h2>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="adderess_text">Instagram</h2>
+                        <div class="footer-img">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="footer-img"><img src="../images/footer-img1.png" style="width: 100%;"></div>
+                                    <div class="footer-img"><img src="../images/footer-img2.png" style="width: 100%;"></div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="social-icon">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="icons">
-                                    <ul>
-                                        <li><a href="#"><img src="../images/fb-icon.png"></a></li>
-                                        <li><a href="#"><img src="../images/twitter-icon.png"></a></li>
-                                        <li><a href="#"><img src="../images/google-icon.png"></a></li>
-                                        <li><a href="#"><img src="../images/linkedin-icon.png"></a></li>
-                                    </ul>
+                                <div class="col-sm-6">
+                                    <div class="footer-img"><img src="../images/footer-img3.png" style="width: 100%;"></div>
+                                    <div class="footer-img"><img src="../images/footer-img4.png" style="width: 100%;"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="social-icon">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="icons">
+                            <ul>
+                                <li><a href="#"><img src="../images/fb-icon.png"></a></li>
+                                <li><a href="#"><img src="../images/twitter-icon.png"></a></li>
+                                <li><a href="#"><img src="../images/google-icon.png"></a></li>
+                                <li><a href="#"><img src="../images/linkedin-icon.png"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            <!-- Javascript files-->
-            <!--<script src="../Scripts/jquery.min.js"></script>
-            <script src="../Scripts/popper.min.js"></script>
-            <script src="../Scripts/bootstrap.bundle.min.js"></script>
-            <script src="../Scripts/jquery-3.0.0.min.js"></script>
-            <script src="../Scripts/plugin.js"></script>-->
-            <!-- sidebar -->
-            <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
-            <script src="../Scripts/custom.js"></script>-->
-            <!-- javascript -->
-            <!--<script src="../Scripts/owl.carousel.js"></script>
-            <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>-->
-            <!--<script>
-                $(document).ready(function () {
-                    $(".fancybox").fancybox({
-                        openEffect: "none",
-                        closeEffect: "none"
-                    });
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
 
-                    $(".zoom").hover(function () {
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>
 
-                        $(this).addClass('transition');
-                    }, function () {
+    <!-- Javascript files-->
+    <!--<script src="../Scripts/jquery.min.js"></script>
+    <script src="../Scripts/popper.min.js"></script>
+    <script src="../Scripts/bootstrap.bundle.min.js"></script>
+    <script src="../Scripts/jquery-3.0.0.min.js"></script>
+    <script src="../Scripts/plugin.js"></script>-->
+    <!-- sidebar -->
+    <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../Scripts/custom.js"></script>-->
+    <!-- javascript -->
+    <!--<script src="../Scripts/owl.carousel.js"></script>
+    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>-->
+    <!--<script>
+        $(document).ready(function () {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
 
-                        $(this).removeClass('transition');
-                    });
-                });
-            </script>
+            $(".zoom").hover(function () {
+
+                $(this).addClass('transition');
+            }, function () {
+
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
 
 
-            <script>
-                function openNav() {
-                    document.getElementById("myNav").style.width = "100%";
-                }
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
 
-                function closeNav() {
-                    document.getElementById("myNav").style.width = "0%";
-                }
-            </script>-->
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>-->
 
 </body>
 </html>

@@ -118,7 +118,7 @@ namespace Dog_Proj.Models {
                 };
                 mailMessage.To.Add(str);
 
-                smtpClient.Send(mailMessage);
+                smtpClient.Send(mailMessage);//לקחת נקודות
             }
             else
             {
@@ -130,7 +130,7 @@ namespace Dog_Proj.Models {
                 };
                 mailMessage.To.Add(str);
 
-                smtpClient.Send(mailMessage);
+                smtpClient.Send(mailMessage);// להחזיר נקודות
             }
 
 

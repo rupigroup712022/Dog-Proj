@@ -60,7 +60,7 @@
             else if (userlog.Password != "The password is wrong!") {
                 localStorage["Acoountlog"] = JSON.stringify(userlog);
                 localStorage["familyId"] = JSON.stringify(userlog.Id);
-
+                localStorage["numOfPoints"] = JSON.stringify(userlog.NumOfPoints);
                 window.location.href = "Userselection.html";
             }
             else {
@@ -82,31 +82,38 @@
 </head>
 <body>
     <!-- section banner start -->
+
     <div class="header-main">
         <div class="container-fluid">
+
             <div class="row">
                 <div class="col-md-4">
                     <div><a href="index.html"><img src="../images/LOGO1S.png" /></a></div>
                 </div>
                 <div class="col-md-8">
-                    <div class="menu_text-log">
+                    <div class="menu_text">
                         <ul>
+                            <li class="LogeIn">
+
                             <li class="LogeIn">
                                 <a href="LogeIn.html">Login /</a>
                                 <a href="SingIn.html"> Sign Up</a>
                             </li>
-                            <li class="active">
+                           
+                            <!--<li class="active">
                                 <div id="myNav" class="overlay">
                                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                                     <div class="overlay-content">
-                                        <a href="index.html">Home</a>
-                                        <a href="about.html">About</a>
-                                        <a href="gallery.html">Gallery</a>
-                                        <a href="contact.html">Contact</a>
+                                        <a href="Userselection.html">החלפת בן משפחה</a>
+                                        <a href="myRequests.html">הבקשות שלי</a>
+                                        <a href="mainScreen.html">בקשת שירות</a>
+                                        <a href="Selection.html">בקשות שביקשתי</a>
+                                        <a href="SingInUser.html">הוספת בן משפחה</a>
+                                        <a href="SingInDog.html">הוספת כלב</a>
                                     </div>
                                 </div>
                                 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
-                            </li>
+                            </li>-->
                         </ul>
                     </div>
                 </div>

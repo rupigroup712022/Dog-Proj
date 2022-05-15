@@ -164,8 +164,10 @@
 </head>
 <body>
     <!-- section banner start -->
+
     <div class="header-main">
         <div class="container-fluid">
+
             <div class="row">
                 <div class="col-md-4">
                     <div><a href="index.html"><img src="../images/LOGO1S.png" /></a></div>
@@ -173,198 +175,205 @@
                 <div class="col-md-8">
                     <div class="menu_text">
                         <ul>
-                            <li class="active">
+                            <li class="LogeIn">
+
+                            <li class="LogeIn">
+                                <a href="LogeIn.html">Login /</a>
+                                <a href="SingIn.html"> SignUp</a>
+                            </li>
+
+                            <!--<li class="active">
                                 <div id="myNav" class="overlay">
                                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                                     <div class="overlay-content">
-                                        <a href="index.html">Home</a>
-                                        <a href="about.html">About</a>
-                                        <a href="gallery.html">Gallery</a>
-                                        <a href="contact.html">Contact</a>
+                                        <a href="Userselection.html">החלפת בן משפחה</a>
+                                        <a href="myRequests.html">הבקשות שלי</a>
+                                        <a href="mainScreen.html">בקשת שירות</a>
+                                        <a href="Selection.html">בקשות שביקשתי</a>
+                                        <a href="SingInUser.html">הוספת בן משפחה</a>
+                                        <a href="SingInDog.html">הוספת כלב</a>
                                     </div>
                                 </div>
                                 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
-
-                            </li>
+                            </li>-->
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- section get in touch start -->
-        <div class="touch_section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h1 class="get_taital"><strong><span style="color: #ffffff;">רישום</span> בן משפחה</strong></h1>
-                    </div>
+    </div>
+    <!-- section get in touch start -->
+    <div class="touch_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="get_taital"><strong><span style="color: #ffffff;">רישום</span> בן משפחה</strong></h1>
                 </div>
-                <div class="email_box">
-                    <div class="input_main">
-                        <div class="container">
-                            <form id="singUser" action="/action_page.php">
+            </div>
+            <div class="email_box">
+                <div class="input_main">
+                    <div class="container">
+                        <form id="singUser" action="/action_page.php">
 
-                                <table class="userTable">
+                            <table class="userTable">
 
-                                    <tr>
-                                        <td>
-                                            
-                                           
-                                        </td>
-                                        <td>
-                                            <p>הגיע הזמן לספר לי קצת על עצמך</p>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <p>הגיע הזמן לספר לי קצת על עצמך</p>
+                                    </td>
+                                </tr>
 
-                                    <tr>
-                                        <td>
-                                            <label>
-                                               
+                                <tr>
+                                    <td>
+                                        <label>
 
-                                                <img class="imgform-user" src="../images/male3.jpg"/>
-                                                <input type="radio" name="gender" value="M" checked>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label>
-                                                
 
-                                                <img class="imgform-user" src="../images/female3.jpg" />
-                                                <input type="radio" name="gender" value="F">
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" class="username" required /></td>
-                                        <td><h3>שם פרטי</h3></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" class="age" required /></td>
-                                        <td><h3>גיל</h3></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="text" class="phone" required pattern=".{10}" />
+                                            <img class="imgform-user" src="../images/male3.jpg" />
+                                            <input type="radio" name="gender" value="M" checked>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <label>
 
-                                        </td>
-                                        <td><h3>מספר טלפון</h3></td>
 
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <select id="Day">
-                                                <option>בחר</option>
-                                                <option>ראשון</option>
-                                                <option>שני</option>
-                                                <option>שלישי</option>
-                                                <option>רביעי</option>
-                                                <option>חמישי</option>
-                                                <option>שישי</option>
-                                                <option>שבת</option>
-                                            </select>
-                                        </td>
-                                        <td><h3>?מתי זמין</h3></td>
-                                    </tr>
-                                    <tr id="time" class="hidden">
-                                        <td>
-                                            <input type="button" class="BTF" value="07:00-08:00" />
-                                            <input type="button" class="BTF" value="08:00-12:00" />
-                                            <input type="button" class="BTF" value="12:00-14:00" />
-                                            <input type="button" class="BTF" value="14:00-16:00" />
-                                            <input type="button" class="BTF" value="16:00-20:00" />
-                                        </td>
-                                    </tr>
-                                   
-                                    <tr>
-                                        <td>
-                                            <input type="submit" id="nextdog" class="nextpage" value="אני רוצה להמשיך להרשמת כלב  " />
-                                            <a href="SingInDog.html"></a>
-                                        </td>
-                                        <td>
-                                            <input type="submit" id="nextuser" class="nextpage" value="הוסף בן משפחה " />
-                                            <a href="SingInUser.html"></a>
-                                        </td>
+                                            <img class="imgform-user" src="../images/female3.jpg" />
+                                            <input type="radio" name="gender" value="F">
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="username" required /></td>
+                                    <td><h3>שם פרטי</h3></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="age" required /></td>
+                                    <td><h3>גיל</h3></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" class="phone" required pattern=".{10}" />
 
-                                    </tr>
+                                    </td>
+                                    <td><h3>מספר טלפון</h3></td>
 
-                                </table>
-                            </form>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select id="Day">
+                                            <option>בחר</option>
+                                            <option>ראשון</option>
+                                            <option>שני</option>
+                                            <option>שלישי</option>
+                                            <option>רביעי</option>
+                                            <option>חמישי</option>
+                                            <option>שישי</option>
+                                            <option>שבת</option>
+                                        </select>
+                                    </td>
+                                    <td><h3>?מתי זמין</h3></td>
+                                </tr>
+                                <tr id="time" class="hidden">
+                                    <td>
+                                        <input type="button" class="BTF" value="07:00-08:00" />
+                                        <input type="button" class="BTF" value="08:00-12:00" />
+                                        <input type="button" class="BTF" value="12:00-14:00" />
+                                        <input type="button" class="BTF" value="14:00-16:00" />
+                                        <input type="button" class="BTF" value="16:00-20:00" />
+                                    </td>
+                                </tr>
 
-                        </div>
+                                <tr>
+                                    <td>
+                                        <input type="submit" id="nextdog" class="nextpage" value="אני רוצה להמשיך להרשמת כלב  " />
+                                        <a href="SingInDog.html"></a>
+                                    </td>
+                                    <td>
+                                        <input type="submit" id="nextuser" class="nextpage" value="הוסף בן משפחה " />
+                                        <a href="SingInUser.html"></a>
+                                    </td>
+
+                                </tr>
+
+                            </table>
+                        </form>
 
                     </div>
+
                 </div>
             </div>
         </div>
+    </div>
 
 
 
-        <!-- section footer start -->
-        <div class="section_footer">
-            <div class="container">
-                <div class="mail_section">
-                    <ul>
+    <!-- section footer start -->
+    <div class="section_footer">
+        <div class="container">
+            <div class="mail_section">
+                <ul>
 
-                        <li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
-                        <!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
-                        <li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
-                        <li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
-                    </ul>
-                </div>
-                <div class="footer_section_2">
-                    <div class="row">
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <h2 class="shop_text">About Petcom</h2>
-                            <p class="dummy_text">קהילה חברתית יזמית המושתת על עזרה הדדית, שיוויוניות ועזרה לקהילה </p>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <h2 class="shop_text">Useful Links</h2>
-                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
-                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
-                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
-                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
-                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <h2 class="shop_text">Overview</h2>
-                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
-                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
-                            <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <h2 class="adderess_text">Instagram</h2>
-                            <div class="footer-img">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="footer-img"><img src="../images/footer-img1.png" style="width: 100%;"></div>
-                                        <div class="footer-img"><img src="../images/footer-img2.png" style="width: 100%;"></div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="footer-img"><img src="../images/footer-img3.png" style="width: 100%;"></div>
-                                        <div class="footer-img"><img src="../images/footer-img4.png" style="width: 100%;"></div>
-                                    </div>
+                    <li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
+                    <!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
+                    <li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
+                    <li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
+                </ul>
+            </div>
+            <div class="footer_section_2">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">About Petcom</h2>
+                        <p class="dummy_text">קהילה חברתית יזמית המושתת על עזרה הדדית, שיוויוניות ועזרה לקהילה </p>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">Useful Links</h2>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">Overview</h2>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="adderess_text">Instagram</h2>
+                        <div class="footer-img">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="footer-img"><img src="../images/footer-img1.png" style="width: 100%;"></div>
+                                    <div class="footer-img"><img src="../images/footer-img2.png" style="width: 100%;"></div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="footer-img"><img src="../images/footer-img3.png" style="width: 100%;"></div>
+                                    <div class="footer-img"><img src="../images/footer-img4.png" style="width: 100%;"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="social-icon">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="icons">
-                            <ul>
-                                <li><a href="#"><img src="../images/fb-icon.png"></a></li>
-                                <li><a href="#"><img src="../images/twitter-icon.png"></a></li>
-                                <li><a href="#"><img src="../images/google-icon.png"></a></li>
-                                <li><a href="#"><img src="../images/linkedin-icon.png"></a></li>
-                            </ul>
-                        </div>
+        <div class="social-icon">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="icons">
+                        <ul>
+                            <li><a href="#"><img src="../images/fb-icon.png"></a></li>
+                            <li><a href="#"><img src="../images/twitter-icon.png"></a></li>
+                            <li><a href="#"><img src="../images/google-icon.png"></a></li>
+                            <li><a href="#"><img src="../images/linkedin-icon.png"></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <script>
         function openNav() {

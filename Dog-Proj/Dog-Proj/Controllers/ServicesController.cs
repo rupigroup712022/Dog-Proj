@@ -51,7 +51,8 @@ namespace Dog_Proj.Controllers
         public string setRating([FromBody] Dictionary<string, string> u)
         {
             Service service = new Service();
-            service.setRating(Convert.ToInt16(u["service_id"]), Convert.ToInt16(u["rating"]), Convert.ToInt16(u["handlerId"]));
+            service.setRating(Convert.ToInt16(u["service_id"]), Convert.ToInt16(u["rating"]), Convert.ToInt16(u["handlerId"]),
+                Convert.ToInt32(u["type"]));
             return u["service_id"];
         }
     }

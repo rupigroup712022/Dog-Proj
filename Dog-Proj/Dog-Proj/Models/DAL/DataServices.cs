@@ -565,6 +565,7 @@ namespace Dog_Proj.Models.DAL
                     account.YardSize = (string)dataReader["yardSize"];
                     account.HouseType = (string)dataReader["HouseType"];
                     account.Passwords = (string)dataReader["passwords"];
+                    account.NumOfPoints = Convert.ToInt32(dataReader["numOfPoints"]);
                 }
 
                 dataReader.Close();
@@ -1188,6 +1189,7 @@ namespace Dog_Proj.Models.DAL
                     waitingReqList[i].Add((dataReader["phone"]).ToString());
                     waitingReqList[i].Add((dataReader["id"]).ToString());//6
                     waitingReqList[i].Add((dataReader["idUser"]).ToString());//6
+
                     i++;
                 }
 
@@ -1244,6 +1246,7 @@ namespace Dog_Proj.Models.DAL
                     rating_dic["avg"]= (dataReader["avgPoint"]).ToString();
                     rating_dic["rating_number"] = (dataReader["rating_number"]).ToString();
                     rating_dic["id"] = (dataReader["id"]).ToString();
+                    rating_dic["numOfPoints"] = (dataReader["numOfPoints"]).ToString();
                 }
 
                 dataReader.Close();
@@ -1268,7 +1271,7 @@ namespace Dog_Proj.Models.DAL
         
        private SqlCommand commandGetFamilyId(short handlerId, SqlConnection con)
         {
-            string str = "SELECT avgPoint, rating_number, A.id" +
+            string str = "SELECT avgPoint, rating_number, A.id, A.numOfPoints" +
                 " FROM UsersFamliy U JOIN Accounts A ON A.id=U.familyId" +
                 " WHERE U.id=@handlerId";
             SqlCommand cmd = createCommand(con, str);
@@ -1290,7 +1293,7 @@ namespace Dog_Proj.Models.DAL
                 return cmd;
         }
 
-        public void setAvgRating(double new_avg, int new_rating_number, short familyId)
+        public void setAvgRating(double new_avg, int new_rating_number, short familyId,int new_points)
         {
 
             SqlConnection con = null;
@@ -1301,7 +1304,7 @@ namespace Dog_Proj.Models.DAL
                 con = Connect("DogsProjDB");
 
                 //C Create the Insert SqlCommand
-                SqlCommand insertCommand = commandsetNewAvg(new_avg, new_rating_number, familyId, con);
+                SqlCommand insertCommand = commandsetNewAvg(new_avg, new_rating_number, familyId, con,new_points);
                 numEffected = insertCommand.ExecuteNonQuery();
 
             }
@@ -1320,9 +1323,9 @@ namespace Dog_Proj.Models.DAL
 
 
         }
-        private SqlCommand commandsetNewAvg (double new_avg, int new_rating_number, short familyId, SqlConnection con)
+        private SqlCommand commandsetNewAvg (double new_avg, int new_rating_number, short familyId, SqlConnection con, int new_points)
         {
-            string str = "UPDATE Accounts SET avgPoint=@new_avg, rating_number=@new_rating_number"+
+            string str = "UPDATE Accounts SET avgPoint=@new_avg, rating_number=@new_rating_number, numOfPoints=@new_points"+
                 " where id=@familyId";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@new_avg", SqlDbType.Float);
@@ -1331,6 +1334,8 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters["@new_rating_number"].Value = new_rating_number;
             cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
             cmd.Parameters["@familyId"].Value = familyId;
+            cmd.Parameters.Add("@new_points", SqlDbType.Int);
+            cmd.Parameters["@new_points"].Value = new_points;
             return cmd;
 
         }

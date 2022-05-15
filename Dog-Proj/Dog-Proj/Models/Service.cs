@@ -17,7 +17,7 @@ namespace Dog_Proj.Models
         string note;
         string servicetype;
         string quantity;
-        int UserId;
+        int userId;
         int familyId;
 
         public Service() { }
@@ -54,7 +54,7 @@ namespace Dog_Proj.Models
         public string Note { get => note; set => note = value; }
         public string Servicetype { get => servicetype; set => servicetype = value; }
         public string Quantity { get => quantity; set => quantity = value; }
-        public int UserId1 { get => UserId; set => UserId = value; }
+        public int UserId { get => userId; set => userId = value; }
         public int FamilyId { get => familyId; set => familyId = value; }
 
         public int InsertServices(int UserId)
@@ -94,19 +94,22 @@ namespace Dog_Proj.Models
         }
 
 
-        public void setRating(short service_id, short rating,short handlerId)
+        public void setRating(short service_id, short rating,short handlerId,int type)
         {
             DataServices dbs = new DataServices();
             Dictionary<string, string> dic= dbs.setRating(service_id, rating,handlerId);
-            calculate_average(Convert.ToDouble(dic["avg"]), Convert.ToInt32(dic["rating_number"]),rating ,Convert.ToInt16(dic["id"]));
+            calculate(Convert.ToDouble(dic["avg"]), Convert.ToInt32(dic["rating_number"]), rating, Convert.ToInt16(dic["id"]), type,
+                Convert.ToInt32(dic["numOfPoints"])) ;
         }
 
 
-        public void calculate_average (double average, int rating_number, short rating, short familyId)
+        public void calculate (double average, int rating_number, short rating, short familyId,int new_points,int prev_points)
+            //צריך לטפל בחריגה של החזת נקודות בעת ביטול בקשה 
         {
             double new_avg = (average + rating) / (rating_number + 1);
             DataServices dbs = new DataServices();
-            dbs.setAvgRating(new_avg, rating_number+1, familyId);
+            int points = prev_points + new_points;
+            dbs.setAvgRating(new_avg, rating_number+1, familyId, points);
             
         }
 
