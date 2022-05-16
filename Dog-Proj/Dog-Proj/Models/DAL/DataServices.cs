@@ -63,7 +63,98 @@ namespace Dog_Proj.Models.DAL
             return 0;
         }
 
+        public Dictionary<string, string> getPoints (int userid)
+        {
 
+            SqlConnection con = null;
+           // int numEffected = 0;
+            try
+            {
+                //C - Connect to the Database
+                con = Connect("DogsProjDB");
+
+                //C Create the Insert SqlCommand
+                SqlCommand insertCommand = commandGetFamilyPoints(Convert.ToInt16(userid), con);
+                SqlDataReader dataReader = insertCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                Dictionary<string, string> rating_dic = new Dictionary<string, string>();
+                while (dataReader.Read())
+
+                {
+                    rating_dic["id"] = (dataReader["id"]).ToString();
+                    rating_dic["numOfPoints"] = (dataReader["numOfPoints"]).ToString();
+                }
+
+                dataReader.Close();
+                return rating_dic;
+            }
+
+            catch (Exception exep)
+            {
+                // this code needs to write the error to a log file
+                throw new Exception("Error", exep);
+            }
+
+            finally
+            {
+                //C Close Connction
+                con.Close();
+            }
+
+        }
+
+        public void setPoints(int familyId, int points)
+        {
+
+            SqlConnection con = null;
+            int numEffected = 0;
+            try
+            {
+                //C - Connect to the Database
+                con = Connect("DogsProjDB");
+
+                //C Create the Insert SqlCommand
+                SqlCommand insertCommand = commandsetPoints(points, Convert.ToInt16(familyId), con);
+                numEffected = insertCommand.ExecuteNonQuery();
+            }
+
+            catch (Exception exep)
+            {
+                // this code needs to write the error to a log file
+                throw new Exception("Error", exep);
+            }
+
+            finally
+            {
+                //C Close Connction
+                con.Close();
+            }
+
+        }
+
+
+        private SqlCommand commandsetPoints(int new_points, short familyId, SqlConnection con)
+        {
+            string str = "UPDATE Accounts SET numOfPoints=@new_points" +
+                " where id=@familyId";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
+            cmd.Parameters["@familyId"].Value = familyId;
+            cmd.Parameters.Add("@new_points", SqlDbType.Int);
+            cmd.Parameters["@new_points"].Value = new_points;
+            return cmd;
+
+        }
+
+        private SqlCommand commandGetFamilyPoints(short userId, SqlConnection con)
+        {
+            string str = "SELECT A.id, A.numOfPoints" +
+                " FROM UsersFamliy U JOIN Accounts A ON A.id=U.familyId" +
+                " WHERE U.id=@handlerId";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@handlerId", SqlDbType.SmallInt);
+            cmd.Parameters["@handlerId"].Value = (short)userId;
+            return cmd;
+        }
 
         public int checking(string username,int familyId)
         {
@@ -1234,7 +1325,7 @@ namespace Dog_Proj.Models.DAL
 
                 //C Create the Insert SqlCommand
                 SqlCommand insertCommand = commandSetRating(service_id, rating,handlerId, con);
-                SqlCommand familyIdCommand = commandGetFamilyId(handlerId, con);
+                SqlCommand familyIdCommand = commandGetFamilyData(handlerId, con);
                 numEffected = insertCommand.ExecuteNonQuery();
                 
                 SqlDataReader dataReader = familyIdCommand.ExecuteReader(CommandBehavior.CloseConnection);
@@ -1269,7 +1360,7 @@ namespace Dog_Proj.Models.DAL
         }
 
         
-       private SqlCommand commandGetFamilyId(short handlerId, SqlConnection con)
+       private SqlCommand commandGetFamilyData(short handlerId, SqlConnection con)
         {
             string str = "SELECT avgPoint, rating_number, A.id, A.numOfPoints" +
                 " FROM UsersFamliy U JOIN Accounts A ON A.id=U.familyId" +
@@ -1304,9 +1395,10 @@ namespace Dog_Proj.Models.DAL
                 con = Connect("DogsProjDB");
 
                 //C Create the Insert SqlCommand
-                SqlCommand insertCommand = commandsetNewAvg(new_avg, new_rating_number, familyId, con,new_points);
+                SqlCommand insertCommand = commandsetNewAvg(new_avg, new_rating_number, familyId, con);
+                SqlCommand insertCommandpoints = commandsetPoints(new_points, familyId, con);
                 numEffected = insertCommand.ExecuteNonQuery();
-
+                numEffected += insertCommandpoints.ExecuteNonQuery();
             }
 
             catch (Exception exep)
@@ -1323,9 +1415,9 @@ namespace Dog_Proj.Models.DAL
 
 
         }
-        private SqlCommand commandsetNewAvg (double new_avg, int new_rating_number, short familyId, SqlConnection con, int new_points)
+        private SqlCommand commandsetNewAvg (double new_avg, int new_rating_number, short familyId, SqlConnection con)
         {
-            string str = "UPDATE Accounts SET avgPoint=@new_avg, rating_number=@new_rating_number, numOfPoints=@new_points"+
+            string str = "UPDATE Accounts SET avgPoint=@new_avg, rating_number=@new_rating_number "+
                 " where id=@familyId";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@new_avg", SqlDbType.Float);
@@ -1334,8 +1426,7 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters["@new_rating_number"].Value = new_rating_number;
             cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
             cmd.Parameters["@familyId"].Value = familyId;
-            cmd.Parameters.Add("@new_points", SqlDbType.Int);
-            cmd.Parameters["@new_points"].Value = new_points;
+
             return cmd;
 
         }

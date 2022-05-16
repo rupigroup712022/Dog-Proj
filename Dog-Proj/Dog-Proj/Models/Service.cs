@@ -57,18 +57,35 @@ namespace Dog_Proj.Models
         public int UserId { get => userId; set => userId = value; }
         public int FamilyId { get => familyId; set => familyId = value; }
 
-        public int InsertServices(int UserId)
+        public int InsertServices(int userId)
         {
-            DataServices ds = new DataServices();
-            return ds.InsertServices( UserId, this);
 
+            DataServices dbs = new DataServices();
+            Dictionary<string, string> dic = dbs.getPoints(UserId);
+
+            var smtpClient = new SmtpClient();
+
+            //smtpClient.Send("email", "recipient", "subject", "body");
+
+            if (Convert.ToInt32(dic["numOfPoints"]) >= Convert.ToInt32(Servicetype))
+            {
+                dbs.setPoints(Convert.ToInt32(dic["id"]), Convert.ToInt32(dic["numOfPoints"]) - Convert.ToInt32(Servicetype));
+                return dbs.InsertServices(userId, this);
+            }
+
+            else
+            {
+                throw new Exception("אין מספיק נקודות זכות");
+                ///לטפל במקרה קצה של 3 בקשות
+            }
         }
-        
 
        public void InsertReqServices(int idService, int idUser)
         {
+            ///idUser נותן השירות
             DataServices ds = new DataServices();
-            string str= ds.InsertReqServices(idService, idUser);
+     
+                string str = ds.InsertReqServices(idService, idUser);
             Console.WriteLine(str);
             try
             {

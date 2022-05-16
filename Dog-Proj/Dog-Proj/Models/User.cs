@@ -98,30 +98,36 @@ namespace Dog_Proj.Models {
             return dbs.getWaitApproval(userid);
 
         }
-        public void setRequests(int userid,string serviceId,bool val)
+
+
+
+        public void setRequests(int userid,string serviceId,bool val,string type)
         {
             DataServices dbs = new DataServices();
-            string str= dbs.setRequestsDb(userid,serviceId,val);
-
-          
-            var smtpClient = new SmtpClient();
            
+            var smtpClient = new SmtpClient();
+
             //smtpClient.Send("email", "recipient", "subject", "body");
+            string str = dbs.setRequestsDb(userid, serviceId, val);
 
             if (val)
             {
-                var mailMessage = new MailMessage
-                {
-                    Subject = "פרטי בקשה:",
-                    Body = "<h1>Hello</h1> </br><p>הבקשה אושרה, היכנס לאתר לצפייה בפרטי הבקשה</p>",
-                    IsBodyHtml = true
-                };
-                mailMessage.To.Add(str);
 
-                smtpClient.Send(mailMessage);//לקחת נקודות
+                    var mailMessage = new MailMessage
+                    {
+                        Subject = "פרטי בקשה:",
+                        Body = "<h1>Hello</h1> </br><p>הבקשה אושרה, היכנס לאתר לצפייה בפרטי הבקשה</p>",
+                        IsBodyHtml = true
+                    };
+                    mailMessage.To.Add(str);
+
+                    smtpClient.Send(mailMessage);//לקחת נקודות
+                
+               
             }
             else
             {
+
                 var mailMessage = new MailMessage
                 {
                     Subject = "פרטי בקשה:",
@@ -132,8 +138,7 @@ namespace Dog_Proj.Models {
 
                 smtpClient.Send(mailMessage);// להחזיר נקודות
             }
-
-
+            
 
         }
         public List<List<string>> GetAvUserPension(int userid)

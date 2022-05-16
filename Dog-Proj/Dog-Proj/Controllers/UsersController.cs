@@ -90,7 +90,7 @@ namespace Dog_Proj.Controllers
             {
                 b = false;
             }
-             user.setRequests(Convert.ToInt32(u["userId"]),u["serviceId"],b);
+             user.setRequests(Convert.ToInt32(u["userId"]),u["serviceId"],b, u["type"]);
             return u["serviceId"];
         }
 

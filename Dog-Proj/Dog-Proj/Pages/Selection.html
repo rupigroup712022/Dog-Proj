@@ -71,15 +71,17 @@
 
         function approvedRequest() {
             let serviceId = $(this).parent().attr('id');
+            let type = $("#type" + serviceId).html();
             let apiCall = "../api/Users/answeredRequest";
             console.log(JSON.stringify({ ...u, serviceId: serviceId, val: true }));
-            ajaxCall("POST", apiCall, JSON.stringify({ ...u, serviceId: serviceId, val: true }), RequestSCB, getRequestsECB);
+            ajaxCall("POST", apiCall, JSON.stringify({ ...u, serviceId: serviceId, val: true, type:type}), RequestSCB, getRequestsECB);
         }
 
         function denyRequest() {
             let serviceId = $(this).parent().attr('id');
+            let type = $("#type" + serviceId).html();
             let apiCall = "../api/Users/answeredRequest";
-            ajaxCall("POST", apiCall, JSON.stringify({ ...u, serviceId: serviceId,val:false }),RequestSCB, getRequestsECB)
+            ajaxCall("POST", apiCall, JSON.stringify({ ...u, serviceId: serviceId, val: false, type: type }),RequestSCB, getRequestsECB)
         }
 
         function RequestSCB(serviceId) {
@@ -112,7 +114,7 @@
                     str += "<td class='user col-12'><h6><b>טלפון ושם:</b>" + l[12]+" " +l[11] + "</h6></td>";
                     str += "</tr>";
                     str += "<tr class='row1'>";
-                str += "<td class='user col-12'><h6><b>נקודות זכות:</b>" + l[4] + "</h6></td>";
+                str += "<td id='type "+l[16]+"' class='user col-12'><h6><b>נקודות זכות:</b>" + l[4] + "</h6></td>";
                     str += "</tr>";
                     str += "<tr class='row1'>";
                     str += "<td class='user col-12'><h6><b>כתובת:</b>" + address + " </h6></td>";
@@ -168,6 +170,7 @@
                 let str = "";
                 str += "<div class='BTF' id='" + l[16] + "'>";
                 str += "<button class='denyRequest'> ביטול בקשה</button>";
+                //לטפל בביטול בקשה בהחזר נקודות (אם מישהו לא מסיים את ההזמנה צריך לבטל אותה- למי שביקש את הבקשה יהיה גם כפתור ביטול בקשה ואז נחזיר גם לו)
                 str += "<table class='table'>";
                 str += "<tr class='row1'>";
                 str += "<td class='user col-12'><h1>" + l[0] + "</h1></td>";
