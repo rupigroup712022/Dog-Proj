@@ -1,0 +1,313 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- mobile metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- site metas -->
+    <title>D-pot</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <!-- Responsive-->
+    <link rel="stylesheet" href="../css/responsive.css">
+    <!-- fevicon -->
+    <link rel="icon" href="images/fevicon.png" type="../image/gif" />
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="../css/jquery.mCustomScrollbar.min.css">
+    <!-- Tweaks for older IEs-->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <!-- owl stylesheets -->
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <link href="../css/Login.css" rel="stylesheet" />
+    <script src="../Scripts/ajaxCall.js"></script>
+    <script src="../Scripts/jquery-3.4.1.js"></script>
+    <link href="../css/style.css" rel="stylesheet" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="../css/priceListCSS.css" rel="stylesheet" />
+    
+
+</head>
+<body>
+    <!-- section banner start -->
+    <div class="header-main">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div><a href="index.html"><img src="../images/LOGO1S.png" /></a></div>
+                </div>
+                <div class="col-md-8">
+                    <div class="menu_text">
+                        <ul>
+                            <li class="LogeIn">
+
+                                <button id="LogOut">Log Out</button>
+                            </li>
+                            <li class="active">
+                                <div id="myNav" class="overlay">
+                                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                                    <div class="overlay-content">
+                                        <a href="Userselection.html">החלפת בן משפחה</a>
+                                        <a href="mainScreen.html">הגשת בקשה לשירות</a>
+                                        <a href="myRequests.html"> בקשות שביקשתי</a>
+                                        <a href="Selection.html">בקשות שקיבלתי</a>
+                                        <a href="SingInUser.html">הוספת בן משפחה</a>
+                                        <a href="SingInDog.html">הוספת כלב</a>
+                                    </div>
+                                </div>
+                                <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- section gallery start -->
+    <div class="demo10">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 col-sm-6">
+                    <div class="pricingTable10">
+                        <div class="pricingTable-header">
+                            <h3 class="heading">Standard</h3>
+                            <span class="price-value">
+                                <span class="month">נקודות זכות</span> 10
+                                <span class="currency"></span>
+                            </span>
+                        </div>
+                        <div class="pricing-content">
+                            <ul>
+                                <li>50GB Disk Space</li>
+                                <li>50 Email Accounts</li>
+                                <li>50GB Monthly Bandwidth</li>
+                                <li>10 Subdomains</li>
+                                <li>15 Domains</li>
+                            </ul>
+                            <a href="#" class="read">sign up</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-sm-6">
+                    <div class="pricingTable10">
+                        <div class="pricingTable-header">
+                            <h3 class="heading">Standard</h3>
+                            <span class="price-value">
+                                <span class="month">נקודות זכות</span> 10
+                                <span class="currency"></span>
+                            </span>
+                        </div>
+                        <div class="pricing-content">
+                            <ul>
+                                <li>50GB Disk Space</li>
+                                <li>50 Email Accounts</li>
+                                <li>50GB Monthly Bandwidth</li>
+                                <li>10 Subdomains</li>
+                                <li>15 Domains</li>
+                            </ul>
+                            <a href="#" class="read">sign up</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-SM-6 col-sm-6">
+                    <div class="pricingTable10">
+                        <div class="pricingTable-header">
+                            <h3 class="heading">Business</h3>
+                            <span class="price-value">
+                                <span class="month">נקודות זכות</span> 20
+                                <span class="currency"></span>
+                            </span>
+                        </div>
+                        <div class="pricing-content">
+                            <ul>
+                                <li>60GB Disk Space</li>
+                                <li>60 Email Accounts</li>
+                                <li>60GB Monthly Bandwidth</li>
+                                <li>15 Subdomains</li>
+                                <li>20 Domains</li>
+                            </ul>
+                            <a href="#" class="read">sign up</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-SM-6 col-sm-6">
+                    <div class="pricingTable10">
+                        <div class="pricingTable-header">
+                            <h3 class="heading">Premium</h3>
+                            <span class="price-value">
+                                <span class="month">נקודות זכות</span> 30
+                                <span class="currency"></span>
+                            </span>
+                        </div>
+                        <div class="pricing-content">
+                            <ul>
+                                <li>70GB Disk Space</li>
+                                <li>70 Email Accounts</li>
+                                <li>70GB Monthly Bandwidth</li>
+                                <li>20 Subdomains</li>
+                                <li>25 Domains</li>
+                            </ul>
+                            <a href="#" class="read">sign up</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="pricingTable10">
+                        <div class="pricingTable-header">
+                            <h3 class="heading">Extra</h3>
+                            <span class="price-value">
+                                <span class="month">נקודות זכות</span> 40
+                                <span class="currency"></span>
+                            </span>
+                        </div>
+                        <div class="pricing-content">
+                            <ul>
+                                <li>80GB Disk Space</li>
+                                <li>80 Email Accounts</li>
+                                <li>80GB Monthly Bandwidth</li>
+                                <li>25 Subdomains</li>
+                                <li>30 Domains</li>
+                            </ul>
+                            <a href="#" class="read">sign up</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- section gallery end -->
+    <!-- section footer start -->
+    <div class="section_footer">
+        <div class="container">
+            <div class="mail_section">
+                <ul>
+
+                    <li class="footer-logo"><img src="../images/LOGO1S.png" /></li>
+                    <!--<li class="footer-logo"><img src="images/map-icon.png"><span class="map_text">Gb road 123 london Uk</span></li>-->
+                    <li class="footer-logo"><img src="../images/call-icon.png"><span class="map_text">077-85854623</span></li>
+                    <li class="footer-logo"><img src="../images/email-icon.png"><span class="map_text">Petcom@gmail.com</span></li>
+                </ul>
+            </div>
+            <div class="footer_section_2">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">About Petcom</h2>
+                        <p class="dummy_text">קהילה חברתית יזמית המושתת על עזרה הדדית, שיוויוניות ועזרה לקהילה </p>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">Useful Links</h2>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Dictionary</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Pet Attitudes</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Call a Doctor</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help a Pet</span></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="shop_text">Overview</h2>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Bacerim Dictionary</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">Help Links</span></div>
+                        <div class="image-icon"><img src="../images/bulit-icon.png"><span class="pet_text">bacerim Attitudes</span></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <h2 class="adderess_text">Instagram</h2>
+                        <div class="footer-img">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="footer-img"><img src="../images/footer-img1.png" style="width: 100%;"></div>
+                                    <div class="footer-img"><img src="../images/footer-img2.png" style="width: 100%;"></div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="footer-img"><img src="../images/footer-img3.png" style="width: 100%;"></div>
+                                    <div class="footer-img"><img src="../images/footer-img4.png" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="social-icon">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="icons">
+                            <ul>
+                                <li><a href="#"><img src="../images/fb-icon.png"></a></li>
+                                <li><a href="#"><img src="../images/twitter-icon.png"></a></li>
+                                <li><a href="#"><img src="../images/google-icon.png"></a></li>
+                                <li><a href="#"><img src="../images/linkedin-icon.png"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
+
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>
+
+    <!-- Javascript files-->
+    <!--<script src="../Scripts/jquery.min.js"></script>
+    <script src="../Scripts/popper.min.js"></script>
+    <script src="../Scripts/bootstrap.bundle.min.js"></script>
+    <script src="../Scripts/jquery-3.0.0.min.js"></script>
+    <script src="../Scripts/plugin.js"></script>-->
+    <!-- sidebar -->
+    <!--<script src="../Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../Scripts/custom.js"></script>-->
+    <!-- javascript -->
+    <!--<script src="../Scripts/owl.carousel.js"></script>
+    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>-->
+    <!--<script>
+        $(document).ready(function () {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function () {
+
+                $(this).addClass('transition');
+            }, function () {
+
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
+
+
+    <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
+
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>-->
+
+</body>
+</html>
+

@@ -193,6 +193,7 @@
     <Content Include="css\nice-select.css" />
     <Content Include="css\normalize.css" />
     <Content Include="css\owl.carousel.min.css" />
+    <Content Include="css\priceListCSS.css" />
     <Content Include="css\responsive.css" />
     <Content Include="css\slick.css" />
     <Content Include="css\style.css" />
@@ -258,6 +259,7 @@
     <Content Include="images\תטייל איתי.jpg" />
     <Content Include="images\תשמור עלי.jpg" />
     <Content Include="Pages\myRequests.html" />
+    <Content Include="Pages\PriceList.html" />
     <Content Include="Pages\Selection.html" />
     <Content Include="Pages\OpUser.html" />
     <Content Include="Pages\pension.html" />
