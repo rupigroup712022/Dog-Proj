@@ -247,22 +247,25 @@ namespace Dog_Proj.Models.DAL
         public string InsertReqServices(int idService, int idUser)
         {
                 SqlConnection con = null;
-                 int numeffected;
+                 int numeffected=0;
 
-                try
+            try
+            {
+                //C - Connect to the Database
+                con = Connect("DogsProjDB");
+
+                //C Create the Insert SqlCommand
+                SqlCommand insertCommand = CreateInsertServiceReq(con, idService, idUser);
+
+                //E Execute
+
+                numeffected = insertCommand.ExecuteNonQuery();
+                string str = "";
+                if (numeffected != 0)
                 {
-                    //C - Connect to the Database
-                    con = Connect("DogsProjDB");
-
-                    //C Create the Insert SqlCommand
-                    SqlCommand insertCommand = CreateInsertServiceReq(con, idService, idUser);
-
-                    //E Execute
-                     numeffected = insertCommand.ExecuteNonQuery();
                 SqlCommand insertCommandEmail = getEmail(idService.ToString(), con);
                 SqlDataReader dataReader = insertCommandEmail.ExecuteReader(CommandBehavior.CloseConnection);
-                
-                string str = "";
+
                 while (dataReader.Read())
                 {
 
@@ -276,6 +279,7 @@ namespace Dog_Proj.Models.DAL
                     throw new Exception("No email was found");
                 }
 
+            }
                 return str;
 
             }
@@ -299,7 +303,8 @@ namespace Dog_Proj.Models.DAL
         private SqlCommand CreateInsertServiceReq(SqlConnection con, int idService, int idUser)
         {
 
-            string commandStr = "INSERT INTO PendingReq (idService,idUser) VALUES (@idService,@idUser)";
+            string commandStr = "if not exists (select * from PendingReq where idService=@idService)" +
+                " INSERT INTO PendingReq (idService,idUser) VALUES (@idService,@idUser)";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@idService", SqlDbType.SmallInt);
             cmd.Parameters["@idService"].Value = (short)idService;
@@ -844,13 +849,13 @@ namespace Dog_Proj.Models.DAL
             return cmd;
         }
 
-        public List<List<string>> GetAvUser(string day, string hour,int userid)
+        public List<List<string>> GetAvUser(string day, string hour,int userid,short serviceId)
         {
             SqlConnection con = null;
             try
             {
                 con = Connect("DogsProjDB");
-                SqlCommand selectCommand = AvDayHourCheck(con, day, hour,userid);
+                SqlCommand selectCommand = AvDayHourCheck(con, day, hour,userid,serviceId);
                 SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
                 int i=0;
                 List<List<string>>user = new List<List<string>>();
@@ -870,7 +875,10 @@ namespace Dog_Proj.Models.DAL
                 }
 
                 dataReader.Close();
-                
+                if (i==0)
+                {
+                    return user;
+                }
                 return user;
             }
             catch (Exception ex)
@@ -886,7 +894,7 @@ namespace Dog_Proj.Models.DAL
             }
         }
 
-        public List<List<string>> GetAvUserPension(int userid)
+        public List<List<string>> GetAvUserPension(int userid)//to do the same logic as the getavuser to add serviceId
         {
             SqlConnection con = null;
             try
@@ -939,12 +947,13 @@ namespace Dog_Proj.Models.DAL
         
 
 
-        private SqlCommand AvDayHourCheck(SqlConnection con, string day, string hour, int familyId)// שאילתה שבודקת מי זמין ביום ובשעה הספציפית שהוכנסו
+        private SqlCommand AvDayHourCheck(SqlConnection con, string day, string hour, int familyId, short serviceId)// שאילתה שבודקת מי זמין ביום ובשעה הספציפית שהוכנסו
         {
-            string str = "SELECT username,age,phone,avgPoint,UserId,city,street,homeNum" +
+            string str = "if not exists (select * from PendingReq where idService=@idService) " +
+                " SELECT username,age,phone,avgPoint,UserId,city,street,homeNum" +
                 " FROM TimesAvailablity T JOIN  UsersFamliy U ON T.UserId=U.id JOIN Accounts A on" +
                 " U.familyId=A.id WHERE T.availableDays LIKE @availableDays and T.availableHours" +
-                " LIKE @availableHours and U.familyId!=@familyId";
+                " LIKE @availableHours and U.familyId!=@familyId ";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@availableDays", SqlDbType.Char);
             cmd.Parameters["@availableDays"].Value = day;
@@ -952,6 +961,8 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters["@availableHours"].Value = hour;
             cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
             cmd.Parameters["@familyId"].Value =(short)familyId;
+            cmd.Parameters.Add("@idService", SqlDbType.SmallInt);
+            cmd.Parameters["@idService"].Value = serviceId;
             return cmd;
         }
 

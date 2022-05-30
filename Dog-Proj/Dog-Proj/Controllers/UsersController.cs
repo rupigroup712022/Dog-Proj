@@ -17,7 +17,8 @@ namespace Dog_Proj.Controllers
         public List<List<string>> Post([FromBody]Dictionary<string, string> userAv)
         {
             User user = new User();
-            return user.GetAvUser(userAv["day"], userAv["hour"],Convert.ToInt32(userAv["userid"]));
+            return user.GetAvUser(userAv["day"], userAv["hour"],Convert.ToInt32(userAv["userid"]), 
+                Convert.ToInt16(userAv["serviceId"]));
         }
 
         // POST api/<controller>

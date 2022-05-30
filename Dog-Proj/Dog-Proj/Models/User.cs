@@ -57,10 +57,10 @@ namespace Dog_Proj.Models {
 
         }
 
-        public List<List<string>> GetAvUser(string day, string hour, int userid)
+        public List<List<string>> GetAvUser(string day, string hour, int userid,short serviceId)
         {
             DataServices dbs = new DataServices();
-            return dbs.GetAvUser(day, hour,userid);
+            return dbs.GetAvUser(day, hour,userid, serviceId);
         }
 
         public List<List<string>> getIncomeApprovedRequests(int userid)

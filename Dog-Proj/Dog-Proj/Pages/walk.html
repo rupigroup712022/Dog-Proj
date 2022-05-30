@@ -144,7 +144,13 @@
         }
 
         function postECB(err) {
-            alert("Error");
+            console.log(err);
+            Swal.fire({
+                title: err.responseJSON.ExceptionMessage,
+                icon: "error",
+                showCancelButton: true,                confirmButtonColor: '#3085d6',                cancelButtonColor: '#d33',                confirmButtonText: 'חזרה לעמוד הראשי',
+                cancelButtonText: 'לביטול'
+            })                .then((result) => {                    if (result.isConfirmed) {                        window.location.href = 'mainScreen.html';                    }                });
         }
 
 
