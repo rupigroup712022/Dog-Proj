@@ -34,10 +34,10 @@ namespace Dog_Proj.Controllers
 
         [HttpPost]
         [Route ("api/Services/req")]
-        public void Post([FromBody] Dictionary<string, int> req)
+        public bool Post([FromBody] Dictionary<string, int> req)
         {
             Service service = new Service();  
-            service.InsertReqServices(req["idService"], req["idUser"]);
+            return service.InsertReqServices(req["idService"], req["idUser"]);
         }
 
 

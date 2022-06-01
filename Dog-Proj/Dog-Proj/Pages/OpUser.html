@@ -62,10 +62,11 @@
 
         function checkchoice() {
 
-            var selcDiv = $('#MakerList').find(".BTF").filter(function () {// יוצר מערך חדש של כל הדיבים שעומדים בתנאי
-                return $(this).css('background-color') == 'rgb(255, 255, 102)';
-            });
-            console.log(selcDiv)
+            var selcDiv = $('#MakerList').find(".selected");
+            //    .filter(function () {// יוצר מערך חדש של כל הדיבים שעומדים בתנאי
+            //    return $(this).css('background-color') == 'rgb(255, 255, 102)';
+            //});
+            console.log(selcDiv);
             if (selcDiv.length <= 3 && JSON.parse(localStorage.getItem("Difference_In_Days") == "1")) { // אם נבחר  שלושה דיבים או פחות ואפשר
                 selcDiv.map(function() {// לכל הדיבים שנשמרו הוא שומר את האוביקט
                     
@@ -143,6 +144,7 @@
                     day: JSON.parse(localStorage.getItem("serviceDay")),
                     hour: JSON.parse(localStorage.getItem("serviceHour")),
                     userid: JSON.parse(localStorage.getItem("familyId")),
+                    serviceId: JSON.parse(localStorage.getItem("ServicesId"))
                 }
                 console.log(userAv);
                 let api = "../api/Users/userAv";
@@ -152,8 +154,19 @@
            
         }
         function getSuccessAll(data) {// מקבל רשימה  של אנשים פונצניאלים שפנוים
-            let location = renderList(data);// רנדור למסך של הדיבים של האנשים הפונצנאלים הפנויים
-            console.log(data);
+            if (data && data.length>0) {
+                let location = renderList(data);// רנדור למסך של הדיבים של האנשים הפונצנאלים הפנויים
+                console.log(data);
+            }
+            else {
+                Swal.fire({
+                    title: "נותן השירות כבר נבחר",
+                    icon: "error",
+                    //    timer: 2500,
+                }).then(function () {
+                    window.location.href = 'myRequests.html';
+                });
+            }
         }
 
         function getSuccessPension(data) {// מקבל רשימה  של אנשים פונצניאלים שפנוים
@@ -410,21 +423,19 @@
         selectedU = [];
         function selectUser(id) {
             console.log(id);
-            var colors = $("#" + id).css("background-color");//תופס את הצבע של הדיב
-            console.log(colors);
+            var div = $("#" + id);
 
-            if ($("#" + id).css("background-color") == "rgb(255, 165, 0)") { // אם זה כתום
+            if (!$("#" + id).hasClass('selected')) {
+                div.addClass('selected');
                 $("#" + id).css("background-color", "rgb(255, 255, 102)");//תהפוך לצהוב
                 $("#" + id).find(".btn").html("ביטול הבקשה");// ותשנה את הכתב לביטול בקשה
-                console.log($("#" + id).find(".btn"));
                 add(id);
             }
             else {
-                // אם הוא שונה מצבע כתום - רוצה להוריד בחירה
+                div.removeClass('selected');
                 $("#" + id).css("background-color", "rgb(255, 165, 0)")// תחליף לכתום
                 selectedU = selectedU.filter(l => l != id);// תוריד מהשמירה במערך
                 $("#" + id).find(".btn").html("בחירת משתמש");
-
                 console.log(selectedU);
 
             }
@@ -432,7 +443,6 @@
             function add(id) {// מכניס לתוך מערך את האידי הנבחר
                 selectedU.push(id);
                 console.log(selectedU);
-                console.log(this);
             }
 
         }

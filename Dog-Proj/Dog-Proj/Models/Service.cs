@@ -80,34 +80,39 @@ namespace Dog_Proj.Models
             }
         }
 
-       public void InsertReqServices(int idService, int idUser)
+       public bool InsertReqServices(int idService, int idUser)
         {
             ///idUser נותן השירות
             DataServices ds = new DataServices();
      
                 string str = ds.InsertReqServices(idService, idUser);
-            Console.WriteLine(str);
-            try
+            if (str.Length>0)
             {
-                var smtpClient = new SmtpClient();
 
-                var mailMessage = new MailMessage
+
+                try
                 {
-                    Subject = "התקבלה בקשה חדשה:",
-                    Body = "<h1>Hello</h1> </br><p>היכנס לאתר לצפייה בפרטי הבקשה</p>",
-                    IsBodyHtml = true
-                };
-                mailMessage.To.Add(str);
+                    var smtpClient = new SmtpClient();
 
-                smtpClient.Send(mailMessage);
-            }
-            catch (Exception)
-            {
-                Console.WriteLine(
-                    "auth error");
-            }
+                    var mailMessage = new MailMessage
+                    {
+                        Subject = "התקבלה בקשה חדשה:",
+                        Body = "<h1>Hello</h1> </br><p>היכנס לאתר לצפייה בפרטי הבקשה</p>",
+                        IsBodyHtml = true
+                    };
+                    mailMessage.To.Add(str);
 
-            
+                    smtpClient.Send(mailMessage);
+                    return true;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine(
+                        "auth error");
+                }
+
+            }
+            return false;
         }
 
 

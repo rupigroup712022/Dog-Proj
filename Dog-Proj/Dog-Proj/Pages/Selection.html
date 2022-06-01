@@ -72,14 +72,16 @@
         function approvedRequest() {
             let serviceId = $(this).parent().attr('id');
             let type = $("#type" + serviceId).html();
+            console.log(type);
             let apiCall = "../api/Users/answeredRequest";
-            console.log(JSON.stringify({ ...u, serviceId: serviceId, val: true }));
+            console.log(JSON.stringify({ ...u, serviceId: serviceId, val: true, type: type }));
             ajaxCall("POST", apiCall, JSON.stringify({ ...u, serviceId: serviceId, val: true, type:type}), RequestSCB, getRequestsECB);
         }
 
         function denyRequest() {
             let serviceId = $(this).parent().attr('id');
             let type = $("#type" + serviceId).html();
+            console.log(type);
             let apiCall = "../api/Users/answeredRequest";
             ajaxCall("POST", apiCall, JSON.stringify({ ...u, serviceId: serviceId, val: false, type: type }),RequestSCB, getRequestsECB)
         }
@@ -89,6 +91,7 @@
         }
 
         function getRequestsSCB(d) {
+            console.log(d);
             $('#results').html('');
             const results = d.map(l => {
                 let address = l[13] + " " + l[14] + " " + l[15];
@@ -114,7 +117,7 @@
                     str += "<td class='user col-12'><h6><b>טלפון ושם:</b>" + l[12]+" " +l[11] + "</h6></td>";
                     str += "</tr>";
                     str += "<tr class='row1'>";
-                str += "<td id='type "+l[16]+"' class='user col-12'><h6><b>נקודות זכות:</b>" + l[4] + "</h6></td>";
+                   str += "<td class='user col-12'><h6><b>נקודות זכות:</b><p id='type" + l[16] +"'>" + l[4] + "</p></h6></td>";
                     str += "</tr>";
                     str += "<tr class='row1'>";
                     str += "<td class='user col-12'><h6><b>כתובת:</b>" + address + " </h6></td>";
