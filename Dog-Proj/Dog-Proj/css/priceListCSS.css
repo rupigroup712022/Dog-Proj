@@ -170,3 +170,40 @@
     }
 }
 /* Credit to https://bootsnipp.com/snippets/92erW */
+
+
+
+
+.thirteen h1 {
+    position: relative;
+    font-size: 50PX;
+    font-weight: 700;
+    letter-spacing: 0px;
+    text-transform: uppercase;
+    width: 260PX;
+    text-align: center;
+    margin: auto;
+    white-space: nowrap;
+    border: 2px solid #222;
+    padding: 5px 11px 3px 11px;
+    MARGIN-TOP: 200PX;
+}
+
+    .thirteen h1:before, .thirteen h1:after {
+        background-color: #c56c00;
+        position: absolute;
+        content: '';
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        bottom: 15px;
+        margin-bottom:10PX;
+    }
+
+    .thirteen h1:before {
+        left: -20px;
+    }
+
+    .thirteen h1:after {
+        right: -20px;
+    }
