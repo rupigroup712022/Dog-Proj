@@ -258,6 +258,7 @@
     <Content Include="images\תאכיל אותי1.jpg" />
     <Content Include="images\תטייל איתי.jpg" />
     <Content Include="images\תשמור עלי.jpg" />
+    <Content Include="Pages\HtmlPage1.html" />
     <Content Include="Pages\myRequests.html" />
     <Content Include="Pages\PriceList.html" />
     <Content Include="Pages\Selection.html" />

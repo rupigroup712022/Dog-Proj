@@ -115,8 +115,58 @@ namespace Dog_Proj.Models {
 
                     var mailMessage = new MailMessage
                     {
-                        Subject = "פרטי בקשה:",
-                        Body = "<h1>Hello</h1> </br><p>הבקשה אושרה, היכנס לאתר לצפייה בפרטי הבקשה</p>",
+                        Subject = "PETCOM: עדכון חדש",
+                        Body = @"<html>
+                         <head>
+                                < style >
+                                          p {
+                                              font - family:Calibri;
+                                              font - size: 40px;
+                                              text - align: center;
+                                              color: white;
+                                           }
+                                     body {
+                                            background - color: #fad58c;
+                                            float:right;
+                                            text - align:center;
+                                          }
+                                     h1 {
+                                             font - family: Calibri;
+                                             font - size: 60px;
+                                             text - align: center;
+                                              color: white;
+                                          }
+                                   img{
+                                             height: 150px;
+                                             width: 500px;
+                                      }
+                                 .continer {
+                                               margin - right:650px;
+                                          }
+                                  .read {
+                                            display: inline - block;
+                                             font - size: 16px;
+                                            color: #fffff;
+                                             text - transform: uppercase;
+                                            background: #f2bb13;
+                                             padding: 8px 25px;
+                                              margin: 30px 0;
+                                              margin - top: 30px;
+                                               transition: all .3s ease 0s
+                                               }
+                             </ style >
+                             </ head >
+                              < body >
+                        < div class='continer'>
+                             <div><a href = 'index.html' >< img src='../images/LOGO1S.png' /></a></div>
+                             <div><h1 dir = 'rtl' > התקבלה בקשה חדשה!</h1></div>
+                             <div><P dir = 'rtl' > הבקשה אושרה, היכנס לאתר לצפייה בפרטי הבקשה</P></div>
+                             <div ><a class='rtl' href='index.html'>כניסה לאתר</a></div>
+                             <div><P dir = 'rtl' > אל תשכח לתת שירות בשביל לקבל!</P></div>
+                              <div><P dir = 'rtl' > תמיד בשבילך ולעזרתך חברי PETCOM!</P></div>
+                         </div>
+                  </body>
+                  </html>",
                         IsBodyHtml = true
                     };
                     mailMessage.To.Add(str);
@@ -130,8 +180,58 @@ namespace Dog_Proj.Models {
 
                 var mailMessage = new MailMessage
                 {
-                    Subject = "פרטי בקשה:",
-                    Body = "<h1>Hello</h1> </br><p>הבקשה נדחתה, היכנס לאתר לביצוע בקשה חדשה </p>",
+                    Subject = "PETCOM: עדכון חדש",
+                    Body = @"<html>
+                         <head>
+                                < style >
+                                          p {
+                                              font - family:Calibri;
+                                              font - size: 40px;
+                                              text - align: center;
+                                              color: white;
+                                           }
+                                     body {
+                                            background - color: #fad58c;
+                                            float:right;
+                                            text - align:center;
+                                          }
+                                     h1 {
+                                             font - family: Calibri;
+                                             font - size: 60px;
+                                             text - align: center;
+                                              color: white;
+                                          }
+                                   img{
+                                             height: 150px;
+                                             width: 500px;
+                                      }
+                                 .continer {
+                                               margin - right:650px;
+                                          }
+                                  .read {
+                                            display: inline - block;
+                                             font - size: 16px;
+                                            color: #fffff;
+                                             text - transform: uppercase;
+                                            background: #f2bb13;
+                                             padding: 8px 25px;
+                                              margin: 30px 0;
+                                              margin - top: 30px;
+                                               transition: all .3s ease 0s
+                                               }
+                             </ style >
+                             </ head >
+                              < body >
+                        < div class='continer'>
+                             <div><a href = 'index.html' >< img src='../images/LOGO1S.png' /></a></div>
+                             <div><h1 dir = 'rtl' > התקבלה בקשה חדשה!</h1></div>
+                             <div><P dir = 'rtl' > הבקשה נדחתה, היכנס לאתר לצפייה בפרטי הבקשה</P></div>
+                             <div ><a class='rtl' href='index.html'>כניסה לאתר</a></div>
+                             <div><P dir = 'rtl' > אל תשכח לתת שירות בשביל לקבל!</P></div>
+                              <div><P dir = 'rtl' > תמיד בשבילך ולעזרתך חברי PETCOM!</P></div>
+                         </div>
+                  </body>
+                  </html>",
                     IsBodyHtml = true
                 };
                 mailMessage.To.Add(str);

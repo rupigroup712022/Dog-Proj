@@ -1340,7 +1340,7 @@ namespace Dog_Proj.Models.DAL
                 numEffected = insertCommand.ExecuteNonQuery();
                 
                 SqlDataReader dataReader = familyIdCommand.ExecuteReader(CommandBehavior.CloseConnection);
-                int i = 0;
+                //int i = 0;
                 Dictionary<string,string> rating_dic = new Dictionary<string, string>();
                 while (dataReader.Read())
 
