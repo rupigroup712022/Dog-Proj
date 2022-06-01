@@ -100,7 +100,6 @@ namespace Dog_Proj.Models {
         }
 
 
-
         public void setRequests(int userid,string serviceId,bool val,string type)
         {
             DataServices dbs = new DataServices();
@@ -108,9 +107,8 @@ namespace Dog_Proj.Models {
             var smtpClient = new SmtpClient();
 
             //smtpClient.Send("email", "recipient", "subject", "body");
-            string str = dbs.setRequestsDb(userid, serviceId, val);
-
-            if (val)
+            List <string> str = dbs.setRequestsDb(userid, serviceId, val);
+            if (val) ///מישהו אישר בקשה
             {
 
                     var mailMessage = new MailMessage
@@ -169,7 +167,7 @@ namespace Dog_Proj.Models {
                   </html>",
                         IsBodyHtml = true
                     };
-                    mailMessage.To.Add(str);
+                    mailMessage.To.Add(str[0]);
 
                     smtpClient.Send(mailMessage);//לקחת נקודות
                 
@@ -177,7 +175,10 @@ namespace Dog_Proj.Models {
             }
             else
             {
-
+                if (str[1].Length > 0 && str[2].Length > 0)
+                {
+                    dbs.setPoints(Convert.ToInt32(str[2]), Convert.ToInt32(str[1]) + Convert.ToInt32(type));
+                }
                 var mailMessage = new MailMessage
                 {
                     Subject = "PETCOM: עדכון חדש",
@@ -234,17 +235,17 @@ namespace Dog_Proj.Models {
                   </html>",
                     IsBodyHtml = true
                 };
-                mailMessage.To.Add(str);
+                mailMessage.To.Add(str[0]);
 
                 smtpClient.Send(mailMessage);// להחזיר נקודות
             }
             
 
         }
-        public List<List<string>> GetAvUserPension(int userid)
+        public List<List<string>> GetAvUserPension(int userid, short serviceId)
         {
             DataServices dbs = new DataServices();
-            return dbs.GetAvUserPension(userid);
+            return dbs.GetAvUserPension(userid, serviceId);
         }
         
 

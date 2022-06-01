@@ -63,13 +63,8 @@ namespace Dog_Proj.Models
             DataServices dbs = new DataServices();
             Dictionary<string, string> dic = dbs.getPoints(UserId);
 
-            var smtpClient = new SmtpClient();
-
-            //smtpClient.Send("email", "recipient", "subject", "body");
-
             if (Convert.ToInt32(dic["numOfPoints"]) >= Convert.ToInt32(Servicetype))
             {
-                dbs.setPoints(Convert.ToInt32(dic["id"]), Convert.ToInt32(dic["numOfPoints"]) - Convert.ToInt32(Servicetype));
                 return dbs.InsertServices(userId, this);
             }
 
@@ -80,13 +75,20 @@ namespace Dog_Proj.Models
             }
         }
 
-       public bool InsertReqServices(int idService, int idUser)
+       public bool InsertReqServices(int idService, int idUser,int reqUser, int servicetype)
         {
             ///idUser נותן השירות
-            DataServices ds = new DataServices();
-     
-                string str = ds.InsertReqServices(idService, idUser);
-            if (str.Length>0)
+          ///  reqUser מבקש השירות
+            DataServices dbs = new DataServices();
+            Dictionary<string, string> dic = dbs.getPoints(reqUser);
+            if (Convert.ToInt32(dic["numOfPoints"]) >= Convert.ToInt32(servicetype)) 
+            {
+                dbs.setPointsWithCheck(Convert.ToInt32(dic["id"]), Convert.ToInt32(dic["numOfPoints"]) - Convert.ToInt32(servicetype), idService);
+                string str = dbs.InsertReqServices(idService, idUser);
+                /////שגיאה בחלק הזה, לא יורדות נקודות 
+
+
+                if (str.Length>0)
             {
 
 
@@ -162,6 +164,15 @@ namespace Dog_Proj.Models
                 }
 
             }
+            }
+
+            else
+            {
+                throw new Exception("אין מספיק נקודות זכות");
+                ///לטפל במקרה קצה של 3 בקשות
+            }
+
+
             return false;
         }
 

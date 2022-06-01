@@ -75,6 +75,7 @@
                 if (amo[i].checked)
                     servicetype = amo[i].value
             }
+            localStorage["Servicetype"] = JSON.stringify(servicetype);
             let note = $("#note").val();
             let serviceName = "walk";
             localStorage["serviceName"] = JSON.stringify(serviceName);

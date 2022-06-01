@@ -88,6 +88,7 @@
                 if (amo[i].checked)
                     servicetype = amo[i].value
             }
+            localStorage["Servicetype"] = JSON.stringify(servicetype);
             let note = $("#note").val();
             let serviceName = "pension";
             var familyId = parseInt(localStorage.getItem('familyId'));// שליפה מהלוקלסטורג

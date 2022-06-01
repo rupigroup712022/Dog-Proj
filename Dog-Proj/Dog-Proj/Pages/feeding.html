@@ -87,6 +87,7 @@
                 if (amo[i].checked)
                     servicetype = amo[i].value
             }
+            localStorage["Servicetype"] = JSON.stringify(servicetype);
             let quantity = $("#foodSize").val();
             let note = $("#note").val();
             let serviceName = "feeding";

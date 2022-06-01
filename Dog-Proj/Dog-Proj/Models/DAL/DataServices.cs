@@ -102,6 +102,35 @@ namespace Dog_Proj.Models.DAL
 
         }
 
+        public void setPointsWithCheck(int familyId, int points, int idService)
+        {
+
+            SqlConnection con = null;
+            int numEffected = 0;
+            try
+            {
+                //C - Connect to the Database
+                con = Connect("DogsProjDB");
+
+                //C Create the Insert SqlCommand
+                SqlCommand insertCommand = commandsetPointsWithCheck(points, Convert.ToInt16(familyId), idService, con);
+                numEffected = insertCommand.ExecuteNonQuery();
+            }
+
+            catch (Exception exep)
+            {
+                // this code needs to write the error to a log file
+                throw new Exception("Error", exep);
+            }
+
+            finally
+            {
+                //C Close Connction
+                con.Close();
+            }
+
+        }
+
         public void setPoints(int familyId, int points)
         {
 
@@ -134,16 +163,36 @@ namespace Dog_Proj.Models.DAL
 
         private SqlCommand commandsetPoints(int new_points, short familyId, SqlConnection con)
         {
-            string str = "UPDATE Accounts SET numOfPoints=@new_points" +
+            string str =  " UPDATE Accounts SET numOfPoints=@new_points" +
                 " where id=@familyId";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
             cmd.Parameters["@familyId"].Value = familyId;
             cmd.Parameters.Add("@new_points", SqlDbType.Int);
             cmd.Parameters["@new_points"].Value = new_points;
+        
             return cmd;
 
         }
+
+        private SqlCommand commandsetPointsWithCheck(int new_points, short familyId, int idService, SqlConnection con)
+        {
+            string str = "IF not exists (SELECT idService" +
+                " FROM PendingReq" +
+                " WHERE idService=@idService ) " +
+                " UPDATE Accounts SET numOfPoints=@new_points" +
+                " where id=@familyId";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
+            cmd.Parameters["@familyId"].Value = familyId;
+            cmd.Parameters.Add("@new_points", SqlDbType.Int);
+            cmd.Parameters["@new_points"].Value = new_points;
+            cmd.Parameters.Add("@idService", SqlDbType.SmallInt);
+            cmd.Parameters["@idService"].Value = (short)idService;
+            return cmd;
+
+        }
+
 
         private SqlCommand commandGetFamilyPoints(short userId, SqlConnection con)
         {
@@ -152,7 +201,7 @@ namespace Dog_Proj.Models.DAL
                 " WHERE U.id=@handlerId";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@handlerId", SqlDbType.SmallInt);
-            cmd.Parameters["@handlerId"].Value = (short)userId;
+            cmd.Parameters["@handlerId"].Value = userId;
             return cmd;
         }
 
@@ -875,10 +924,7 @@ namespace Dog_Proj.Models.DAL
                 }
 
                 dataReader.Close();
-                if (i==0)
-                {
-                    return user;
-                }
+               
                 return user;
             }
             catch (Exception ex)
@@ -894,13 +940,13 @@ namespace Dog_Proj.Models.DAL
             }
         }
 
-        public List<List<string>> GetAvUserPension(int userid)//to do the same logic as the getavuser to add serviceId
+        public List<List<string>> GetAvUserPension(int userid, short serviceId)//to do the same logic as the getavuser to add serviceId
         {
             SqlConnection con = null;
             try
             {
                 con = Connect("DogsProjDB");
-                SqlCommand selectCommand = PensionCheck(con, userid);
+                SqlCommand selectCommand = PensionCheck(con, userid, serviceId);
                 SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
                 int i = 0;
                 List<List<string>> user = new List<List<string>>();
@@ -934,13 +980,16 @@ namespace Dog_Proj.Models.DAL
             }
         }
 
-        private SqlCommand PensionCheck(SqlConnection con,int familyId)
+        private SqlCommand PensionCheck(SqlConnection con,int familyId, short serviceId)
         {
-            string str = "SELECT A.familyname,A.avgPoint,A.id,A.city,A.street,A.homeNum FROM Accounts A " +
+            string str = "if not exists (select * from PendingReq where idService=@idService) " +
+                " SELECT A.familyname,A.avgPoint,A.id,A.city,A.street,A.homeNum FROM Accounts A " +
                 " WHERE A.id!=@familyId";
             SqlCommand cmd = createCommand(con, str);
             cmd.Parameters.Add("@familyId", SqlDbType.SmallInt);
             cmd.Parameters["@familyId"].Value = (short)familyId;
+            cmd.Parameters.Add("@idService", SqlDbType.SmallInt);
+            cmd.Parameters["@idService"].Value = serviceId;
             return cmd;
         }
 
@@ -1124,7 +1173,7 @@ namespace Dog_Proj.Models.DAL
         }
 
 
-        public string setRequestsDb(int userid, string serviceId, bool val)
+        public List<string> setRequestsDb(int userid, string serviceId, bool val)
         {
 
             SqlConnection con = null;
@@ -1137,23 +1186,34 @@ namespace Dog_Proj.Models.DAL
                 //C Create the Insert SqlCommand
                 SqlCommand insertCommand = createSetAnswerCommand(userid, serviceId, val, con);
                 numEffected = insertCommand.ExecuteNonQuery();
-                SqlCommand insertCommandEmail = getEmail(serviceId, con);
-                SqlDataReader dataReader = insertCommandEmail.ExecuteReader(CommandBehavior.CloseConnection);
-                string str="";
+                SqlCommand insertCommandDeny = commandCheckAllDeny(con, Convert.ToInt16(serviceId));
+                SqlDataReader dataReader = insertCommandDeny.ExecuteReader(CommandBehavior.CloseConnection);
+                string points="";
+                string familyId = "";
                 while (dataReader.Read())
                 {
-
-                    str = dataReader["email"].ToString();
-
+                    
+                    points =dataReader["numOfPoints"].ToString();
+                    familyId = dataReader["familyId"].ToString();
                 }
                 dataReader.Close();
+                SqlCommand insertCommandEmail = getEmail(serviceId, con);
+                SqlDataReader dataReaders = insertCommandEmail.ExecuteReader(CommandBehavior.CloseConnection);
+                string str="";
+                while (dataReaders.Read())
+                {
+
+                    str = dataReaders["email"].ToString();
+
+                }
+                dataReaders.Close();
 
                 if (str == "")
                 {
                      throw new Exception("No email was found"); 
                 }
               
-                return str;
+                return new List<string> { str, points, familyId };
 
             }
 
@@ -1170,6 +1230,25 @@ namespace Dog_Proj.Models.DAL
             }
 
 
+        }
+
+        private SqlCommand commandCheckAllDeny(SqlConnection con, short serviceId) //מוודאים שכל מי שנשלחה אליו הבקשה הוא דחה אותה כדי להחזיר למשתמש שביקש את הנקודות
+        {
+
+            string str = " if ((SELECT count(P.idUser)" +
+                  " FROM PendingReq P " +
+                   " WHERE P.idService LIKE @serviceId AND P.idService not in (select serviceId from finished_tasks)" +
+                 " GROUP BY P.idService)= (SELECT count(P.idUser)" +
+                                                         " FROM PendingReq P " +
+                                                         " WHERE P.idService LIKE @serviceId AND P.idService not in (select serviceId from finished_tasks) AND P.approvedreq=0" +
+                                                         " GROUP BY P.idService ))" +
+                                                         " SELECT A.numOfPoints, A.id " +
+                                                         " From Accounts A JOIN ServicesDog S ON A.id= S.familyId" +
+                                                         " WHERE S.id=@serviceId";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@serviceId", SqlDbType.SmallInt);
+            cmd.Parameters["@serviceId"].Value = serviceId;
+            return cmd;
         }
 
         private SqlCommand createSetAnswerCommand( int userid, string serviceId, bool val, SqlConnection con)

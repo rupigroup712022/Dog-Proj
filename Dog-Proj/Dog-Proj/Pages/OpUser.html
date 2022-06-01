@@ -36,18 +36,22 @@
 
 
     <script>
-        $(document).ready(function () {
+
+        var userGeo;
+        $(document).ready( function () {
             username = JSON.parse(localStorage["username"]);
             $("#end").click(checkchoice);
             welcome(username);
             getAllmakers();
             getAddressUser();
             $("#LogOut").click(LogOut);
-
+            userGeo = JSON.parse(localStorage.getItem('coordi'));
+            var dist = 0;
 
         });
 
-
+        servicetype = parseInt(JSON.parse(localStorage["Servicetype"]));
+        reqUser = parseInt(JSON.parse(localStorage["UserId"]));
 
         function welcome(username) {
             console.log(username);
@@ -61,7 +65,7 @@
         }
 
         function checkchoice() {
-
+          
             var selcDiv = $('#MakerList').find(".selected");
             //    .filter(function () {// יוצר מערך חדש של כל הדיבים שעומדים בתנאי
             //    return $(this).css('background-color') == 'rgb(255, 255, 102)';
@@ -72,7 +76,9 @@
                     
                     let Service = {
                         idService: parseInt(JSON.parse(localStorage.getItem("ServicesId"))),
-                        idUser: parseInt($(this).attr('id')), idFamilyRequsting
+                        idUser: parseInt($(this).attr('id')), idFamilyRequsting,
+                        reqUser: reqUser,
+                        servicetype: servicetype
                     }
                     console.log(Service);
                     let api = "../api/Services/req";
@@ -83,6 +89,9 @@
                 req = {
                     idService: parseInt(JSON.parse(localStorage.getItem("ServicesId"))),
                     idUser: parseInt($(selcDiv).attr('id')),
+                    reqUser: reqUser,
+                    servicetype: servicetype
+
                 }
                 let api = "../api/Services/req";
                 ajaxCall("POST", api, JSON.stringify(req), SuccessSlectoin, error);
@@ -170,8 +179,20 @@
         }
 
         function getSuccessPension(data) {// מקבל רשימה  של אנשים פונצניאלים שפנוים
-            let location = renderListPension(data);// רנדור למסך של הדיבים של האנשים הפונצנאלים הפנויים
-            console.log(data);
+
+            if (data && data.length > 0) {
+                let location = renderListPension(data);// רנדור למסך של הדיבים של האנשים הפונצנאלים הפנויים
+                console.log(data);
+            }
+            else {
+                Swal.fire({
+                    title: "נותן השירות כבר נבחר",
+                    icon: "error",
+                    //    timer: 2500,
+                }).then(function () {
+                    window.location.href = 'myRequests.html';
+                });
+            }
         }
 
         async function renderListPension(d) {// מקבל את כל האנשים הפוצנציאלים
@@ -301,8 +322,7 @@
         }
 
 
-        const userGeo = JSON.parse(localStorage.getItem('coordi'));
-        var dist = 0;
+      
 
         async function getlocation(data) {
             console.log(data);
