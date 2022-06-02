@@ -264,6 +264,7 @@
     <Content Include="Pages\Selection.html" />
     <Content Include="Pages\OpUser.html" />
     <Content Include="Pages\pension.html" />
+    <Content Include="Pages\SingInMoreUser.html" />
     <Content Include="Pages\SingInUser.html" />
     <Content Include="Pages\walk.html" />
     <Content Include="Pages\feeding.html" />

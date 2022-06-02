@@ -79,7 +79,7 @@
         }
 
         function setRating() {
-            let service_id = $(this).parents().find('.BTF').attr('id');
+            let service_id = $(this).parents().find('.BTF1').attr('id');
             let handlerId = $(this).attr('id');
             let rating = $('#rating' + service_id).val();
             let type = $('#type' + service_id).html();
@@ -107,7 +107,7 @@
                 str += "<td class='user col-12'><h3><b>: תאריך ושעת השירות   </b><br/>  " + fullDate + "</h3></td>";
                 str += "</tr>";
                 str += "<tr class='row1'>";
-                str += "<td id='type" + l[6] + "' class='col-12'><h3 >" + l[3] + "<b> : סכום השירות </b></h3></td>";
+                str += "<td class='col-12'><h3><b>: סכום השירות:</b><p id='type" + l[6] + "'>" + l[3] + "</p></h3></td>";
                 str += "</tr>";
                     str += "<tr class='row1'>"; 
                     str += "<td class='user col-12'><h3><b> שם:</b>" + l[4] + "</h3></td>";
@@ -176,7 +176,7 @@
                                         <a href="mainScreen.html">הגשת בקשה לשירות</a>
                                         <a href="myRequests.html"> בקשות שביקשתי</a>
                                         <a href="Selection.html">בקשות שקיבלתי</a>
-                                        <a href="SingInUser.html">הוספת בן משפחה</a>
+                                        <a href="SingInMoreUser.html">הוספת בן משפחה</a>
                                         <a href="SingInDog.html">הוספת כלב</a>
                                     </div>
                                 </div>

@@ -40,13 +40,10 @@
             $("#Day").change(selectday);
             $("#singUser").submit(signUp);
             $("#time").find(".BTF").click(changeColor);
-            $("#nextdog").click(function () {
+            $("#nextServ").click(function () {
                 clik = $(this).val();
             });
-            $("#nextuser").click(function () {
-                clik = $(this).val();
-            });
-
+           
         });
         var DayDic = {};//מילון ימים ושעות- זמינות 
         var sex;
@@ -133,24 +130,16 @@
             }
             else {
                 localStorage["UserId"] = JSON.stringify(success);// הכנסה ללוקאל סטורג
-                if (clik == "אני רוצה להמשיך להרשמת כלב") {
+                if (clik == "המשך לבחירת שירות") {
                     Swal.fire({
-                        title: "הוסף כלב !",
+                        title: "המשך לבחירת שירות !",
                         icon: "success",
                         timer: 2500,
                     }).then(function () {
-                        window.location.href = 'SingInDog.html';
+                        window.location.href = 'Userselection.html';
                     });
                 }
-                else {
-                    Swal.fire({
-                        title: "הוסף בן משפחה !",
-                        icon: "success",
-                           timer: 2500,
-                    }).then(function () {
-                       window.location.href = 'SingInUser.html';
-                    });
-                }
+                
             }
             console.log(success);
         }
@@ -293,11 +282,9 @@
 
                                 <tr>
                                     <td>
-                                        <input type="submit" id="nextdog" class="nextpage" value="אני רוצה להמשיך להרשמת כלב" />
+                                        <input type="submit" id="nextServ" class="nextpage" value="המשך לבחירת שירות" />
                                     </td>
-                                    <td>
-                                        <input type="submit" id="nextuser" class="nextpage" value="הוסף בן משפחה " />
-                                    </td>
+                                  
 
                                 </tr>
 

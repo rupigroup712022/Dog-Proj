@@ -1187,14 +1187,14 @@ namespace Dog_Proj.Models.DAL
                 SqlCommand insertCommand = createSetAnswerCommand(userid, serviceId, val, con);
                 numEffected = insertCommand.ExecuteNonQuery();
                 SqlCommand insertCommandDeny = commandCheckAllDeny(con, Convert.ToInt16(serviceId));
-                SqlDataReader dataReader = insertCommandDeny.ExecuteReader(CommandBehavior.CloseConnection);
+                SqlDataReader dataReader = insertCommandDeny.ExecuteReader();
                 string points="";
                 string familyId = "";
                 while (dataReader.Read())
                 {
                     
                     points =dataReader["numOfPoints"].ToString();
-                    familyId = dataReader["familyId"].ToString();
+                    familyId = dataReader["id"].ToString();
                 }
                 dataReader.Close();
                 SqlCommand insertCommandEmail = getEmail(serviceId, con);

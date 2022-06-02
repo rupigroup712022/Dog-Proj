@@ -36,9 +36,12 @@
 
 
     <script>
-
+        var markers;
         var userGeo;
-        $(document).ready( function () {
+        var dist;
+        $(document).ready(function () {
+             dist = 0;
+            markers = [];
             username = JSON.parse(localStorage["username"]);
             $("#end").click(checkchoice);
             welcome(username);
@@ -46,7 +49,7 @@
             getAddressUser();
             $("#LogOut").click(LogOut);
             userGeo = JSON.parse(localStorage.getItem('coordi'));
-            var dist = 0;
+         
 
         });
 
@@ -504,7 +507,7 @@
                                         <a href="mainScreen.html">הגשת בקשה לשירות</a>
                                         <a href="myRequests.html"> בקשות שביקשתי</a>
                                         <a href="Selection.html">בקשות שקיבלתי</a>
-                                        <a href="SingInUser.html">הוספת בן משפחה</a>
+                                        <a href="SingInMoreUser.html">הוספת בן משפחה</a>
                                         <a href="SingInDog.html">הוספת כלב</a>
                                     </div>
                                 </div>
