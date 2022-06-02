@@ -100,7 +100,7 @@
                     //await getlocation(addresses); בהמשך נציג לפי מרחקים 
                     //addresses["distance"] = dist;
                 let str = "";
-                str += "<div class='BTF' id='" + l[16] + "'>";
+                str += "<div class='BTF2' id='" + l[16] + "'>";
                 str += "<button class='denyRequest'> ביטול בקשה</button>";
                 str += "<button class='aprroveRequest'> לאישור בקשה</button>";
                 str += "<table class='table'>";
@@ -171,7 +171,7 @@
                 //await getlocation(addresses); בהמשך נציג לפי מרחקים 
                 //addresses["distance"] = dist;
                 let str = "";
-                str += "<div class='BTF' id='" + l[16] + "'>";
+                str += "<div class='BTF2' id='" + l[16] + "'>";
                 str += "<button class='denyRequest'> ביטול בקשה</button>";
                 //לטפל בביטול בקשה בהחזר נקודות (אם מישהו לא מסיים את ההזמנה צריך לבטל אותה- למי שביקש את הבקשה יהיה גם כפתור ביטול בקשה ואז נחזיר גם לו)
                 str += "<table class='table'>";
@@ -332,11 +332,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <button id="getPendingReq">הצג בקשות ממתינות לאישורי</button>
-                    <button id="getApprovedReq"> הצג בקשות שאישרתי</button>
+                    <button class="button1" id="getPendingReq">הצג בקשות ממתינות לאישורי</button>
+                    <button  class="button1" id="getApprovedReq"> הצג בקשות שאישרתי</button>
                 </div>
             </div>
-            <div class="input_main">
+            <div class="input_main1">
                 <div id="results">
                 </div>
             </div>
