@@ -1539,7 +1539,7 @@ input#regervation {
             right: 0;
      
           }
-.denyRequest, .aprroveRequest {
+.denyRequest, .aprroveRequest, .setRating, .rating {
     display: inline-block;
     border-radius: 4px;
     background-color: #f5d502;

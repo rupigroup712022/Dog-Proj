@@ -120,7 +120,7 @@
                 
                 else if (parseInt(l[5])>10) {
                     str += "<td class='user col-12'><h3><b>טלפון:</b>" + l[5] + "</h3></td></tr>"
-                    str += "<input id='rating" + l[6] +"' type=number min=1 max=5 step=1 required placeholder='דרג 1-5'>" 
+                    str += "<input class='rating' id='rating" + l[6] +"' type=number min=1 max=5 step=1 required placeholder='דרג 1-5'>"
                     str += "<button id='" + l[7] +"' class='setRating'> שלח דרוג</button>";
                 }
                 else {
