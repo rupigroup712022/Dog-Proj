@@ -108,8 +108,10 @@ namespace Dog_Proj.Models {
 
             //smtpClient.Send("email", "recipient", "subject", "body");
             List <string> str = dbs.setRequestsDb(userid, serviceId, val);
-            if (val) ///מישהו אישר בקשה
+            try
             {
+                if (val) ///מישהו אישר בקשה
+                {
 
                     var mailMessage = new MailMessage
                     {
@@ -169,20 +171,20 @@ namespace Dog_Proj.Models {
                     };
                     mailMessage.To.Add(str[0]);
 
-                    smtpClient.Send(mailMessage);//לקחת נקודות
-                
-               
-            }
-            else
-            {
-                if (str[1].Length > 0 && str[2].Length > 0)
-                {
-                    dbs.setPoints(Convert.ToInt32(str[2]), Convert.ToInt32(str[1]) + Convert.ToInt32(type));
+                //    smtpClient.Send(mailMessage);//לקחת נקודות
+
+
                 }
-                var mailMessage = new MailMessage
+                else
                 {
-                    Subject = "PETCOM: עדכון חדש",
-                    Body = @"<html>
+                    if (str[1].Length > 0 && str[2].Length > 0)
+                    {
+                        dbs.setPoints(Convert.ToInt32(str[2]), Convert.ToInt32(str[1]) + Convert.ToInt32(type));
+                    }
+                    var mailMessage = new MailMessage
+                    {
+                        Subject = "PETCOM: עדכון חדש",
+                        Body = @"<html>
                          <head>
                                 < style >
                                           p {
@@ -233,11 +235,16 @@ namespace Dog_Proj.Models {
                          </div>
                   </body>
                   </html>",
-                    IsBodyHtml = true
-                };
-                mailMessage.To.Add(str[0]);
+                        IsBodyHtml = true
+                    };
+                    mailMessage.To.Add(str[0]);
 
-                smtpClient.Send(mailMessage);// להחזיר נקודות
+               //     smtpClient.Send(mailMessage);// להחזיר נקודות
+                }
+            }
+            catch(Exception e)
+            {
+                throw e;
             }
             
 

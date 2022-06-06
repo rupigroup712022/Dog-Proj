@@ -81,25 +81,23 @@ namespace Dog_Proj.Models
           ///  reqUser מבקש השירות
             DataServices dbs = new DataServices();
             Dictionary<string, string> dic = dbs.getPoints(reqUser);
-            if (Convert.ToInt32(dic["numOfPoints"]) >= Convert.ToInt32(servicetype)) 
+            if (Convert.ToInt32(dic["numOfPoints"]) >= Convert.ToInt32(servicetype))
             {
                 dbs.setPointsWithCheck(Convert.ToInt32(dic["id"]), Convert.ToInt32(dic["numOfPoints"]) - Convert.ToInt32(servicetype), idService);
                 string str = dbs.InsertReqServices(idService, idUser);
                 /////שגיאה בחלק הזה, לא יורדות נקודות 
 
 
-                if (str.Length>0)
-            {
-
-
-                try
+                if (str.Length > 0)
                 {
-                    var smtpClient = new SmtpClient();
 
-                    var mailMessage = new MailMessage
-                    {
-                        Subject = "PETCOM: התקבלה בקשה חדשה",
-                        Body = @"<html>
+                  
+                        var smtpClient = new SmtpClient();
+
+                        var mailMessage = new MailMessage
+                        {
+                            Subject = "PETCOM: התקבלה בקשה חדשה",
+                            Body = @"<html>
                          <head>
                                 < style >
                                           p {
@@ -150,20 +148,16 @@ namespace Dog_Proj.Models
                          </div>
                   </body>
                   </html>",
-                        IsBodyHtml = true
-                    };
-                    mailMessage.To.Add(str);
+                            IsBodyHtml = true
+                        };
+                        mailMessage.To.Add(str);
 
-                    smtpClient.Send(mailMessage);
-                    return true;
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine(
-                        "auth error");
-                }
+                      //  smtpClient.Send(mailMessage);
+                        return true;
+                    
+                  
 
-            }
+                }
             }
 
             else

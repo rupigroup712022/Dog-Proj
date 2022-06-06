@@ -525,7 +525,7 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters.Add("@passwords", SqlDbType.NChar);
             cmd.Parameters["@passwords"].Value = account.Passwords;
             cmd.Parameters.Add("@numOfPoints", SqlDbType.Int);
-            cmd.Parameters["@numOfPoints"].Value = account.NumOfPoints;
+            cmd.Parameters["@numOfPoints"].Value = 20;
             cmd.Parameters.Add("@linkedUsers", SqlDbType.TinyInt);
             cmd.Parameters["@linkedUsers"].Value = Convert.ToByte(account.LinkedUsers);
             cmd.Parameters.Add("@avgPoint", SqlDbType.Float);
