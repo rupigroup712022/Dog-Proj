@@ -1064,6 +1064,9 @@ namespace Dog_Proj.Models.DAL
                     pendingRequestList[i].Add((dataReader["street"]).ToString());
                     pendingRequestList[i].Add((dataReader["homeNum"]).ToString());
                     pendingRequestList[i].Add((dataReader["id"]).ToString());
+                    pendingRequestList[i].Add((dataReader["picture"]).ToString());//17
+                    pendingRequestList[i].Add((dataReader["dog_character"]).ToString());//18
+
                     i++;
                 }
 
@@ -1092,7 +1095,7 @@ namespace Dog_Proj.Models.DAL
         {
             
             string str = " SELECT S.serviceName, S.serviceDate, S.serviceDay,S.serviceHour,S.servicetype,D.dogname,D.dogBreed,D.age,D.size,D.sex,D.neutering," +
-            " U.username,U.phone,A.city,A.street,A.homeNum,S.id " +
+            " U.username,U.phone,A.city,A.street,A.homeNum,S.id,D.picture,D.dog_character " +
             " FROM PendingReq P JOIN ServicesDog S ON " +
             " P.idService = S.id JOIN Dogs4 D on D.familyNum = S.familyId JOIN UsersFamliy U ON U.id = S.UserId JOIN Accounts A ON A.id = S.familyId " +
             " JOIN ( SELECT DISTINCT PD.idService AS TmpID FROM ServicesDog  SD JOIN PendingReq PD ON PD.idService = SD.id " +
@@ -1135,6 +1138,8 @@ namespace Dog_Proj.Models.DAL
                     approvedRequestList[i].Add((dataReader["street"]).ToString());//14
                     approvedRequestList[i].Add((dataReader["homeNum"]).ToString());//15
                     approvedRequestList[i].Add((dataReader["id"]).ToString());//16
+                    approvedRequestList[i].Add((dataReader["picture"]).ToString());//17
+                    approvedRequestList[i].Add((dataReader["dog_character"]).ToString());//18
                     i++;
                 }
 
@@ -1162,7 +1167,7 @@ namespace Dog_Proj.Models.DAL
         private SqlCommand incomeApprovedRequests(SqlConnection con, int userid)
         {
             string str = "SELECT S.serviceName, S.serviceDate, S.serviceDay,S.serviceHour,S.servicetype,D.dogname,D.dogBreed,D.age,D.size,D.sex,D.neutering," +
-                " U.username,U.phone,A.city,A.street,A.homeNum,S.id FROM PendingReq P JOIN ServicesDog S ON" +
+                " U.username,U.phone,A.city,A.street,A.homeNum,S.id,D.picture,D.dog_character FROM PendingReq P JOIN ServicesDog S ON" +
                 " P.idService=S.id JOIN Dogs4 D on D.familyNum=S.familyId JOIN UsersFamliy U" +
                 " ON U.id=S.UserId JOIN Accounts A ON A.id=S.familyId" +
                 " WHERE P.idUser LIKE @userid AND S.serviceName!='pension' AND P.approvedreq=1";

@@ -96,24 +96,30 @@
             var UserId = parseInt(JSON.parse(localStorage.getItem('UserId')));
             console.log(UserId);
 
-
-            feeding = {
-                ServiceName: serviceName,
-                ServiceDate: serviceDate,
-                ServiceDay: serviceDay,
-                ServiceHour: serviceHour,
-                Note: note,
-                Servicetype: servicetype,
-                Quantity: quantity,
-                UserId: UserId,
-                FamilyId: familyId
-
+            if (serviceName && serviceDate && serviceDay && serviceHour && servicetype && quantity && UserId && familyId) {
+                feeding = {
+                    ServiceName: serviceName,
+                    ServiceDate: serviceDate,
+                    ServiceDay: serviceDay,
+                    ServiceHour: serviceHour,
+                    Note: note,
+                    Servicetype: servicetype,
+                    Quantity: quantity,
+                    UserId: UserId,
+                    FamilyId: familyId
+                }
+                console.log(feeding);
+                let api = "../api/Services?UserId=" + UserId;
+                ajaxCall("POST", api, JSON.stringify(feeding), postSCB, postECB);
+            }
+            else {
+                Swal.fire({
+                    title: "נא למלא את כל הפרטים !",
+                    icon: "error",
+                    timer: 2500,
+                });
             }
 
-
-            console.log(feeding);
-            let api = "../api/Services?UserId=" + UserId;
-            ajaxCall("POST", api, JSON.stringify(feeding), postSCB, postECB);
             return false;
         }
 

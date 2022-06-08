@@ -90,6 +90,12 @@
             $('#' + serviceId).html('');
         }
 
+        actionDic = {
+            feeding: 'האכלה',
+            walk: 'טיול',
+            pension: 'פנסיון'
+        }
+
         function getRequestsSCB(d) {
             console.log(d);
             $('#results').html('');
@@ -105,7 +111,7 @@
                 str += "<button class='aprroveRequest'> לאישור בקשה</button>";
                 str += "<table class='table'>";
                     str += "<tr class='row1'>";
-                    str += "<td class='user col-12'><h1>" + l[0] + "</h1></td>";
+                     str += "<td class='user col-12'><h1>" + actionDic[l[0]] + "</h1></td>";
                     str += "</tr>";
                     str += "<tr class='row1'>";
                     str += "<td class='user col-12'><h1> שם וגזע הכלב -" + l[5] +" , "+ l[6] + "</h1></td>";
@@ -118,9 +124,15 @@
                     str += "</tr>";
                     str += "<tr class='row1'>";
                    str += "<td class='user col-12'><h6><b>נקודות זכות:</b><p id='type" + l[16] +"'>" + l[4] + "</p></h6></td>";
-                    str += "</tr>";
+                str += "</tr>";
+                str += "<tr class='row1'>";
+                str += "<td class='user col-12'><h6><b>כתובת:</b>" + address + " </h6></td>";
+                str += "</tr>";
+                str += "<tr class='row1'>";
+                str += "<td class='user col-12'><h6><b>אופי:</b>" + l[18] + " </h6></td>";
+                str += "</tr>";
                     str += "<tr class='row1'>";
-                    str += "<td class='user col-12'><h6><b>כתובת:</b>" + address + " </h6></td>";
+                str += "<td class='user col-12'><img style='display:block; width:100%; height:auto;'  src='../" + l[17] + "'/></td>";
                     str += "</tr>";
                     //str += "<tr class='row1'>";
                     //str += "<td class='user col-12'><h6 ><b class='distance'> " + "מרחק : " + dist.toFixed(2) + " ק''מ" + "</b></h6></td>";
@@ -133,7 +145,6 @@
                     //addresses["str"] = str;
                     //console.log(addresses);
                     //const k = BestLocation.findIndex(a => (a.distance && a.distance > addresses.distance) ? true : false);
-
                     //if (k == -1) {
                     //    BestLocation.push(addresses)
 
@@ -176,7 +187,7 @@
                 //לטפל בביטול בקשה בהחזר נקודות (אם מישהו לא מסיים את ההזמנה צריך לבטל אותה- למי שביקש את הבקשה יהיה גם כפתור ביטול בקשה ואז נחזיר גם לו)
                 str += "<table class='table'>";
                 str += "<tr class='row1'>";
-                str += "<td class='user col-12'><h1>" + l[0] + "</h1></td>";
+                str += "<td class='user col-12'><h1>" + actionDic[l[0]] + "</h1></td>";
                 str += "</tr>";
                 str += "<tr class='row1'>";
                 str += "<td class='user col-12'><h1> שם וגזע הכלב -" + l[5] + " , " + l[6] + "</h1></td>";
@@ -193,12 +204,12 @@
                 str += "<tr class='row1'>";
                 str += "<td class='user col-12'><h6><b>כתובת:</b>" + address + " </h6></td>";
                 str += "</tr>";
-                //str += "<tr class='row1'>";
-                //str += "<td class='user col-12'><h6 ><b class='distance'> " + "מרחק : " + dist.toFixed(2) + " ק''מ" + "</b></h6></td>";
-                //str += "</tr>";
-                //str += "<tr class='row1'>";
-                //str += "<td class='col-12'><button type='button' class='btn btn-info btn-lg' onclick = 'selectUser(" + l[j + 4] + ")' id ='B" + l[j + 4] + "' data - toggle='modal' > בחירת משתמש </button > </td>";
-                //str += "</tr>";
+                str += "<tr class='row1'>";
+                str += "<td class='user col-12'><h6><b>אופי:</b>" + l[18] + " </h6></td>";
+                str += "</tr>";
+                str += "<tr class='row1'>";
+                str += "<td class='user col-12'><img style='display:block; width:100%; height:auto;'  src='../" + l[17] + "'/></td>";
+                str += "</tr>";
                 str += "</table>";
                 str += "</div><br/>";
                 //addresses["str"] = str;
