@@ -37,6 +37,14 @@ namespace Dog_Proj.Controllers
             return user.getIncomePendingRequests(Convert.ToInt32(u["userId"]));
         }
 
+        [HttpPost]
+        [Route("api/Users/CountRequestsApro")]
+
+        public int CountRequestsApro([FromBody] Dictionary<string, string> u)
+        {
+            User user = new User();
+            return user.CountRequestsApro(Convert.ToInt32(u["userId"]));
+        }
 
         [HttpPost]
         [Route("api/Users/incomeApprovedReq")]
@@ -61,6 +69,16 @@ namespace Dog_Proj.Controllers
             User user = new User();
             return user.getWaitResponse(Convert.ToInt32(u["userId"]));
         }
+        [HttpPost]
+        [Route("api/Users/CountWaitResponse")]
+        public int CountWaitResponse([FromBody] Dictionary<string, string> u)
+        {
+            User user = new User();
+            return user.CountWaitResponse(Convert.ToInt32(u["userId"]));
+        }
+
+
+
 
         [HttpPost]
         [Route("api/Users/getWaitApproval")]
@@ -92,6 +110,17 @@ namespace Dog_Proj.Controllers
                 b = false;
             }
              user.setRequests(Convert.ToInt32(u["userId"]),u["serviceId"],b, u["type"]);
+            return u["serviceId"];
+        }
+
+
+
+        [HttpPost]
+        [Route("api/Users/setSelfCensel")]
+        public string setSelfCensel([FromBody] Dictionary<string, string> u)
+        {
+            User user = new User();
+            user.setSelfCensel(Convert.ToInt32(u["userId"]), u["serviceId"], u["type"]);
             return u["serviceId"];
         }
 

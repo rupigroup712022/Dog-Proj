@@ -49,6 +49,10 @@
             $(document).on("click", ".aprroveRequest", approvedRequest)
             $(document).on("click", ".denyRequest", denyRequest)
             $("#LogOut").click(LogOut);
+            CountRequestsApro();
+            $(".CountRequestsApro").html("יש לך    " + localStorage.getItem("CountRequestsApro") + " " + "בקשות לאשר ")
+            CountWaitResponse();
+            $(".CountResponse").html("יש לך    " + localStorage.getItem("CountResponse") + " " + "חוות דעת למלא ")
 
         });
 
@@ -62,6 +66,19 @@
                     let apiCall = "../api/Users/incomePendingReq";
                     ajaxCall("POST", apiCall,JSON.stringify(u), getRequestsSCB, getRequestsECB)
                     
+        }
+        
+
+        function CountRequestsApro() {
+
+            let apiCall = "../api/Users/CountRequestsApro";
+            ajaxCall("POST", apiCall, JSON.stringify(u), getCountRequestsAproSCB, getRequestsECB)
+
+        }
+
+        function getCountRequestsAproSCB(CountRequestsApro) {
+            localStorage["CountRequestsApro"] = JSON.stringify(CountRequestsApro);
+
         }
         function getIncomeApprovedRequests() {
    
@@ -85,6 +102,10 @@
             let apiCall = "../api/Users/answeredRequest";
             ajaxCall("POST", apiCall, JSON.stringify({ ...u, serviceId: serviceId, val: false, type: type }),RequestSCB, getRequestsECB)
         }
+
+
+
+
 
         function RequestSCB(serviceId) {
             $('#' + serviceId).html('');
@@ -294,9 +315,20 @@
         //}
 
 
+        function CountWaitResponse() {
 
+            let apiCall = "../api/Users/CountWaitResponse";
+            ajaxCall("POST", apiCall, JSON.stringify(u), getCountWaitResponseSCB, getRequestsECB)
 
+        }
+        function getCountWaitResponseSCB(CountResponse) {
+            localStorage["CountResponse"] = JSON.stringify(CountResponse);
 
+        }
+
+        function getRequestsECB(error) {
+            console.log('error occured');
+        }
     </script>
 
 
@@ -311,10 +343,12 @@
                     <div><a href="index.html"><img src="../images/LOGO1S.png" /></a></div>
                 </div>
                 <div class="col-md-8">
+                    <div class="CountResponse"></div>
+                    <div class="CountRequestsApro"></div>
                     <div class="menu_text">
                         <ul>
                             <li class="LogeIn">
-                           
+
                                 <button id="LogOut">Log Out</button>
                             </li>
                             <li class="active">

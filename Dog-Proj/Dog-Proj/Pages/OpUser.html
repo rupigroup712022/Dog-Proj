@@ -49,11 +49,16 @@
             userGeo = JSON.parse(localStorage.getItem('coordi'));
             getAllmakers();
             $("#LogOut").click(LogOut);
-         
-         
+            CountRequestsApro();
+            $(".CountRequestsApro").html("יש לך    " + localStorage.getItem("CountRequestsApro") + " " + "בקשות לאשר ")
+            CountWaitResponse();
+            $(".CountResponse").html("יש לך    " + localStorage.getItem("CountResponse") + " " + "חוות דעת למלא ")
 
         });
-
+        const u =
+        {
+            userId: JSON.parse(localStorage.getItem('UserId'))
+        }
         servicetype = parseInt(JSON.parse(localStorage["Servicetype"]));
         reqUser = parseInt(JSON.parse(localStorage["UserId"]));
 
@@ -503,6 +508,31 @@
             document.getElementById("myNav").style.width = "0%";
         }
 
+        function CountWaitResponse() {
+
+            let apiCall = "../api/Users/CountWaitResponse";
+            ajaxCall("POST", apiCall, JSON.stringify(u), getCountWaitResponseSCB, getRequestsECB)
+
+        }
+        function getCountWaitResponseSCB(CountResponse) {
+            localStorage["CountResponse"] = JSON.stringify(CountResponse);
+
+        }
+
+        function CountRequestsApro() {
+
+            let apiCall = "../api/Users/CountRequestsApro";
+            ajaxCall("POST", apiCall, JSON.stringify(u), getCountRequestsAproSCB, getRequestsECB)
+
+        }
+
+        function getCountRequestsAproSCB(CountRequestsApro) {
+            localStorage["CountRequestsApro"] = JSON.stringify(CountRequestsApro);
+
+        }
+        function getRequestsECB(error) {
+            console.log('error occured');
+        }
     </script>
 
 
@@ -518,6 +548,9 @@
                     <div><a href="index.html"><img src="../images/LOGO1S.png" /></a></div>
                 </div>
                 <div class="col-md-8">
+                    <div class="CountResponse"></div>
+                    <div class="CountRequestsApro"></div>
+
                     <div class="menu_text">
                         <ul>
                             <li class="LogeIn">

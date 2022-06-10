@@ -39,10 +39,16 @@
         $(document).ready(function () {
             $('#Next').click(nextlevel);
             $("#LogOut").click(LogOut);
-
+            CountRequestsApro();
+            $(".CountRequestsApro").html("יש לך    " + localStorage.getItem("CountRequestsApro") + " " + "בקשות לאשר ")
+            CountWaitResponse();
+            $(".CountResponse").html("יש לך    " + localStorage.getItem("CountResponse") + " " + "חוות דעת למלא ")
         });
 
-
+        const u =
+        {
+            userId: JSON.parse(localStorage.getItem('UserId'))
+        }
         function LogOut() {
             localStorage.clear();
             window.location.href = "index.html";
@@ -150,8 +156,34 @@
         function postECB(err) {
             alert("Error");
         }
+        function CountWaitResponse() {
+
+            let apiCall = "../api/Users/CountWaitResponse";
+            ajaxCall("POST", apiCall, JSON.stringify(u), getCountWaitResponseSCB, getRequestsECB)
+
+        }
+        function getCountWaitResponseSCB(CountResponse) {
+            localStorage["CountResponse"] = JSON.stringify(CountResponse);
+
+        }
+        function getRequestsECB(error) {
+            console.log('error occured');
+        }
 
 
+        function CountRequestsApro() {
+
+            let apiCall = "../api/Users/CountRequestsApro";
+            ajaxCall("POST", apiCall, JSON.stringify(u), getCountRequestsAproSCB, getRequestsECB)
+
+        }
+
+        function getCountRequestsAproSCB(CountRequestsApro) {
+            localStorage["CountRequestsApro"] = JSON.stringify(CountRequestsApro);
+
+        }
+
+        
 
 
     </script>
@@ -194,6 +226,9 @@
                     <div><a href="index.html"><img src="../images/LOGO1.png" /></a></div>
                 </div>
                 <div class="col-md-8">
+                    <div class="CountResponse"></div>
+                    <div class="CountRequestsApro"></div>
+
                     <div class="menu_text-sign">
                         <ul>
                             <li class="LogeIn">

@@ -1396,6 +1396,108 @@ namespace Dog_Proj.Models.DAL
             }
         }
 
+        public int CountWaitResponse(int userid)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = Connect("DogsProjDB");
+                SqlCommand selectCommand = commandCountWaitResponse(con, userid);
+                SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                int i = 0;
+                while (dataReader.Read())
+
+                {
+
+                   i=Convert.ToInt32((dataReader["countRequests"]).ToString());
+                  
+
+                }
+
+                dataReader.Close();
+
+                return i;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to insert the countRequests", ex);
+            }
+            finally
+            {
+
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand commandCountWaitResponse(SqlConnection con, int userid)
+        {
+            string str = "SELECT  COUNT(S.id)  as countRequests" +
+                " FROM PendingReq P JOIN ServicesDog S ON" +
+                " P.idService=S.id" +
+                " WHERE S.UserId LIKE @userid AND P.approvedreq=1 AND S.id not in (select serviceId from finished_tasks)"+
+                " GROUP BY S.UserId";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@userid", SqlDbType.SmallInt);
+            cmd.Parameters["@userid"].Value = (short)userid;
+            return cmd;
+        }
+
+        public int CountRequestsApro(int userid)
+        {
+            SqlConnection con = null;
+            try
+            {
+                con = Connect("DogsProjDB");
+                SqlCommand selectCommand = commandCountRequestsApro(con, userid);
+                SqlDataReader dataReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                int i = 0;
+                while (dataReader.Read())
+
+                {
+
+                    i = Convert.ToInt32((dataReader["CountRequestsApro"]).ToString());
+
+
+                }
+
+                dataReader.Close();
+
+                return i;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to insert the CountRequestsApro", ex);
+            }
+            finally
+            {
+
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand commandCountRequestsApro(SqlConnection con, int userid)
+        {
+
+            string str = " SELECT COUNT(S.id) as CountRequestsApro" +
+            " FROM PendingReq P JOIN ServicesDog S ON " +
+            " P.idService = S.id " +
+            " JOIN ( SELECT DISTINCT PD.idService AS TmpID FROM ServicesDog  SD JOIN PendingReq PD ON PD.idService = SD.id " +
+            " WHERE SD.serviceName != 'pension' or PD.approvedreq != 1) as t on t.TmpID = S.id " +
+            " WHERE P.idUser LIKE @userid AND P.approvedreq is NULL " +
+            " and DATEDIFF(MINUTE, CONVERT(varchar(10), (S.serviceDate), 126)+' ' + substring(S.serviceHour, 1, 5),GETDATE()) <= 0 "+
+            " GROUP BY P.idUser";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@userid", SqlDbType.SmallInt);
+            cmd.Parameters["@userid"].Value = (short)userid;
+            return cmd;
+        }
+
+
+
         private SqlCommand commandgetWaitResponse(SqlConnection con, int userid)
         {
             string str = "SELECT S.serviceName, S.serviceDate, S.serviceHour, S.servicetype, U.username,U.phone,S.id,P.idUser" +
@@ -1580,6 +1682,8 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters["@userid"].Value = (short)userid;
             return cmd;
         }
+
+
         
     }
 }

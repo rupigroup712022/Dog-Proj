@@ -48,8 +48,13 @@
             $(document).on("click", "#waitResponse", getWaitResponse)
             $(document).on("click", ".setRating", setRating)
             $(document).on("click", "#waitApproval", getWaitApproval)
-            $("#LogOut").click(LogOut);
+            $(document).on("click", ".denyRequest", setSelfCensel)
 
+            $("#LogOut").click(LogOut);
+            CountRequestsApro();
+            $(".CountRequestsApro").html("יש לך    " + localStorage.getItem("CountRequestsApro") + " " + "בקשות לאשר ")
+            CountWaitResponse();
+            $(".CountResponse").html("יש לך    " + localStorage.getItem("CountResponse") + " " + "חוות דעת למלא ")
         });
 
         function LogOut() {
@@ -70,13 +75,33 @@
             ajaxCall("POST", apiCall, JSON.stringify(u), getHistoryRequestsSCB, getRequestsECB)
 
         }
+        function CountWaitResponse() {
+
+            let apiCall = "../api/Users/CountWaitResponse";
+            ajaxCall("POST", apiCall, JSON.stringify(u), getCountWaitResponseSCB, getRequestsECB)
+
+        }
+        function getCountWaitResponseSCB(CountResponse) {
+            localStorage["CountResponse"] = JSON.stringify(CountResponse);
+
+        }
 
         function getWaitApproval() {
 
             let apiCall = "../api/Users/getWaitApproval";
-            ajaxCall("POST", apiCall, JSON.stringify(u), getHistoryRequestsSCB, getRequestsECB)
+            ajaxCall("POST", apiCall, JSON.stringify(u), setSelfCenselSCB, getRequestsECB)
 
         }
+
+
+        function setSelfCensel() {
+            let serviceId = $(this).parent().attr('id');
+            let type = $("#type" + serviceId).html();
+            console.log(type);
+            let apiCall = "../api/Users/setSelfCensel";
+            ajaxCall("POST", apiCall, JSON.stringify({ ...u, serviceId: serviceId, type: type }), setRatingSCB, getRequestsECB)
+        }
+
 
         function setRating() {
             let service_id = $(this).parents().find('.BTF1').attr('id');
@@ -148,6 +173,81 @@
             }
         }
 
+
+        function setSelfCenselSCB(d) {
+            $('#results').html('');
+            const results = d.map(l => {
+                let fullDate = l[1] + " " + l[2];
+                let str = "";
+                str += "<div class='BTF1' id='" + l[6] + "'>";
+                str += "<button class='denyRequest'> ביטול בקשה</button>";
+                str += "<table class='table'>";
+                str += "<tr class='row1'>";
+                str += "<td class='user col-12'><h1> סוג שירות :" + actionDic[l[0]] + "</h1></td>";
+                str += "</tr>";
+                str += "<tr class='row1'>";
+                str += "<td class='user col-12'><h3><b>: תאריך ושעת השירות   </b><br/>  " + fullDate + "</h3></td>";
+                str += "</tr>";
+                str += "<tr class='row1'>";
+                str += "<td class='col-12'><h3><b>: סכום השירות</b><p id='type" + l[6] + "'>" + l[3] + "</p></h3></td>";
+                str += "</tr>";
+                str += "<tr class='row1'>";
+                str += "<td class='user col-12'><h3><b> שם:</b>" + l[4] + "</h3></td>";
+                str += "</tr>";
+                str += "<tr class='row1'>";
+                if (l.length > 8) {
+                    str += "<td class='user col-12'><h3><b>טלפון:</b>" + l[5] + "</h3></td></tr>"
+                    str += "<td class='user col-12'><h3><b>גיל:</b>" + l[8] + "</h3></td></tr>"
+                }
+
+                else if (parseInt(l[5]) > 10) {
+                    str += "<td class='user col-12'><h3><b>טלפון:</b>" + l[5] + "</h3></td></tr>"
+                    str += "<input class='rating' id='rating" + l[6] + "' type=number min=1 max=5 step=1 required placeholder='דרג 1-5'>"
+                    str += "<button id='" + l[7] + "' class='setRating'> שלח דרוג</button>";
+                }
+                else {
+                    str += "<td class='user col-12'><h3><b>דירוג:</b>" + l[5] + "</h3></td></tr>";
+                }
+                str += "</table>";
+                str += "</div><br/>";
+                return str;
+            }
+            )
+            if (results == null || results.length <= 0) {
+                Swal.fire({
+                    title: "לא נמצאה היסטוריית בקשות-בדוק בבקשה את הבקשות הממתינות שלך",
+                    icon: "error",
+                    //    timer: 2500,
+                })
+            }
+            else {
+                results.map(l => { $('#results').append(l) });
+            }
+        }
+
+
+        function getRequestsECB(error) {
+            console.log('error occured');
+        }
+
+
+
+        function getCountWaitResponseSCB(CountResponse) {
+            localStorage["CountResponse"] = JSON.stringify(CountResponse);
+
+        }
+
+        function CountRequestsApro() {
+
+            let apiCall = "../api/Users/CountRequestsApro";
+            ajaxCall("POST", apiCall, JSON.stringify(u), getCountRequestsAproSCB, getRequestsECB)
+
+        }
+
+        function getCountRequestsAproSCB(CountRequestsApro) {
+            localStorage["CountRequestsApro"] = JSON.stringify(CountRequestsApro);
+
+        }
         function getRequestsECB(error) {
             console.log('error occured');
         }
@@ -167,6 +267,9 @@
                     <div><a href="index.html"><img src="../images/LOGO1S.png" /></a></div>
                 </div>
                 <div class="col-md-8">
+                    <div class="CountResponse"></div>
+                    <div class="CountRequestsApro"></div>
+
                     <div class="menu_text">
                         <ul>
                             <li class="LogeIn">

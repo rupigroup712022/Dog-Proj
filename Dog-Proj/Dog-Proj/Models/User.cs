@@ -77,6 +77,12 @@ namespace Dog_Proj.Models {
 
         }
 
+        public int CountRequestsApro(int userid)
+        {
+            DataServices dbs = new DataServices();
+            return dbs.CountRequestsApro(userid);
+
+        }
         public List<List<string>> getRequestHistory(int userid)
         {
             DataServices dbs = new DataServices();
@@ -91,7 +97,14 @@ namespace Dog_Proj.Models {
 
         }
 
+        public int CountWaitResponse(int userid)
+        {
+            DataServices dbs = new DataServices();
+            return dbs.CountWaitResponse(userid);
+
+        }
         
+
            public List<List<string>> getWaitApproval(int userid)
         {
             DataServices dbs = new DataServices();
@@ -249,6 +262,23 @@ namespace Dog_Proj.Models {
             
 
         }
+
+
+
+        public void setSelfCensel(int userid, string serviceId, string type)
+        {
+            DataServices dbs = new DataServices();
+            List<string> str = dbs.setRequestsDb(userid, serviceId, false);
+                    if (str[1].Length > 0 && str[2].Length > 0)
+                    {
+                        dbs.setPoints(Convert.ToInt32(str[2]), Convert.ToInt32(str[1]) + Convert.ToInt32(type));
+                    }
+                   
+        }
+         
+
+
+        
         public List<List<string>> GetAvUserPension(int userid, short serviceId)
         {
             DataServices dbs = new DataServices();
