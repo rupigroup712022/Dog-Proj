@@ -205,14 +205,14 @@ a {
 }
 
 .menu_text-sign {
-    width: 30%;
-    float: right;
+/*    width: 30%;
+*/    float: right;
     padding-left:80px;
 }
 
 .menu_text {
-    width: 20%;
-    float: right;
+/*    width: 20%;
+*/    float: right;
     padding-left: 70px;
 }
 
@@ -1560,6 +1560,9 @@ input#regervation {
     MARGIN-LEFT: 350PX;
 }
 .CountResponse, .CountRequestsApro {
-    background-color: red;
+    background-color: orange;
+    margin-top: 15px;
+    text-align: center;
     color: white;
+    width: 80%;
 }
