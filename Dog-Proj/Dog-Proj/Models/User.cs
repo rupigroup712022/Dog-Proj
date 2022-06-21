@@ -184,7 +184,7 @@ namespace Dog_Proj.Models {
                     };
                     mailMessage.To.Add(str[0]);
 
-                //    smtpClient.Send(mailMessage);//לקחת נקודות
+                smtpClient.Send(mailMessage);//לקחת נקודות
 
 
                 }
@@ -252,7 +252,7 @@ namespace Dog_Proj.Models {
                     };
                     mailMessage.To.Add(str[0]);
 
-               //     smtpClient.Send(mailMessage);// להחזיר נקודות
+                   smtpClient.Send(mailMessage);// להחזיר נקודות
                 }
             }
             catch(Exception e)

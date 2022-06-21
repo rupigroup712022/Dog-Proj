@@ -152,7 +152,7 @@ namespace Dog_Proj.Models
                         };
                         mailMessage.To.Add(str);
 
-                      //  smtpClient.Send(mailMessage);
+                       smtpClient.Send(mailMessage);
                         return true;
                     
                   

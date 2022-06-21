@@ -312,7 +312,7 @@ namespace Dog_Proj.Models.DAL
                 string str = "";
                 if (numeffected != 0)
                 {
-                SqlCommand insertCommandEmail = getEmail(idService.ToString(), con);
+                SqlCommand insertCommandEmail = getEmailForMail(idUser.ToString(), con);
                 SqlDataReader dataReader = insertCommandEmail.ExecuteReader(CommandBehavior.CloseConnection);
 
                 while (dataReader.Read())
@@ -1293,6 +1293,16 @@ namespace Dog_Proj.Models.DAL
             cmd.Parameters["@serviceId"].Value = Convert.ToInt16(serviceId);
             return cmd;
         }
+
+        private SqlCommand getEmailForMail(string userid, SqlConnection con)
+        {
+            string str = "SELECT email FROM UsersFamliy US JOIN Accounts A ON US.familyId=A.id WHERE US.id LIKE @userid";
+            SqlCommand cmd = createCommand(con, str);
+            cmd.Parameters.Add("@userid", SqlDbType.SmallInt);
+            cmd.Parameters["@userid"].Value = Convert.ToInt16(userid);
+            return cmd;
+        }
+
 
         public List<List<string>> getRequestHistory(int userid)
         {
