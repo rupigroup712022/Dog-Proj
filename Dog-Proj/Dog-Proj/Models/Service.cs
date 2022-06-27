@@ -90,50 +90,50 @@ namespace Dog_Proj.Models
 
                 if (str.Length > 0)
                 {
-
                   
                         var smtpClient = new SmtpClient();
-
+                    //System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
                         var mailMessage = new MailMessage
                         {
                             Subject = "PETCOM: התקבלה בקשה חדשה",
                             Body = @"<html>
-                         <head>
+                               <head>
+                                  <meta charset='utf - 8'/>
                                 < style >
                                           p {
-                                              font - family:Calibri;
-                                              font - size: 40px;
-                                              text - align: center;
-                                              color: white;
+                                              font-family:Calibri;
+                                              font-size: 40px;
+                                              text-align: center;
+                                              color:white;
                                            }
                                      body {
-                                            background - color: #fad58c;
+                                            background-color: #fad58c;
                                             float:right;
-                                            text - align:center;
+                                            text-align:center;
                                           }
                                      h1 {
-                                             font - family: Calibri;
-                                             font - size: 60px;
-                                             text - align: center;
-                                              color: white;
+                                             font-family: Calibri;
+                                             font-size: 60px;
+                                             text-align: center;
+                                              color:white;
                                           }
                                    img{
-                                             height: 150px;
-                                             width: 500px;
+                                             height:150px;
+                                             width:500px;
                                       }
                                  .continer {
-                                               margin - right:650px;
+                                               margin-right:650px;
                                           }
                                   .read {
-                                            display: inline - block;
-                                             font - size: 16px;
-                                            color: #fffff;
-                                             text - transform: uppercase;
+                                            display:inline-block;
+                                             font-size:16px;
+                                            color:#fffff;
+                                             text-transform:uppercase;
                                             background: #f2bb13;
-                                             padding: 8px 25px;
-                                              margin: 30px 0;
-                                              margin - top: 30px;
-                                               transition: all .3s ease 0s
+                                             padding:8px 25px;
+                                              margin:30px 0;
+                                              margin-top: 30px;
+                                               transition:all.3s ease 0s
                                                }
                              </ style >
                              </ head >
