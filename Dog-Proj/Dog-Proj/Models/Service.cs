@@ -93,66 +93,52 @@ namespace Dog_Proj.Models
                   
                         var smtpClient = new SmtpClient();
                     //System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-                        var mailMessage = new MailMessage
-                        {
-                            Subject = "PETCOM: התקבלה בקשה חדשה",
-                            Body = @"<html>
-                               <head>
-                                  <meta charset='utf - 8'/>
-                                < style >
+                    MailMessage mailMessage = new MailMessage() { 
+                    Subject = "PETCOM: עדכון חדש",
+                    Body = @"<html>
+                                <style>
                                           p {
                                               font-family:Calibri;
                                               font-size: 40px;
                                               text-align: center;
-                                              color:white;
+                                            color:#000000;
                                            }
                                      body {
                                             background-color: #fad58c;
                                             float:right;
                                             text-align:center;
+                                            color:#000000;
                                           }
                                      h1 {
                                              font-family: Calibri;
                                              font-size: 60px;
                                              text-align: center;
-                                              color:white;
+                                            color:#000000;
                                           }
                                    img{
-                                             height:150px;
-                                             width:500px;
+                                             height: 150px;
+                                             width: 500px;
                                       }
-                                 .continer {
-                                               margin-right:650px;
-                                          }
-                                  .read {
-                                            display:inline-block;
-                                             font-size:16px;
-                                            color:#fffff;
-                                             text-transform:uppercase;
-                                            background: #f2bb13;
-                                             padding:8px 25px;
-                                              margin:30px 0;
-                                              margin-top: 30px;
-                                               transition:all.3s ease 0s
-                                               }
-                             </ style >
-                             </ head >
-                              < body >
-                        < div class='continer'>
-                             <div><a href = 'index.html' >< img src='../images/LOGO1S.png' /></a></div>
+
+                             </style>
+                              <body>
+                        <div>
+                             <div><img src='https://www.pexels.com/search/cute%20dogs/' /></div>
                              <div><h1 dir = 'rtl' > התקבלה בקשה חדשה!</h1></div>
-                             <div><P dir = 'rtl' > כנס לאתר לצפות בפרטי הבקשה</P></div>
+                             <div><p dir = 'rtl' > כנס לאתר לצפות בפרטי הבקשה</p></div>
                              <div ><a class='rtl' href='index.html'>כניסה לאתר</a></div>
-                             <div><P dir = 'rtl' > אל תשכח לתת שירות בשביל לקבל!</P></div>
-                              <div><P dir = 'rtl' > תמיד בשבילך ולעזרתך חברי PETCOM!</P></div>
+                             <div><p dir = 'rtl' > אל תשכח לתת שירות בשביל לקבל!</p></div>
+                              <div><p dir = 'rtl' > תמיד בשבילך ולעזרתך חברי PETCOM!</p></div>
                          </div>
                   </body>
                   </html>",
-                            IsBodyHtml = true
-                        };
-                        mailMessage.To.Add(str);
-
-                       smtpClient.Send(mailMessage);
+                     IsBodyHtml = true
+                };
+                    mailMessage.To.Add(new MailAddress(str));
+                    //mailMessage.Subject = "PETCOM: עדכון חדש";
+                    //mailMessage.Body =mailMessage.Body
+                    
+                    smtpClient.Send(mailMessage);
                         return true;
                     
                   
