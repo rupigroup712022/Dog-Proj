@@ -123,7 +123,7 @@ namespace Dog_Proj.Models {
             List <string> str = dbs.setRequestsDb(userid, serviceId, val);
             try
             {
-                if (val) ///מישהו אישר בקשה
+                if (val) 
                 {
 
                     MailMessage mailMessage = new MailMessage()
@@ -170,7 +170,7 @@ namespace Dog_Proj.Models {
 
                     mailMessage.To.Add(str[0]);
 
-                    smtpClient.Send(mailMessage);//לקחת נקודות
+                    smtpClient.Send(mailMessage);
 
 
                 }

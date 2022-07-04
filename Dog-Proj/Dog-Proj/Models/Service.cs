@@ -71,7 +71,6 @@ namespace Dog_Proj.Models
             else
             {
                 throw new Exception("אין מספיק נקודות זכות");
-                ///לטפל במקרה קצה של 3 בקשות
             }
         }
 
@@ -85,7 +84,6 @@ namespace Dog_Proj.Models
             {
                 dbs.setPointsWithCheck(Convert.ToInt32(dic["id"]), Convert.ToInt32(dic["numOfPoints"]) - Convert.ToInt32(servicetype), idService);
                 string str = dbs.InsertReqServices(idService, idUser);
-                /////שגיאה בחלק הזה, לא יורדות נקודות 
 
 
                 if (str.Length > 0)
@@ -149,7 +147,6 @@ namespace Dog_Proj.Models
             else
             {
                 throw new Exception("אין מספיק נקודות זכות");
-                ///לטפל במקרה קצה של 3 בקשות
             }
 
 
@@ -167,7 +164,6 @@ namespace Dog_Proj.Models
 
 
         public void calculate (double average, int rating_number, short rating, short familyId,int new_points,int prev_points)
-            //צריך לטפל בחריגה של החזת נקודות בעת ביטול בקשה 
         {
             double new_avg = (average + rating) / (rating_number + 1);
             DataServices dbs = new DataServices();
