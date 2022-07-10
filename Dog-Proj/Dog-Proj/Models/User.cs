@@ -150,13 +150,14 @@ namespace Dog_Proj.Models {
                                             color:#000000;
                                           }
                                    img{
-                                             height: 150px;
-                                             width: 500px;
+                                             height: 10%;
+                                             width: 50%;
                                       }
 
                              </style>
                               <body>
-                        <div>                             <div><img src='https://www.pexels.com/search/cute%20dogs/' /></div>
+                        <div>                          
+                             <a href='https://imgbb.com/'><img src='https://i.ibb.co/PZV5KXz/33.jpg' alt='33' border='0'></a>
                              <div><h1 dir = 'rtl' > התקבלה בקשה חדשה!</h1></div>
                              <div><P dir = 'rtl' > הבקשה אושרה, היכנס לאתר לצפייה בפרטי הבקשה</P></div>
                              <div ><a class='rtl' href='index.html'>כניסה לאתר</a></div>
@@ -204,14 +205,14 @@ namespace Dog_Proj.Models {
                                             color:#000000;
                                           }
                                    img{
-                                             height: 150px;
-                                             width: 500px;
+                                             height: 10%;
+                                             width: 50%;
                                       }
 
                              </style>
                               <body>
                         <div>
-                             <div><img src='https://www.pexels.com/search/cute%20dogs/' /></div>
+                             <a href='https://imgbb.com/'><img src='https://i.ibb.co/PZV5KXz/33.jpg' alt='33' border='0'></a>
                              <div><h1 dir = 'rtl' > התקבלה בקשה חדשה!</h1></div>
                              <div><P dir = 'rtl' > הבקשה נדחתה, היכנס לאתר לצפייה בפרטי הבקשה</P></div>
                              <div ><a class='rtl' href='index.html'>כניסה לאתר</a></div>

@@ -74,7 +74,7 @@ namespace Dog_Proj.Models
             }
         }
 
-       public bool InsertReqServices(int idService, int idUser,int reqUser, int servicetype)
+       public int InsertReqServices(int idService, int idUser,int reqUser, int servicetype)
         {
             ///idUser נותן השירות
           ///  reqUser מבקש השירות
@@ -114,15 +114,15 @@ namespace Dog_Proj.Models
                                             color:#000000;
                                           }
                                    img{
-                                             height: 150px;
-                                             width: 500px;
+                                             height: 10%;
+                                             width: 50%;
                                       }
 
                              </style>
                               <body>
                         <div>
-                             <div><img src='https://www.pexels.com/search/cute%20dogs/' /></div>
-                             <div><h1 dir = 'rtl' > התקבלה בקשה חדשה!</h1></div>
+                             <a href='https://imgbb.com/'><img src='https://i.ibb.co/PZV5KXz/33.jpg' alt='33' border='0'></a>
+                             < div><h1 dir = 'rtl' > התקבלה בקשה חדשה!</h1></div>
                              <div><p dir = 'rtl' > כנס לאתר לצפות בפרטי הבקשה</p></div>
                              <div ><a class='rtl' href='index.html'>כניסה לאתר</a></div>
                              <div><p dir = 'rtl' > אל תשכח לתת שירות בשביל לקבל!</p></div>
@@ -137,7 +137,7 @@ namespace Dog_Proj.Models
                     //mailMessage.Body =mailMessage.Body
                     
                     smtpClient.Send(mailMessage);
-                        return true;
+                        return servicetype;
                     
                   
 
@@ -150,7 +150,7 @@ namespace Dog_Proj.Models
             }
 
 
-            return false;
+            return 0;
         }
 
 

@@ -119,6 +119,7 @@
         }
 
         function SuccessSlectoin(secc) {
+            localStorage["numOfPoints"] = JSON.parse(localStorage["numOfPoints"]) - secc;
             Swal.fire({
                 title: "צפה בבקשות שלך!",
                 icon: "success",
@@ -368,7 +369,7 @@
                 type: "GET",
                 data: {
                     address: data.address,
-                    key: "AIzaSyD_b7WIuckZ56JNQMXK8AlbSuf6K88dsIU"
+                    key: "AIzaSyBTDuc6NwuTBHIz7bltsGuAJoZXUTmYarc"
                 },
                 /* success:*/
                 //function (response) {
@@ -432,11 +433,11 @@
             const str = Addrres[0] + "%20" + Addrres[1] + "%20" + Addrres[2];
             console.log(Addrres);
             $.ajax({
-                url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + str + "&key=AIzaSyD_b7WIuckZ56JNQMXK8AlbSuf6K88dsIU",
+                url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + str + "&key=AIzaSyBTDuc6NwuTBHIz7bltsGuAJoZXUTmYarc",
                 type: "GET",
                // data: {
                   //  address: str,
-                  //  key: "AIzaSyD_b7WIuckZ56JNQMXK8AlbSuf6K88dsIU"
+                  //  key: "AIzaSyBTDuc6NwuTBHIz7bltsGuAJoZXUTmYarc"
             //    },
                 success: function (response) {
                     if (response.status == 'ZERO_RESULTS') {
@@ -722,7 +723,7 @@
             document.getElementById("myNav").style.width = "0%";
         }
     </script>-->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_b7WIuckZ56JNQMXK8AlbSuf6K88dsIU&callback=initMap&libraries=&v=weekly"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTDuc6NwuTBHIz7bltsGuAJoZXUTmYarc&callback=initMap&libraries=&v=weekly"></script>
 
 </body>
 </html>
