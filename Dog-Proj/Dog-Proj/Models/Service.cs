@@ -120,14 +120,14 @@ namespace Dog_Proj.Models
 
                              </style>
                               <body>
-                        <div>
-                             <a href='https://imgbb.com/'><img src='https://i.ibb.co/PZV5KXz/33.jpg' alt='33' border='0'></a>
-                             < div><h1 dir = 'rtl' > התקבלה בקשה חדשה!</h1></div>
+                        
+                            <div> <a href='https://imgbb.com/'><img src='https://i.ibb.co/PZV5KXz/33.jpg' alt='33' border='0'></a></div>
+                             <div><h1 dir = 'rtl' > התקבלה בקשה חדשה!</h1></div>
                              <div><p dir = 'rtl' > כנס לאתר לצפות בפרטי הבקשה</p></div>
-                             <div ><a class='rtl' href='index.html'>כניסה לאתר</a></div>
+                             <div><a class='rtl' href='https://proj.ruppin.ac.il/igroup71/prod/Pages/index.html'>כניסה לאתר</a></div>
                              <div><p dir = 'rtl' > אל תשכח לתת שירות בשביל לקבל!</p></div>
                               <div><p dir = 'rtl' > תמיד בשבילך ולעזרתך חברי PETCOM!</p></div>
-                         </div>
+                         
                   </body>
                   </html>",
                      IsBodyHtml = true
